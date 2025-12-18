@@ -1,0 +1,404 @@
+//样式重置
+html,
+body,
+div,
+span,
+applet,
+object,
+iframe,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p,
+blockquote,
+pre,
+a,
+abbr,
+acronym,
+address,
+big,
+cite,
+code,
+del,
+dfn,
+em,
+img,
+ins,
+kbd,
+q,
+s,
+samp,
+small,
+strike,
+strong,
+sub,
+sup,
+tt,
+var,
+b,
+u,
+i,
+center,
+input,
+select,
+textarea,
+dl,
+dt,
+dd,
+ol,
+ul,
+li,
+fieldset,
+form,
+label,
+legend,
+table,
+caption,
+tfoot,
+thead,
+tr,
+th,
+td,
+article,
+aside,
+canvas,
+details,
+embed,
+figure,
+figcaption,
+footer,
+header,
+hgroup,
+menu,
+nav,
+output,
+ruby,
+section,
+summary,
+time,
+mark,
+audio,
+video {
+  padding: 0;
+  margin: 0;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-weight: normal;
+}
+
+body {
+  font: normal 14px/1.5 "Microsoft YaHei", "微软雅黑", "Helvetica Neue", Helvetica, "PingFang SC", "Hiragino Sans GB", Arial, sans-serif;
+  color: #606266;
+}
+
+ol,
+ul {
+  list-style: none;
+}
+
+table {
+  border-spacing: 0;
+  border-collapse: collapse;
+}
+
+a {
+  color: $themeColor;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+input:disabled,
+select:disabled {
+  color: #666 !important;
+  cursor: not-allowed !important;
+  background-color: #f5f7fa !important;
+  border-color: #e4e7ed !important;
+}
+
+::-webkit-input-placeholder { /* WebKit, Blink, Edge */
+  color: #c0c4cc;
+}
+
+::-moz-placeholder { /* Mozilla Firefox 19+ */
+  color: #c0c4cc;
+}
+
+:-moz-placeholder { /* Mozilla Firefox 4 to 18 */
+  color: #c0c4cc;
+}
+
+:-ms-input-placeholder { /* Internet Explorer 10-11 */
+  color: #c0c4cc;
+}
+
+pre {
+  white-space: pre-wrap;
+}
+
+.clearfix {
+  *zoom: 1;
+
+  &::after {
+    display: block;
+    overflow: hidden;
+    clear: both;
+    visibility: hidden;
+    content: '';
+  }
+}
+//通用样式
+.hidden {
+  visibility: hidden;
+}
+
+.cursor-pointer {
+  cursor: pointer !important;
+}
+
+.text-primary {
+  color: $themeColor;
+}
+
+.text-default {
+  color: $themeColorDefault;
+}
+
+.text-info {
+  color: $themeColorInfo;
+}
+
+.text-success {
+  color: $themeColorSuccess;
+}
+
+.text-warning {
+  color: $themeColorWarning;
+}
+
+.text-danger {
+  color: $themeColorDanger;
+}
+
+.font-bold {
+  font-weight: bold;
+}
+%border-common {
+  padding: 2px 6px;
+  color: $themeColor;
+  border: 1px solid $themeColor;
+  border-radius: 3px;
+}
+
+.border-primary {
+  @extend %border-common;
+}
+
+.border-default {
+  @extend %border-common;
+
+  color: $themeColorDefault;
+  border-color: $themeColorDefault;
+}
+
+.border-info {
+  @extend %border-common;
+
+  color: $themeColorInfo;
+  border-color: $themeColorInfo;
+}
+
+.border-success {
+  @extend %border-common;
+
+  color: $themeColorSuccess;
+  border-color: $themeColorSuccess;
+}
+
+.border-warning {
+  @extend %border-common;
+
+  color: $themeColorWarning;
+  border-color: $themeColorWarning;
+}
+
+.border-danger {
+  @extend %border-common;
+
+  color: $themeColorDanger;
+  border-color: $themeColorDanger;
+}
+
+.align-left {
+  text-align: left;
+}
+
+.align-right {
+  text-align: right;
+}
+
+.align-center {
+  text-align: center;
+}
+
+.table-center {
+  th,
+  td {
+    text-align: center;
+  }
+}
+
+.table-right {
+  th,
+  td {
+    text-align: right;
+  }
+}
+
+//布局样式
+.ly-box {
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+  padding-right: 10px;
+  padding-bottom: 10px;
+  overflow: auto;
+}
+
+.ly-center {
+  align-items: center;
+  justify-content: center;
+  margin: 20px;
+  background: #fff !important;
+  border: 1px solid #d9d9d9;
+}
+
+.content {
+  padding: 15px;
+  background: #fff;
+  border: 1px solid #d9d9d9;
+  border-radius: 4px;
+
+  + .content {
+    margin-top: 15px;
+  }
+
+  .list-bar {
+    display: flex;
+    flex-wrap: wrap;
+    margin-right: -20px;
+
+    .el-form-item {
+      box-sizing: border-box;
+      width: 25%;
+      padding-right: 20px;
+      margin-bottom: 10px;
+
+      &.percent-50 {
+        width: 50%;
+      }
+
+      .el-form-item__label {
+        font-size: 12px;
+      }
+
+      .el-autocomplete,
+      .el-date-editor.el-input,
+      .el-range-editor.el-input__inner,
+      .el-select {
+        width: 100%;
+      }
+    }
+
+    &.colum-3 {
+      .el-form-item {
+        width: 33.3%;
+      }
+    }
+
+    &.colum-2 {
+      .el-form-item {
+        width: 50%;
+      }
+    }
+  }
+
+  .button-bar {
+    position: relative;
+
+    .el-pagination {
+      position: absolute;
+      right: 0;
+      bottom: 0;
+      padding: 0;
+    }
+  }
+}
+
+//可删除样式，为了demo而设置
+[class^='pg-'] {
+  .marginTop20 {
+    margin-top: 20px;
+  }
+
+  pre {
+    padding: 10px;
+    background-color: #eee;
+  }
+
+  h2,
+  h3,
+  h4 {
+    padding: 5px 0;
+    margin-top: 5px;
+  }
+
+  h2 {
+    font-size: $font-size-normal + 6;
+    color: $themeColorWarning;
+  }
+
+  h3 {
+    font-size: $font-size-normal + 4;
+    color: $themeColor;
+  }
+
+  h4 {
+    font-size: $font-size-normal + 2;
+    color: $themeColorSuccess;
+  }
+
+  p,
+  ul {
+    padding: 5px 0;
+  }
+
+  em {
+    font-style: normal;
+    color: $color-primary;
+  }
+
+  .table {
+    width: 100%;
+
+    th,
+    td {
+      padding: 10px;
+      text-align: left;
+      border: 1px solid $color-9;
+    }
+
+    th {
+      color: #fff;
+      background-color: $color-9;
+    }
+  }
+}

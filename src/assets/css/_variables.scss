@@ -1,0 +1,53 @@
+/*
+ * @Author: 王宏伟
+ * @Email：wanghongwei@hualala.com
+ * @Date: 2024-07-12 10:35:09
+ * @Description: sass中定义的全局的样式变量、混入等
+ * @FilePath: /react-18.2/src/assets/css/sass.scss
+ */
+
+/* 变量 variable */
+
+/* 字体大小 */
+$font-size-normal:14px;
+
+/* 颜色 */
+$color-0:#000;
+$color-3:#333;
+$color-6:#666;
+$color-9:#999;
+$color-e:#eee;
+$color-f:#fff;
+$color-primary:#308eff;
+$color-success:#00a854;
+$color-warning:#e6a23c;
+$color-danger:#d81e06;
+
+/* 混入 mixin */
+
+/* n行出省略号，默认1行 */
+@mixin ellipsis ($line:1) {
+  display: -webkit-box !important;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: $line;
+  overflow: hidden;
+}
+
+//左侧栏变量
+$themeColor:#409eff;
+$themeColorHover:#49a9ee;
+$themeColorDefault:#606266;
+$themeColorInfo:#909399;
+$themeColorSuccess:#00a854;
+$themeColorWarning:#e6a23c;
+$themeColorDanger:#f56c6c;
+$a-hover:#49a9ee;
+
+$menuWidth: 160px;
+$menuWidthCollapse: 60px;
+$menu-bg:#001529;
+$menu-bg-active:#191b24;
+$menu-font:#999;
+$menu-font-active:#fff;
+
+$T-S:14px;

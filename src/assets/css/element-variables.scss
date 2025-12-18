@@ -1,0 +1,152 @@
+/* 改变主题色变量 */
+$--color-primary: #409eff; //default:#409EFF
+
+/* 改变 icon 字体路径变量，必需 */
+$--font-path: '~element-plus/lib/theme-chalk/fonts';
+
+@import "~element-plus/packages/theme-chalk/src/index"; //全部引入,使主题色生效，打包时再利用babel-plugin-import的按需引入使用到的组件样式
+
+.el-loading-mask {
+  .el-loading-spinner {
+    left: 50%;
+    display: inline-block;
+    width: 7px;
+    height: 7px;
+    margin: 0 !important;
+    overflow: hidden;
+    text-indent: -9999px;
+    background: transparent none repeat scroll 0 0;
+    border-radius: 100%;
+    box-shadow: -14px -14px 0 7px #f86, 14px -14px 0 7px #fc6, 14px 14px 0 7px #6d7, -14px 14px 0 7px #4ae;
+    transform-origin: 50% 50% 0;
+    animation: dots-loader 5s ease-in-out 0s normal none infinite running;
+
+    .circular {
+      display: none;
+    }
+  }
+}
+
+@keyframes dots-loader {
+  0% {
+    box-shadow: -14px -14px 0 7px #f86, 14px -14px 0 7px #fc6, 14px 14px 0 7px #6d7, -14px 14px 0 7px #4ae;
+  }
+
+  8.33% {
+    box-shadow: 14px -14px 0 7px #f86, 14px -14px 0 7px #fc6, 14px 14px 0 7px #6d7, -14px 14px 0 7px #4ae;
+  }
+
+  16.67% {
+    box-shadow: 14px 14px 0 7px #f86, 14px 14px 0 7px #fc6, 14px 14px 0 7px #6d7, -14px 14px 0 7px #4ae;
+  }
+
+  25% {
+    box-shadow: -14px 14px 0 7px #f86, -14px 14px 0 7px #fc6, -14px 14px 0 7px #6d7, -14px 14px 0 7px #4ae;
+  }
+
+  33.33% {
+    box-shadow: -14px -14px 0 7px #f86, -14px 14px 0 7px #fc6, -14px -14px 0 7px #6d7, -14px -14px 0 7px #4ae;
+  }
+
+  41.67% {
+    box-shadow: 14px -14px 0 7px #f86, -14px 14px 0 7px #fc6, -14px -14px 0 7px #6d7, 14px -14px 0 7px #4ae;
+  }
+
+  50% {
+    box-shadow: 14px 14px 0 7px #f86, -14px 14px 0 7px #fc6, -14px -14px 0 7px #6d7, 14px -14px 0 7px #4ae;
+  }
+
+  58.33% {
+    box-shadow: -14px 14px 0 7px #f86, -14px 14px 0 7px #fc6, -14px -14px 0 7px #6d7, 14px -14px 0 7px #4ae;
+  }
+
+  66.67% {
+    box-shadow: -14px -14px 0 7px #f86, -14px -14px 0 7px #fc6, -14px -14px 0 7px #6d7, 14px -14px 0 7px #4ae;
+  }
+
+  75% {
+    box-shadow: 14px -14px 0 7px #f86, 14px -14px 0 7px #fc6, 14px -14px 0 7px #6d7, 14px -14px 0 7px #4ae;
+  }
+
+  83.33% {
+    box-shadow: 14px 14px 0 7px #f86, 14px -14px 0 7px #fc6, 14px 14px 0 7px #6d7, 14px 14px 0 7px #4ae;
+  }
+
+  91.67% {
+    box-shadow: -14px 14px 0 7px #f86, 14px -14px 0 7px #fc6, 14px 14px 0 7px #6d7, -14px 14px 0 7px #4ae;
+  }
+
+  100% {
+    box-shadow: -14px -14px 0 7px #f86, 14px -14px 0 7px #fc6, 14px 14px 0 7px #6d7, -14px 14px 0 7px #4ae;
+  }
+}
+
+.el-table {
+  .el-table__header {
+    th {
+      font-weight: normal;
+      color: #303133;
+      background-color: #f5f5f5;
+      border-top: 1px solid #d9d9d9;
+      border-bottom: 1px solid #d9d9d9;
+    }
+  }
+
+  td {
+    font-size: 12px;
+
+    .el-button {
+      padding: 2px 6px;
+      line-height: 18px;
+    }
+  }
+
+  .el-table__empty-text {
+    width: 40%;
+    padding: 120px 0 30px 0;
+    background: url(~@/assets/images/empty.png) no-repeat center 30px;
+  }
+
+  .show-table {
+    .el-table__expand-icon {
+      .el-icon {
+        display: none;
+      }
+
+      &::after {
+        font-size: 14px;
+        color: $themeColor;
+        cursor: pointer;
+        content: '展开';
+      }
+    }
+
+    .el-table__expand-icon--expanded {
+      -o-transform: rotate(0deg);
+      -moz-transform: rotate(0deg);
+      -webkit-transform: rotate(0deg);
+      transform: rotate(0deg);
+
+      &::after {
+        color: $themeColor;
+        cursor: pointer;
+        content: '收起';
+      }
+    }
+  }
+}
+
+.el-pagination {
+  padding: 20px;
+  text-align: right;
+
+  input.el-input__inner:read-only {
+    cursor: pointer !important;
+    background-color: #fff !important;
+    border-color: #dcdfe6 !important;
+  }
+
+  .el-pagination__sizes:last-child {
+    margin-right: -5px;
+  }
+}

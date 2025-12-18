@@ -1,0 +1,231 @@
+<!Doctype html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<title>call</title>
+</head>
+
+<body>
+	<h2>方法重用</h2>
+	<p>使用 call()、apply()、bind()  方法，您可以编写能够在不同对象上使用的方法。</p>
+<pre>
+	const name = '张三',age = 20
+	let obj = {
+		name: '李四',
+		age: this.age,
+		info: function (f,t) {
+			console.log(`${ this.name }，年龄${ this.age }，从${ f }到${ t }`)
+		}
+	}
+	const data = {
+		name: '王五',
+		age: 30
+	}
+	obj.info() //李四，年龄undefined，从undefined到undefined
+	// call 、bind 、 apply 这三个函数的第一个参数都是 this 的指向对象，第二个参数差别就来了
+	obj.info.call(data,'北京','上海')//王五，年龄30，从北京到上海
+	obj.info.bind(data,'北京','上海')()//王五，年龄30，从北京到上海
+	obj.info.apply(data,['北京','上海'])//王五，年龄30，从北京到上海  apply 的所有参数都必须放在一个数组里面传进去
+</pre>
+<script type="text/javascript">
+	//方法重用:call()、apply()、bind()
+	const name = '小二',age = 1
+	window.name= '零零'
+	window.age= 0
+	function call(){
+		this.age = -1 // 将Window里的age改为了-1
+		console.log('this',this) // 这里为Window对象
+		const name = '张三',age = 20
+		let obj = {
+			name: '李四',
+			age: this.age,
+			// info: function (f,t,x) {
+			info:  (f,t,x) => { //箭头函数，this指向使用该方法的外部，这里为Window对象
+				// console.log('arguments',arguments)
+				console.log(`${x}：${ name }，年龄${ this.age }，从${ f }到${ t }`)
+			}
+		}
+		const data = {
+			name: '王五', // 如果这里注释掉该属性，那下面方法重用的时候this.name都是undefined，因为这时this指向的是data
+			age: 30
+		}
+		obj.info() //李四，年龄undefined，从undefined到undefined
+		// call 、bind 、 apply 这三个函数的第一个参数都是 this 的指向对象，第二个参数差别就来了
+		obj.info.call(data,'北京','上海','call') // 王五，年龄30，从北京到上海
+		// bind 除了第1个小括号传参外，还需要第2个小括号来执行，说明第一次执行完返回的是一个方法，参数可以在两个小括号中任意按序填写，如果再写第3个小括号会报错
+		obj.info.bind(data,'北京','上海')('bind第1个方法内传全部参数') // 王五，年龄30，从北京到上海
+		obj.info.bind(data,'北京')('上海','bind第1个方法内传1个参数，第二个传2个') // 王五，年龄30，从北京到上海
+		obj.info.bind(data)('北京','上海','bind第2个方法内传全部参数') // 王五，年龄30，从北京到上海
+		// obj.info.bind(data)('北京','上海','bind执行了第3个方法')() // 报错：call.html:53 Uncaught TypeError: obj.info.bind(...)(...) is not a function
+		obj.info.apply(data,['北京','上海','apply']) // 王五，年龄30，从北京到上海  apply 的所有参数都必须放在一个数组里面传进去
+	}
+	call()
+
+	//call方法的this指向
+	function callThis(){
+		// call 方法里的this指向问题
+		// window.num=100
+		const num=0
+		let obj = {
+			num:1,
+			// fn: () => { //不要使用箭头函数，this指向window
+			fn: function() {
+				console.log('obj.fn执行结果：',this.num, this);
+			}
+		}
+		// obj.fn(); //obj.fn执行结果：1 {num: 1, fn: ƒ} 此时fn是作为obj的方法被调用，this指向obj对象
+		const a = obj.fn; 
+		// console.log('this1',this) // this1 Window对象
+		// a() //obj.fn执行结果：undefined Window对象  将obj.fn赋值给变量a后，a()相当于直接调用函数，this指向全局对象（浏览器中为window）
+		function fn() {
+			console.log('this2',this) // this2 {x: 10, num: 3}
+			const num=2
+			// type-01
+			// obj.fn.call(this); //fn.call(data) 执行结果为：obj.fn执行结果：3 {x: 10, num: 3}
+			
+			// type-02
+			// obj.fn.call(); //fn.call(data) 执行结果为：obj.fn执行结果：undefined Window对象
+			
+			// type-03
+			// const b = obj.fn
+			// b(); // b()相当于直接调用函数，不管里面有无this参数，obj.fn里的this就相当于全局，fn.call(data) 执行结果为：obj.fn执行结果：undefined Window对象
+
+			// type-04
+			obj.fn() //fn.call(data) 执行结果为：obj.fn执行结果： 1 {num: 1, fn: ƒ}
+		}
+		const data={
+			x:10,
+			num:3
+		}
+		fn.call(data) // 结果见上面的各种情况
+		// obj.fn.call(data) // obj.fn执行结果：3 {x: 10, num: 3}
+	}
+	// callThis()
+
+	//currying:柯里化
+	function curryingTest(){
+		// add(1)(2)(3)……（x）实现 func(1,2,3,……,x)
+		function add() {
+			const _this=this
+			let _args =[...arguments]	// 第一次执行时，定义一个数组专门用来存储所有的参数
+			// 另一种写法
+			// let _args = Array.prototype.slice.call(arguments);
+			console.log( _args )
+
+			// 在内部声明一个函数，利用闭包的特性保存_args并收集所有的参数值
+	    	let _adder= function() {
+				_args.push(...arguments);
+				console.log( _args )
+				return _adder;
+			};
+
+			// 利用toString隐式转换的特性，当最后执行时隐式转换，并计算最终的值返回
+			_adder.toString = function () {
+				console.log('_adder.toString')
+				return _args.reduce(function (sum, current) {
+					return sum + current;
+				},0);
+			}
+			return _adder;
+		}
+		// console.log( typeof add(1)(2)(3) ) // function
+		// console.log( add(1)(2)(3)  ) // 6
+
+		// 通用currying封装-普通版，不支持一次执行
+		function normalCurrying(fn, ...paramsArgs) {//this->window paramsArgs此时是一个数组，和函数内部的 arguments对象不一样，他是一个可迭代的类数组对象,不能使用数组的方法：map。两者都是可迭代的，可以使用for of等迭代方法
+			console.log('this')
+			console.log(this)
+			const _this = this
+			const len = fn.length; // 方法fn参数的个数
+			console.log('len',len,'paramsArgs',paramsArgs)
+			
+			let args = paramsArgs || [];
+			return function(...arg) { //this->window
+				// console.log('this2')
+				// console.log(_this)
+				// console.log(this)
+				// var _args = Array.prototype.slice.call(arguments);
+				// Array.prototype.push.apply(args, _args);
+				// 更简洁写法
+				args =[...args,...arg]
+				console.log('args',args)
+				if (args.length < len) {
+					return normalCurrying.call(_this, fn, args);
+				}
+				return fn.apply(this, args);
+			}
+		}
+
+		// 通用currying封装-升级版，支持一次执行
+		function curring() { //this->window
+			const _this=this
+			let [fn,...args]=arguments //使用es6的解构赋值比方法重用更简洁
+			const len = fn.length
+			if (args.length >= len) {
+				return fn.apply(this, args) //亦可：return fn.call(this, ...args)
+			}
+			return function() { //this->window
+				args.push(...arguments)
+				if (args.length < len) {
+					return curring.call(_this, fn, ...args) //亦可：return curring.apply(_this, [fn, ...args])
+				}
+				return fn.apply(this, args)//apply：fn方法里会传入数组解构后的多个形参，call会传入原格式（数组）
+			};
+		}
+		function getSum(a,b,c,d){
+			return a+ b+c+d
+		}
+		function isType(val,type) {
+			return Object.prototype.toString.call(val) == `[object ${type}]`
+		}
+		// console.log( normalCurrying(getSum)(1,2)(3)(4) ) // 10
+		console.log( normalCurrying(getSum,1)(3,3,2)) // 10
+		// console.log( normalCurrying(isType,1,'Number') ) //最少执行两次，否则返回curring里定义的方法 ƒ () {var _args = Array.prototype.slice.call(arguments)……
+
+		// console.log( curring(getSum)(1,2)(3)(4) ) // 10
+		// console.log( curring(isType)(1)('Number') ) // true
+		// console.log( curring(isType)(1,'Number') ) // true
+		// console.log( curring(isType,1,'Number') ) // true 解决了执行两次的问题
+	}
+	// curryingTest()
+
+	//重写bing,实现的机制就是Currying
+	function bindReset(){
+		//完美bind
+		Function.prototype.bind = function() {
+			console.log('1')
+			console.log(this)
+			const _this = this // 保存原函数 	function func(x, y ,z) {
+			const[context,...args]=arguments //使用es6的解构赋值比方法重用更简洁
+			// const context = Array.prototype.shift.call(arguments)	//{name: "kong"} 等价于 context = [].shift.call(arguments);
+			// const args = Array.prototype.slice.call(arguments); // 上一步已经删除了第一个数据，所以这里直接取剩余的全部参数，转为数组
+			return function() { // 返回一个新函数  this->window
+				args.push(...arguments);
+				_this.apply(context, args);
+			}
+		}
+		function func(x, y ,z) {
+			console.log(`${this.name} ${x} ${y} ${z}`);
+		}
+		var data = {
+			name: '张三'
+		};
+		func.bind(data, 7, 8)(9); // 张三 7 8 9
+		// func.bind(data, 7, 8, 9)(); // 张三 7 8 9
+
+		//有问题bind
+		Function.prototype.bindBad = function (context) {//含有1个形参：为数据对象，就不用从arguments中获取了
+			var _this = this
+			var args = Array.prototype.slice.call(arguments, 1)
+			return function() {
+					return _this.apply(context, args)
+			}
+		}
+		// func.bindBad(data, 7, 8, 9)() // kong 7 8 9
+		// func.bindBad(data, 7, 8 )(9) //kong 7 8 undefined bind写法不够强壮，不支持这种写法
+	}
+	// bindReset()
+
+</script>
+</body>
+</html>

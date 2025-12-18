@@ -1,0 +1,484 @@
+.pg-chess {
+  width: 100%;
+  height: 100%;
+  user-select: none; //整个页面禁止用户选择，防止点击棋盘或头像的时候出现竖线
+  // 第一个参数表示方向，可以不设置，默认:to bottom =180deg。其他值为：to top= 0deg、to right= 90deg、to left= 270deg
+  background: linear-gradient(to right, #000 0%, #fff 100%);
+
+  // scss继承 定义要在使用的父级或者同级，%开头的名称不会出现在编译后的并集/群组选择器中，@extend是没有代码冗余的。
+  %chess-black {
+    //  [形状] 默认：ellipse [大小] at [中心点位置],前面都为可选 颜色停止点1, 颜色停止点2
+    //颜色中的百分比表示该颜色以半径的该比例所在的圆弧向搜周扩散，比例所在的位置为纯正的该颜色，扩散的位置为与其他颜色的混合颜色，如果只写颜色，那比例就是平分，如2个，那比例分别为：0%和100%；如3个，那比例分别为：0%、50%、100%。颜色支持rgba格式
+    background: radial-gradient(circle, #444 10%, #222, #000 70%);
+    // background: radial-gradient(circle at 30% 30%, white, #3498db 60%); //通过at调整位置，更具立体感
+    // background: radial-gradient(默认：ellipse, green 10%, blue, red 70%);
+    box-shadow: 0 0 2px #000;
+  }
+  %chess-white {
+    background: radial-gradient(circle, #fff, #eee, #fff 100%);
+    box-shadow: 0 0 2px rgba(0, 0, 0, 0.5);
+  }
+
+  .start-animation {
+    position: fixed;
+    display: flex;
+    width: 100%;
+
+    >div {
+      position: relative;
+      flex: 1;
+
+      &.left {
+        img {
+          animation: img-left 10s ease-in-out 2s 1 normal backwards;
+        }
+
+        @keyframes img-left {
+          // 0%,
+          // 100% { transform: translate(-50%); }
+          0% { transform: translate(-550px); }
+          50% { transform: translate(0%); }
+          100% { transform: translate(550px); }
+        }
+      }
+
+      &.right {
+        img {
+          animation: img-right 1s ease-in-out 0s 1 normal both;
+        }
+
+        @keyframes img-right {
+          0%,
+          100% { transform: translate(50%); }
+          50% { transform: translate(0%); }
+        }
+      }
+
+      img {
+        position: absolute;
+        z-index: -1;
+        width: 100%;
+      }
+    }
+  }
+
+  .hander-bar {
+    position: absolute;
+    right: 0;
+    left: 0;
+    z-index: 20;
+    display: flex;
+    justify-content: center;
+    padding: 10px;
+    background-color: #fff;
+    // background: linear-gradient(90deg, rgba(190, 190, 190, 0), rgba(190, 190, 190, 1) 40%, rgba(190, 190, 190, 1) 60%, rgba(190, 190, 190, 0) 100%,);
+    filter: drop-shadow(0 0 4px rgba(0, 0, 0, 0.5));
+    transition: all 0.4s ease-in-out 0s;
+    transform: translateY(-54px);
+
+    // &:hover,
+    &.hander-bar-show {
+      transform: translateY(0);
+    }
+
+    .timer {
+      position: absolute;
+      top: 100%;
+      left: 50%;
+      z-index: -1;
+      display: flex;
+      cursor: pointer;
+      transform: translateX(-50%);
+
+      .remaining-time {
+        // z-index: 2;
+        box-sizing: border-box;
+        width: 80px;
+        height: 80px;
+        padding-top: 44px;
+        margin: -44px -10px;
+        font-size: 22px;
+        text-align: center;
+        background: #fff;
+        border-radius: 50%;
+      }
+
+      .role-tips {
+        margin-top: -10px;
+        font-size: 50px;
+        font-weight: bold;
+        color: #fff;
+      }
+
+      .el-icon-bottom-left {
+        color: #000;
+      }
+
+      .el-icon-bottom-right {
+        color: #fff;
+      }
+
+      .current-role {
+        animation: role-current 4s ease 0s infinite normal both;
+      }
+
+      @keyframes role-current {
+        0%,
+        50%,
+        100% { transform: rotate(0deg); }
+        8% { transform: rotate(20deg); }
+        16% { transform: rotate(-20deg); }
+        30% { transform: rotate(15deg); }
+        40% { transform: rotate(-15deg); }
+      }
+    }
+
+    .margin-left {
+      margin-left: 15px;
+    }
+  }
+
+  .chess {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 100vh;
+
+    >.role-info {
+      display: flex;
+      flex-grow: 1;
+      flex-shrink: 0;
+      justify-content: center;
+      font-size: 20px;
+
+      .avatar {
+        position: relative;
+        width: 100px;
+        height: 100px;
+        overflow: hidden;
+        border-style: solid;
+        border-width: 1px;
+        border-radius: 10%;
+        // box-shadow: 0 0 4px rgba(0, 0, 0, 0.5);
+
+        img {
+          width: 100%;
+          height: 100%;
+        }
+
+        span {
+          position: absolute;
+          right: -20px;
+          bottom: -20px;
+          width: 40px;
+          height: 40px;
+          transform: rotate(45deg);
+        }
+      }
+
+      ul {
+        padding-top: 10px;
+
+        li {
+          padding: 10px 0;
+
+          label {
+            display: inline-block;
+            width: 3em;
+            font-weight: bold;
+            text-align: right;
+          }
+        }
+      }
+
+      &.chess-left {
+        color: #ccc;
+
+        .avatar {
+          border-color: #eee;
+          box-shadow: 0 0 4px rgba(255, 255, 255, 0.5);
+
+          span {
+            background: rgba(0, 0, 0, 0.8);
+          }
+        }
+      }
+
+      &.chess-right {
+        color: #333;
+
+        .avatar {
+          border-color: #666;
+          box-shadow: 0 0 4px rgba(0, 0, 0, 0.5);
+
+          span {
+            background: rgba(255, 255, 255, 0.8);
+          }
+        }
+      }
+    }
+
+    .chess-main {
+      position: relative;
+      z-index: 10;
+      box-sizing: border-box;
+      flex-shrink: 0;
+      margin-top: 20px;
+      overflow: hidden;
+      background-color: rgba(204, 204, 204, 0.8);
+      border-radius: 10px;
+      box-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
+
+      table {
+        tr {
+          td {
+            position: relative;
+            box-sizing: border-box;
+            border: 1px solid #666;
+
+            // &:last-child {
+            //   border: none;
+            // }
+            &:last-of-type {
+              border: none;
+            }
+
+            span {
+              position: absolute;
+              top: 0;
+              left: 0;
+              width: 40px;
+              height: 40px;
+              cursor: pointer;
+              // user-select: none;
+              border-radius: 50%;
+              transform: translate(-52%, -52%);
+            }
+
+            &.is-ready-black {
+              span {
+                @extend %chess-black;
+
+                opacity: 0.5;
+              }
+            }
+
+            &.is-ready-white {
+              span {
+                @extend %chess-white;
+
+                opacity: 0.7;
+              }
+            }
+
+            &.black {
+              span {
+                @extend %chess-black;
+              }
+            }
+
+            &.white {
+              span {
+                @extend %chess-white;
+              }
+            }
+            $colors:0,1,2,3,4,5,6; //支持7子连珠
+
+            @each $i in $colors {
+              &.winning-#{ $i } {
+                span {
+                  animation: winning-#{ $i } 0.6s ease-out #{ $i*0.2 }s 1 normal both;
+                }
+              }
+
+              @keyframes winning-#{ $i } {
+                0%,
+                100% { transform: scale(100%) translate(-50%, -50%); }
+                50% { transform: scale(130%)  translate(-38%, -38%); }
+              }
+            }
+          }
+
+          &:last-of-type {
+            td {
+              border: none;
+            }
+          }
+        }
+      }
+    }
+  }
+
+  .dialog-role-set {
+    background: #ccc;
+
+    .el-dialog__close {
+      font-size: 24px;
+      color: #333;
+    }
+
+    --arrow-black: 0;
+    --arrow-white: 0;
+
+    .role-select {
+      position: relative;
+      display: flex;
+      justify-content: center;
+      // margin: 0 50px;
+
+      .select-tips {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        width: 100px;
+        // justify-content: center;
+        transition: all 0.4s ease-in-out 0s;
+
+        >ins {
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          width: 40px;
+          height: 40px;
+          cursor: pointer;
+          // user-select: none;
+          border-radius: 50%;
+        }
+
+        // >b[class^='el-icon'],
+        >b[class*='el-icon-'] {
+          margin-top: -5px;
+          // padding-top: 2px;
+          font-size: 20px;
+          font-weight: bold;
+
+          $arrows:1,2,3; //箭头闪烁
+
+          // 即是b元素，也要同时满足是其父元素下的第n个元素，b元素中间穿插的其他标签，会影响n的值。
+          // &:nth-child(5) { transform: scale(2); }
+          // 即是b元素，也要同时满足是其父元素下的第n个b元素，b元素中间可以穿插其他标签，其他标签不会影响n的值。此处的放大2倍不会生效，会被下面中的动画里的transform覆盖。
+          // &:nth-of-type(2) { transform: scale(2); }
+
+          @each $i in $arrows {
+            &:nth-of-type(#{ $i }) {
+              // &.arrow-#{ $i } {
+              // opacity: 1;
+              animation: arrow-#{ $i } 1s linear #{ $i*0.33 }s infinite normal both;
+            }
+
+            @keyframes arrow-#{ $i } {
+              0% {
+                opacity: 0;
+                transform: translateY(0%);
+              }
+
+              50%,
+              90% { opacity: 1; }
+
+              100% {
+                opacity: 0;
+                transform: translateY(50%);
+              }
+            }
+          }
+        }
+
+        >span {
+          box-sizing: border-box;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          width: 40px;
+          height: 80px;
+          margin-top: 16px;
+          font-size: 16px;
+          // line-height: 36px;
+          // text-align: center;
+          border: 2px dashed #999;
+          border-radius: 10%;
+          writing-mode: vertical-rl;
+          transition: all 0.4s ease-in-out 0s;
+
+          &.hide {
+            // display: none;
+            opacity: 0;
+          }
+        }
+
+        &.black {
+          // transform: translateX(calc(var(--arrow-black) - ( 50vw - 400px) - 70px + 36px));
+          transform: translateX(var(--arrow-black));
+
+          >ins {
+            @extend %chess-black;
+          }
+
+          >b[class*='el-icon-'] {
+            // color: #999;
+          }
+        }
+
+        &.white {
+          // transform: translateX(calc(var(--arrow-black) - ( 50vw - 400px) - 70px + 36px));
+          transform: translateX(var(--arrow-white));
+
+          >ins {
+            @extend %chess-white;
+          }
+
+          >b[class*='el-icon-'] {
+            color: #eee;
+          }
+        }
+      }
+
+      .select-avatar {
+        z-index: 1;
+        display: flex;
+        flex: 1;
+        justify-content: space-between;
+        padding-top: 90px;
+        // user-select: none;
+
+        img {
+          box-sizing: border-box;
+          width: 100px;
+          height: 100px;
+          cursor: pointer;
+          border-color: #aaa;
+          border-style: solid;
+          border-width: 2px;
+          border-radius: 10%;
+          opacity: 0.8;
+
+          &:hover {
+            opacity: 0.9;
+          }
+
+          &.black {
+            border-color: #333;
+            opacity: 1;
+          }
+
+          &.white {
+            border-color: #eee;
+            opacity: 1;
+          }
+        }
+
+        p {
+          text-align: center;
+        }
+      }
+    }
+  }
+}
+
+.el-message-box__title {
+  font-size: 22px;
+}
+
+.el-message-box__content {
+  font-size: 18px;
+}
