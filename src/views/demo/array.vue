@@ -130,53 +130,55 @@ console.log('最终arr',arr,arr.length)
       <h2>类数组和可迭代对象</h2>
       <p>类数组对象和可迭代对象是两种与数组相似但各有特点的数据结构。理解它们的区别和联系，对于处理 DOM、函数参数等场景非常有帮助。</p>
       <table class="table">
-        <tr>
-          <th width="120">
-            特性
-          </th>
-          <th width="400">
-            类数组对象 (Array-like)
-          </th>
-          <th width="400">
-            可迭代对象 (Iterable)
-          </th>
-        </tr>
-        <tr>
-          <td>核心定义</td>
-          <td>具有数字索引和 length属性的对象</td>
-          <td>实现了 Symbol.iterator方法的对象</td>
-        </tr>
-        <tr>
-          <td>能否用 for循环 / for...of遍历</td>
-          <td>一般不能（除非同时是可迭代对象）</td>
-          <td>可以</td>
-        </tr>
-        <tr>
-          <td>能否用 map、forEach遍历</td>
-          <td>不能（即使是可迭代对象也不能）</td>
-          <td>一般不可以（除了数组可以，字符串等都不可以）</td>
-        </tr>
-        <tr>
-          <td>常见例子</td>
-          <td>arguments对象、NodeList、HTMLCollection</td>
-          <td>数组、字符串、Map、Set</td>
-        </tr>
-        <tr>
-          <td>转换为真正数组的方法</td>
-          <td>
-            Array.from(arrayLike)<br>
-            Array.prototype.slice.call(arrayLike)
-          </td>
-          <td>
-            Array.from(iterable)<br>
-            [...iterable](扩展运算符)
-          </td>
-        </tr>
-        <tr>
-          <td>判断方法</td>
-          <td>typeof arrayLike.length === 'number' && arrayLike[0] !== undefined</td>
-          <td>typeof arr[Symbol.iterator] === 'function'</td>
-        </tr>
+        <tbody>
+          <tr>
+            <th width="120">
+              特性
+            </th>
+            <th width="400">
+              类数组对象 (Array-like)
+            </th>
+            <th width="400">
+              可迭代对象 (Iterable)
+            </th>
+          </tr>
+          <tr>
+            <td>核心定义</td>
+            <td>具有数字索引和 length属性的对象</td>
+            <td>实现了 Symbol.iterator方法的对象</td>
+          </tr>
+          <tr>
+            <td>能否用 for循环 / for...of遍历</td>
+            <td>一般不能（除非同时是可迭代对象）</td>
+            <td>可以</td>
+          </tr>
+          <tr>
+            <td>能否用 map、forEach遍历</td>
+            <td>不能（即使是可迭代对象也不能）</td>
+            <td>一般不可以（除了数组可以，字符串等都不可以）</td>
+          </tr>
+          <tr>
+            <td>常见例子</td>
+            <td>arguments对象、NodeList、HTMLCollection</td>
+            <td>数组、字符串、Map、Set</td>
+          </tr>
+          <tr>
+            <td>转换为真正数组的方法</td>
+            <td>
+              Array.from(arrayLike)<br>
+              Array.prototype.slice.call(arrayLike)
+            </td>
+            <td>
+              Array.from(iterable)<br>
+              [...iterable](扩展运算符)
+            </td>
+          </tr>
+          <tr>
+            <td>判断方法</td>
+            <td>typeof arrayLike.length === 'number' && arrayLike[0] !== undefined</td>
+            <td>typeof arr[Symbol.iterator] === 'function'</td>
+          </tr>
+        </tbody>
       </table>
 
       <h3>类数组 (Array-like)</h3>

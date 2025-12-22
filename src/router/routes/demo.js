@@ -123,7 +123,7 @@ export default {
       name: 'feature',
       component: () => import('@/views/demo/feature.vue'),
       meta: {
-        title: '新特性',
+        title: 'feature',
         key: 'MENU_HAWK_DEMO',
         crumb: [
           {
@@ -131,6 +131,23 @@ export default {
           },
           {
             name: 'feature',
+          },
+        ]
+      }
+    },
+    {
+      path: 'ref-dom',
+      name: 'ref-dom',
+      component: () => import('@/views/demo/ref-dom'),
+      meta: {
+        title: 'ref-dom',
+        key: 'MENU_HAWK_DEMO',
+        crumb: [
+          {
+            name: 'Demo',
+          },
+          {
+            name: 'ref-dom',
           },
         ]
       }

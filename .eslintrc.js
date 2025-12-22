@@ -48,6 +48,7 @@ module.exports = {
     'space-before-blocks': [2, 'always'], // 不以新行开始的块{前面要不要有空格
     'no-const-assign': 2, // 禁止修改const声明的变量
     'space-infix-ops': 2, // 中缀操作符周围要不要有空格
-    'template-curly-spacing': [2, 'always']
+    'template-curly-spacing': [2, 'always'],
+    'vue/no-multiple-template-root': 0
   }
 }

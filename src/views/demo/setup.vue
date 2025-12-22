@@ -2,7 +2,15 @@
   <div class="pg-about">
     <div class="ly-box">
       <div class="content">
+        <input
+          ref="inputChildRef"
+          type="text"
+          placeholder="inputChild"
+        >
+
         <h2>ref和reactive</h2>
+        <p>总的来说，vue3版本中 composition API的ref和reactive只要不改变引用地址就能触发响应式，而option API 中响应式基本不涉及引用地址是否改变，具体可见<a href="/demo/feature">feature页面</a>。</p>
+        <p>2版本中的ref和reactive只要不改变引用地址就能触发渲染</p>
         <p>Vue3 中 ref 和 reactive 的核心区别体现在数据类型支持、访问方式、响应式原理和使用场景四个维度。</p>
 
         <h3>1、‌数据类型支持‌</h3>
@@ -187,11 +195,17 @@ import {
   onUpdated,
   nextTick,
   watch,
+  useTemplateRef,
 } from 'vue'
+
+const inputRef = useTemplateRef('inputChildRef')
 
 // ref基本数据类型:count
 const count = ref(0)
-const countAdd = () => count.value++
+const countAdd = () => {
+  inputRef.value.focus()
+  count.value++
+}
 const countSubtract = () => count.value--
 watch(count,(newVal,oldVal) => {
   console.log('watch-count')

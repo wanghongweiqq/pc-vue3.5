@@ -38,7 +38,7 @@
 <!-- eslint-disable no-unused-vars -->
 <script setup>
 import {
-  ref, 
+  ref,
   reactive,
   onMounted ,
   computed,
@@ -55,7 +55,7 @@ const lightList = reactive([
 ])
 let currentLight = reactive({})
 
-// 含有参数的计算属性
+// 含有参数的计算属性，普通的计算属性是返回一个值，带参数的计算属性就是返回一个方法，方法里有对应的参数
 const remainTime = computed(() =>
   (item) => item.color === currentLight.color ? Math.round( currentLight.remain / 1000 ) : ''
 )

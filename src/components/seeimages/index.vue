@@ -6,8 +6,9 @@
  * @FilePath: /vue3.0/src/components/seeimages/index.vue
 -->
 <template>
+  <!-- v-if="showpImg" -->
   <div
-    v-if="showpImg"
+    v-if="imageShow"
     class="cp-seeimages"
   >
     <ul class="image-list">
@@ -80,17 +81,18 @@ export default {
     return {
       curIndex: this.imageIndex,
       curRotate: 0,
-      showpImg: this.imageShow
+      // showpImg: this.imageShow
     }
   },
 
   watch: {
-    imageShow: {
-      handler (val) {
-        this.showpImg = val
-      },
-      immediate: true
-    } 
+    // 可以直接使用父组件的imageShow控制是否展示
+    // imageShow: {
+    //   handler (val) {
+    //     this.showpImg = val
+    //   },
+    //   immediate: true
+    // }
   },
 
   methods: {
