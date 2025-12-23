@@ -12,7 +12,19 @@
       <RefOptions />
 
       <div class="content">
-        <RefComposition ref="pareatRefComposition" />
+        <RefComposition ref="parentRefComposition" />
+        <h3>父子组件使用</h3>
+        <p>1、子组件使用defineExpose暴露方法，该方法入参为一个对象，对象的key值为暴露给父组件的方法名，对象的value值子组件自身要执行的方法</p>
+        <pre>
+defineExpose({
+  focus: domRefFunc,
+})</pre>
+        <p>2、父组件使用ref定义的变量调用子组件暴露的方法</p>
+        <pre>
+const parentRefComposition = ref(null)
+const parentRefFuncComposition = () => {
+  parentRefComposition.value.focus()
+}</pre>
         <p>
           <el-button
             size="small"
@@ -22,10 +34,50 @@
             父组件触发子组件的ref
           </el-button>
         </p>
+        <h4>react中父子组件使用</h4>
+        <p>1、创建 Ref：在父组件中使用 useRef 创建一个 ref 对象。其实在父组件中像普通组件中那样使用ref即可，只是注意父组件要使用子组件暴露给他的方法名字，一般这个名字和操作dom的名字相同。</p>
+        <p>2、转发 Ref：子组件使用 forwardRef 方法包裹，将父组件传入的 ref 作为子组件的第二个参数转发给子组件。这是因为函数式子组件默认不会接收ref属性，第一个参数props中不含有父组件的ref。</p>
+        <p>3、暴露方法：在子组件中使用 useImperativeHandle Hook，将操作子组件dom的方法（如 focus）暴露给父组件。这样可以限制父组件只能调用特定的方法，而不是直接访问子组件的全部实例。，从而提供更精确和安全的组件间通信方式。</p>
+        <p>4、触发焦点：在父组件中，通过 ref.current.focus()来触发焦点。</p>
+        <pre>
+// 父组件
+const refParent = useRef(null)
+const inputParentFocus = () => {
+  refParent.current.focus()
+}
+&lt;Child ref={refParent} /&gt;
+
+// 子组件
+import React, { useRef, forwardRef, useImperativeHandle } from 'react'
+const Child = (props, ref) => {
+  const inputChildRef = useRef(null)
+  // 使用命令的/必要的/规则的操作，它允许你自定义由ref暴露给父组件的实例值
+  useImperativeHandle(ref, () => ({
+    focus: () => {
+      inputChildRef.current.focus()
+    },
+    blur: inputChildBlur,
+  }), [])
+}
+// forwardRef 使父组件的ref能够以第二个参数的形式传递过来
+export default forwardRef(Child)
+</pre>
       </div>
 
       <div class="content">
         <RefUseTemplateRef ref="parentRefUseTemplateRef" />
+        <h3>父子组件使用</h3>
+        <p>1、子组件使用defineExpose暴露方法，该方法入参为一个对象，对象的key值为暴露给父组件的方法名，对象的value值子组件自身要执行的方法</p>
+        <pre>
+defineExpose({
+  focus, // 更简洁的写法，此时子组件直接将方法名命名为focus
+})</pre>
+        <p>2、父组件使用ref定义的变量调用子组件暴露的方法</p>
+        <pre>
+const parentRefUseTemplateRef = useTemplateRef('parentRefUseTemplateRef')
+const parentRefFuncUseTemplateRef = () => {
+  parentRefUseTemplateRef.value.focus()
+}</pre>
         <p>
           <el-button
             size="small"
@@ -40,7 +92,7 @@
       <div class="content">
         <h2>关键注意事项</h2>
         <p>1、<em>访问时机至关重要</em>：必须在组件挂载完成之后才能通过 ref访问到 DOM 元素。在 setup函数或 beforeCreate、created生命周期中直接访问会得到 null，因为此时 DOM 还未渲染 。务必在 onMounted(Vue 3) 或 mounted(Vue 2) 及其之后的生命周期或事件（如按钮点击）中操作。</p>
-        <p>2、<em>响应式更新与 $nextTick</em>：如果 DOM 元素是通过 v-if或 v-for动态渲染的，可能需要在数据更新后，使用 Vue.nextTick（或 this.$nextTick）来确保访问的是更新后的 DOM </p>
+        <p>2、<em>响应式更新与 $nextTick</em>：如果 DOM 元素是通过 v-if或 v-for动态渲染的，可能需要在数据更新后，使用 Vue.nextTick（或 this.$nextTick）来确保访问的是更新后的 DOM ，具体可见示例：<a href="/demo/setup#dom-ref">DOM ref</a></p>
         <pre>
 // Vue 3 示例
 import { nextTick } from 'vue'
@@ -88,13 +140,13 @@ const toggleAndFocus = async () => {
 </template>
 <!-- eslint-disable no-unused-vars -->
 <script setup>
+import { ref,useTemplateRef } from 'vue'
 import CpCrumbs from '@/components/crumbs/'
 import RefOptions from './ref-options'
 import RefComposition from './ref-composition'
 import RefUseTemplateRef from './ref-useTemplateRef'
-import { useTemplateRef } from 'vue'
 
-const parentRefComposition = useTemplateRef('pareatRefComposition')
+const parentRefComposition = ref(null)
 const parentRefUseTemplateRef = useTemplateRef('parentRefUseTemplateRef')
 
 const parentRefFuncComposition = () => {
