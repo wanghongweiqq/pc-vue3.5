@@ -62,6 +62,7 @@ class MyPromise {
     this.thenRun()
   }
 
+  // #state=PENDING // vue端私有属性会报错，需要配置针对性的babel转译
   constructor (executor) {
     this._state = PENDING // 状态
     this._result = undefined // 结果
@@ -105,7 +106,7 @@ class MyPromise {
     // 普通值则返回一个已解决的Promise
     return new MyPromise(resolve => {
       resolve(value)
-    }) 
+    })
   }
   static reject (value) {
     // 如果参数是Promise实例，直接返回
@@ -121,9 +122,9 @@ class MyPromise {
     // 普通值则返回一个已解决的Promise
     return new MyPromise((_,reject) => {
       reject(value)
-    }) 
+    })
   }
-  
+
 }
 
 export default MyPromise

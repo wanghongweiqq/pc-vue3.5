@@ -296,12 +296,12 @@ const time = () => {
 }
 
 onMounted(() => {
-  console.info(`%c${ arrDeep }`, 'color: red;',`%c${ arrDeep }`, 'color: green;')
+  // console.info(`%c${ arrDeep }`, 'color: red;',`%c${ arrDeep }`, 'color: green;')
   // iOS 三层后就不展开了 objDeep {"a": {"b": {"c": [Object]}}}
-  console.log('blueM', '1243','abc' )
-  console.log( '1243','abc' )
+  // console.log('blueM', '1243','abc' )
+  // console.log( '1243','abc' )
   // console.log('red', objDeep )
-  // console.log('redM', objDeep )
+  console.log('redM14', objDeep )
   // console.log(time )
   // log()
   // stringify()

@@ -10,13 +10,13 @@
   <div class="content">
     <h2>数组去重</h2>
     <h3>原数据</h3>
-    
+
     <p>原数据，属性值为undefined的数据不会在html中展示出来，如其中最后一个e后面是有f属性的 f: undefined</p>
     <p>{{ arrayOriginal }}</p>
     <h3>去重后的数据</h3>
-    <p>没有过滤undefined，将undefined作为一个普通的值，这时{ e: 1 } 和 { e: 1, f: undefined }认为是不重复的。</p>
+    <p>1、<em>没有过滤undefined</em>，将undefined作为一个普通的值，这时{ e: 1 } 和 { e: 1, f: undefined }认为是不重复的。</p>
     <p>{{ result.arrayDefault }}</p>
-    <p>过滤了undefined，删除了带有该值的属性，然后再去重，这时{ e: 1 } 和 { e: 1, f: undefined }认为是重复的。</p>
+    <p>2、<em>过滤了undefined</em>，删除了带有该值的属性，然后再去重，这时{ e: 1 } 和 { e: 1, f: undefined }认为是重复的。</p>
     <p>{{ result.arrayIsFilterUndefined }}</p>
   </div>
 </template>
@@ -27,7 +27,10 @@ import {
   reactive,
 } from 'vue'
 
-let result = reactive({ arrayDefault: [], arrayIsFilterUndefined: [] })
+let result = reactive({
+  arrayDefault: [],
+  arrayIsFilterUndefined: []
+})
 
 let arrayOriginal = [
   { a: 1, b: 2 },
@@ -36,8 +39,8 @@ let arrayOriginal = [
   { e: 1 },
   { e: 1, f: null },
   { e: 1, f: undefined },
-  1, 
-  1, 
+  1,
+  1,
   ['x','y'],
   ['y','x'],
 ]
@@ -62,8 +65,8 @@ function isEqual (val1, val2, params) {
   }else{
     let a1 = Object.entries(val1)
     let a2 = Object.entries(val2)
-    const { 
-      isRemovePropertyUndefined = false , 
+    const {
+      isRemovePropertyUndefined = false ,
     } = params
     if(isRemovePropertyUndefined) {
       a1 = removePropertyUndefined(a1)
@@ -85,12 +88,14 @@ function isEqual (val1, val2, params) {
 
 function removeDuplicateArray (arr = [],params = {}) {
   let res = []
-  flag:for(const val1 of arr) {
+  flag:
+  for(const val1 of arr) {
     for(const val2 of res) {
       if(isEqual(val1,val2,params)) { // 相同
-        continue flag
+        continue flag // 如果结果数组中含有该项val1，则退出内层循环，继续外层循环
       }
     }
+    // 逻辑走到这说明：结果数组中不含有该项val1，那直接将其添加到结果数组中
     res.push(val1)
   }
   return res

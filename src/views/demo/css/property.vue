@@ -20,7 +20,7 @@
       </div>
     </div>
     <pre>
-/* 只能用css格式，估计是scss还没有支持 */
+/* 声明属性时要在最外层，不能有嵌套 */
 @property --rota {
   syntax: '&lt;angle&gt;';
   inherits: true;
@@ -42,31 +42,33 @@
   </div>
 </template>
 
-<style >
-/* 只能用css格式，估计是scss还没有支持 */
+<style lang="scss">
+/* 声明属性时要在最外层，不能有嵌套 */
 @property --rota {
   syntax: '<angle>';
   inherits: true;
   initial-value: 0deg;
 }
 
-.box {
-  width: 150px;
-  height: 200px;
-  padding: 10px;
-  background: linear-gradient(var(--rota), green, red);
-  animation: box-bg-rotate 4s linear infinite;
-}
-
-@keyframes box-bg-rotate {
-  to {
-    --rota: 360deg;
+.bcp-property {
+  .box {
+    width: 150px;
+    height: 200px;
+    padding: 10px;
+    background: linear-gradient(var(--rota), green, red);
+    animation: box-bg-rotate 4s linear infinite;
   }
-}
 
-.box-content {
-  width: 100%;
-  height: 100%;
-  background-color: white;
+  @keyframes box-bg-rotate {
+    to {
+      --rota: 360deg;
+    }
+  }
+
+  .box-content {
+    width: 100%;
+    height: 100%;
+    background-color: white;
+  }
 }
 </style>

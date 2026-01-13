@@ -2,6 +2,7 @@
   <div class="pg-css">
     <div class="ly-box">
       <CpCrumbs />
+      <Time />
       <Flex />
       <Baseline />
       <Grid />
@@ -15,6 +16,7 @@ import Flex from './flex'
 import Property from './property'
 import Baseline from './baseline'
 import Grid from './grid'
+import Time from './time'
 
 export default {
   components: {
@@ -23,6 +25,7 @@ export default {
     Baseline,
     Grid,
     Property,
+    Time,
   },
 }
 </script>

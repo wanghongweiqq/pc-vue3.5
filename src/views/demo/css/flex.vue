@@ -29,10 +29,6 @@
     </div>
 
     <h4>示例1、只有中间为单独的flex-grow，所以：</h4>
-    <p>1、剩余空间 = 总宽度400 - 中间默认auto宽度72 = 328</p>
-    <p>2、每份空间 = 剩余空间328 / 3 = 109</p>
-    <p>3、flex1宽度 = 0 + 109= 109</p>
-    <p>4、flex-grow-1宽度 = 72 + 109= 181</p>
     <div class="flex-test-1">
       <div class="flex1">
         flex1
@@ -44,12 +40,12 @@
         flex1
       </div>
     </div>
+    <p>1、剩余空间 = 总宽度400 - 中间默认auto宽度72 = 328</p>
+    <p>2、每份空间 = 剩余空间328 / 3 = 109</p>
+    <p>3、flex1宽度 = 0 + 109= 109</p>
+    <p>4、flex-grow-1宽度 = 72 + 109= 181</p>
 
     <h4>示例2、两边都为flex-grow，所以：</h4>
-    <p>1、剩余空间 = 总宽度400 - 两边默认auto宽度72 *2 = 256</p>
-    <p>2、每份空间 = 剩余空间256 / 3 = 85</p>
-    <p>3、flex1宽度 = 0 + 85= 85</p>
-    <p>4、flex-grow-1宽度 = 72 + 85= 157</p>
     <div class="flex-test-1">
       <span class="flex-grow-1">
         flex-grow-1
@@ -61,6 +57,10 @@
         flex-grow-1
       </span>
     </div>
+    <p>1、剩余空间 = 总宽度400 - 两边默认auto宽度72 *2 = 256</p>
+    <p>2、每份空间 = 剩余空间256 / 3 = 85</p>
+    <p>3、flex1宽度 = 0 + 85= 85</p>
+    <p>4、flex-grow-1宽度 = 72 + 85= 157</p>
 
     <h3>align-items: stretch(默认值) | flex-start | flex-end | center | baseline ; 属性定义项目在交叉轴上如何对齐。</h3>
     <h4>align-items: stretch; 默认值。项目被拉伸以填满容器的高度。</h4>

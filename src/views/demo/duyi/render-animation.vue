@@ -50,7 +50,7 @@
 <!-- eslint-disable no-unused-vars -->
 <script setup>
 import {
-  ref, 
+  ref,
   onMounted,
 } from 'vue'
 
@@ -91,15 +91,15 @@ function insetJs () {
   }
 
   @keyframes move2 {
+    from { left: 0; }
+    to { left: 100px; }
+  }
+
+  @keyframes move3 {
     to {
       color: green;
       // background-color: green;
     }
-  }
-
-  @keyframes move3 {
-    from { left: 0; }
-    to { left: 100px; }
   }
 
   &.animation {
@@ -108,7 +108,7 @@ function insetJs () {
     }
 
     :nth-of-type(2) {
-      animation: move3 4s ease-in-out 0s infinite alternate;
+      animation: move2 4s ease-in-out 0s infinite alternate;
     }
   }
 }

@@ -3,17 +3,19 @@
     <h2>align-items: baseline;的说明</h2>
     <p>padding / margin / font-size / line-height，不会影响文字之间的基线对齐(文字的下边沿对齐)，但有可能是文字整体上下移动（比如整体行高太高导致顶部空间不够时）。</p>
     <p>父元素即使设置了字体大小，但如果html中没有直接的文字，子元素不会按该字体大小对齐，这和vertical-align不同</p>
+    <h3>标签下有不带标签的文字子元素</h3>
     <div class="flex-baseline">
       字80px
-      <span class="text-1">11第一块文字</span>
-      <span class="text-2">22第二块文字</span>
-      <span class="text-3">33第三块文字</span>
+      <span class="text-1">11第一块文字 padding-top 20px</span>
+      <span class="text-2">22第二块文字 padding-bottom 20px</span>
+      <span class="text-3">33第三块文字 margin-top 20px</span>
     </div>
+    <h3>标签下无不带标签的文字子元素</h3>
     <div class="flex-baseline">
       <!-- 字80px -->
-      <span class="text-1">11第一块文字</span>
-      <span class="text-2">22第二块文字</span>
-      <span class="text-3">33第三块文字</span>
+      <span class="text-1">11第一块文字 padding-top 20px</span>
+      <span class="text-2">22第二块文字 padding-bottom 20px</span>
+      <span class="text-3">33第三块文字 margin-top 20px</span>
     </div>
 
     <h2>容器的属性</h2>
@@ -53,8 +55,9 @@
 
     <h3>以下是父元素不设置font-size的情况，那就要先找“带头大哥”，再向他看齐</h3>
     <p>该声明(vertical-align:middle)不会让子元素在父框内垂直居中，即使子元素使用了display:inline-block，如果有多个子元素，会让多个子元素以最高的元素垂直居中</p>
+    <p><em>如果内部子元素使用了各种对其属性，那最终呈现的效果相当复杂，目前无法总结，最好子元素统一对其方式。最好不要使用vertical-align的对其方式，而是使用flex的align-items</em></p>
 
-    <p>baseline对齐，1倍字体为14px，字体逐渐翻倍</p>
+    <h4>baseline对齐，1倍字体为14px，字体逐渐翻倍</h4>
     <p>以高度最大的行内元素为基准，然后对齐，也就是说先找带头大哥，然后再向他看齐</p>
     <div class="vertical-align-2 baseline">
       <span class="font-1">1倍字体</span>
@@ -62,21 +65,21 @@
       <span class="font-3">3倍字体</span>
     </div>
 
-    <p>top对齐，1倍字体为14px，字体逐渐翻倍，对齐的是行内块的顶部，并不是文字的顶部，line-height/padding-top会让顶部更偏上</p>
+    <h4>top对齐，1倍字体为14px，字体逐渐翻倍，对齐的是行内块的顶部，并不是文字的顶部，line-height/padding-top会让顶部更偏上</h4>
     <div class="vertical-align-2 top">
       <span class="font-1">1倍字体</span>
       <span class="font-2">2倍字体</span>
       <span class="font-3">3倍字体</span>
     </div>
 
-    <p>middle对齐，1倍字体为14px，字体逐渐翻倍</p>
+    <h4>middle对齐，1倍字体为14px，字体逐渐翻倍</h4>
     <div class="vertical-align-2 middle">
       <span class="font-1">1倍字体</span>
       <span class="font-2">2倍字体</span>
       <span class="font-3">3倍字体</span>
     </div>
 
-    <p>middle对齐，字体统一为14px，行高逐渐翻倍</p>
+    <h4>middle对齐，字体统一为14px，行高逐渐翻倍</h4>
     <div class="vertical-align-2 middle">
       <span class="line-1">1倍行高</span>
       <span class="line-2">2倍行高</span>
@@ -140,13 +143,25 @@
       font-size: 90px;
       vertical-align: top;
     }
+  }
+  $types:'text-top','text-bottom','top',middle,bottom,super,sub,baseline;
 
-    $types:'text-top','text-bottom','top',middle,bottom,super,sub,baseline;
+  @each $type in $types {
+    .vertical-#{$type} {
+      vertical-align: #{$type};
+    }
+  }
+  $list:1,2,3;
 
-    @each $type in $types {
-      .vertical-#{$type} {
-        vertical-align: #{$type};
-      }
+  @each $i in $list {
+    .font-#{$i} {
+      font-size: #{$i*14}px;
+    }
+  }
+
+  @each $i in $list {
+    .line-#{$i} {
+      line-height: #{$i};
     }
   }
 
@@ -188,20 +203,6 @@
         display: inline-block;
         vertical-align: top;
         border: 1px solid green;
-      }
-    }
-
-    $list:1,2,3;
-
-    @each $i in $list {
-      .font-#{$i} {
-        font-size: #{$i*14}px;
-      }
-    }
-
-    @each $i in $list {
-      .line-#{$i} {
-        line-height: #{$i};
       }
     }
   }

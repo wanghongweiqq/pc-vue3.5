@@ -161,11 +161,11 @@ export default {
     // this.promiseAllSettled()
     // this.promiseRace()
     // this.promiseAny()
-    
+
     // this.finally()
     // this.originalPromise()
-    // this.myPromise()
-    this.newArray0()
+    this.myPromise()
+    // this.newArray0()
     // this.newArray()
   },
   methods: {
@@ -203,11 +203,11 @@ export default {
       console.log('d',d)
     },
     task5 () {
-      console.log('start')      
+      console.log('start')
       Promise.resolve(0)
         .then((res) => {
           // console.log('0-0') // 1
-          console.log(0) 
+          console.log(0)
           // return Promise.resolve(4)
           // return 1 + 1
           new Promise((resolve) => {
@@ -215,12 +215,12 @@ export default {
             resolve(4)
             console.log('c1-2') // 4
           })
-            .then((x) => { 
+            .then((x) => {
               console.log('c2') // 7
               console.log(x)// 8
-              return x 
-            }) 
-          console.log('0-1') 
+              return x
+            })
+          console.log('0-1')
           return 'return'
 
         })
@@ -257,15 +257,15 @@ export default {
       // onsole.log('0')
       // onsole.log('1')
       // Promise.resolve(4).then
-      // console.log(2) 
+      // console.log(2)
 
       //  Promise.resolve(4)11111
-      // console.log(3) 
+      // console.log(3)
 
-      // console.log(4) 
-      // console.log(5) 
-      // console.log(6) 
-    
+      // console.log(4)
+      // console.log(5)
+      // console.log(6)
+
       //   setTimeout(() => {
       //     console.log('async2 end') // 7
       //   },0)
@@ -282,7 +282,7 @@ export default {
         .then(function () {
           console.log('promise3')// 6
         })
-      console.log('end')      
+      console.log('end')
     },
 
     // 单线程：宏任务、微任务
@@ -419,7 +419,7 @@ export default {
         //     'status': 'rejected',
         //     'reason': '切菜切手了，无法继续做饭'
         //   },
-    
+
         //   {
         //     'status': 'fulfilled',
         //     'value': '烧好的水'
@@ -507,15 +507,15 @@ export default {
       })
         .then((res) => {
           console.log('p1-then1-fulfilled', res + 1)
-          // return res 
+          // return res
           // throw '3333'
           // return setTimeout(() => {
-          //   return res 
+          //   return res
           // })
           // return Promise.resolve(res + 1)
           return MyPromise.reject(res )
           // return MyPromise.resolve(res ) //手写版只会执行1次微任务，而原生会执行2次微任务
-          
+
         // return new MyPromise((resolve, reject) => {
         //   resolve(res)
         //   // reject(res)
@@ -543,7 +543,7 @@ export default {
           (res) => {
             console.log('p1-then2-fulfilled', res + 2)
             // return Promise.resolve(res + 1)
-            return res 
+            return res
           }
           , (error) => {
             console.log('p1-then2-rejected', error + 2)
@@ -552,7 +552,7 @@ export default {
 
         .then((res) => {
           console.log('p1-then3-fulfilled', res + 3)
-          return res 
+          return res
         }, (error) => {
           console.log('p1-then3-rejected', error + 3)
           return error
@@ -584,7 +584,7 @@ export default {
             // return res
             // throw '3333'
             // return setTimeout(() => {
-            //   return res 
+            //   return res
             // })
             // return Promise.resolve(res )
             return Promise.reject(res )
@@ -610,7 +610,7 @@ export default {
           (res) => {
             console.log('p2-then2-fulfilled', res + 2)
             // return Promise.resolve(res + 1)
-            return res 
+            return res
           }
           , (error) => {
             console.log('p2-then2-rejected', error + 2)

@@ -577,7 +577,7 @@ export default {
       const num2 = '1234567890.1234567890'
       const num3 = 'abc123456789.1234567890abc1234'
 
-      console.log('以下都是非单词边界法')
+      console.log('redM','以下都是非单词边界法')
       const pattern1 = /\B(?=(\d{3})*$)/g //* 也可以，因为当*是0时，正好是整数的单词边界，$是必须的，否则基本每个数字后都会添加
       const pattern2 = /\B(?=(\d{3})+$)/g
 
