@@ -50,7 +50,7 @@ router.beforeEach((to,from,next) => {
     let listMenu = window.BSGlobal && window.BSGlobal.listMenu ? window.BSGlobal.listMenu : {}
     listMenu.MENU_HAWK_OPEN = true
     if (!listMenu[to.meta.key]) {
-      next({ name: '403' })
+      return next({ name: '403' })
     }
   }
   next()

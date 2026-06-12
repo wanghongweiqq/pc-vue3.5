@@ -65,7 +65,7 @@ let arr2 = Array.from([1, 2, 3], x => x * 2); // [2, 4, 6]
 const array1 = [2,5,41,11,8,3]
 const array2 = array1.toSorted((a,b) => a - b)
 const array3 = array1.toReversed()
-const array4 = array1.toSpliced(1,1,100,'c') // 剩余参数表示添加项数
+const array4 = array1.toSpliced(1,1,100,'c') // 第三个参数及以后为剩余参数，表示添加项数
 const array5 = array1.with(0,'a')
 </pre>
       <p>
@@ -239,15 +239,18 @@ console.log('最终arr',arr,arr.length)
     <div class="content">
       <h2>解构对原数据的影响</h2>
       <pre>
-let a = { x: { l: 1 },y: 2 }
-let { x,y } = a
+let a = { x: { l: 1 }, y: 2, z:null }
+let { x, y, z=1 } = a
 // a中原来是引用类型的x，分情况讨论
 // x = { m: 2 } // 原数据a不会被改变，相当于给x重新赋值了
 x.l = 2 // 原数据a会被改变，和之前的x指向同一个存储地址
 // a中原来是基本类型的y，如何改变其值都不会影响a
 y = 3
 y = { m: 3 }
-console.log(a)</pre>
+console.log(a)
+// 解构赋值时，默认值仅在 undefined时生效：解构默认值只在对应的属性值为 undefined时才会使用。如果属性值为 null、false或 0等其他假值，默认值不会被启用
+console.log(z) // 输出null
+</pre>
     </div>
   </div>
 </template>
@@ -401,18 +404,20 @@ function jieGou () {
   // aaa.map((item) => {
   //   console.log('item1',item)
   // })
-  let obj = { a: { l: 1 }, b: { l: 1 }, c: 3, d: 4 }
+  let obj = { a: { l: 1 }, b: { l: 1 }, c: 3, d: 4,e: null }
   let objCopy = utils.deepCopy(obj)
-  let { a, b, c, d } = obj
+  let { a, b, c, d,e = 1 } = obj
   // 1、对象obj中属性x的值是引用类型，分情况讨论
   a = { m: 2 } // 1.1、a在栈中的指针指向了堆中一个新的位置，原数据obj不会被改变，相当于给a重新赋值了
   b.l = 2 // 1.2、a在栈中的指针没有改变，原数据obj会被改变，和之前的b指向同一个存储地址
   // 2、对象obj中属性y的值是基本类型，如何改变其值都不会影响对象obj
   c = 'c'
   d = { l: 3 }
-  console.log('greenM','原数据：',objCopy)
-  console.info('greenM','原数据：',objCopy)
+  console.log('greenM','log原数据：',objCopy)
+  console.info('greenM','info原数据：',objCopy)
   console.log('redM','新数据：',obj)
+  // 3、解构赋值时，默认值仅在 undefined时生效：解构默认值只在对应的属性值为 undefined时才会使用。如果属性值为 null、false或 0等其他假值，默认值不会被启用
+  console.log('blueM','解构e时其默认值为1：',e)
 }
 
 onMounted(() => {

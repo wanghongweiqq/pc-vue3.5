@@ -23,10 +23,10 @@ const mutations = {
 const actions = {
   ACT_Name ({ commit },val) { // { state,getters,commit,dispatch }
     // console.log(state.name)
-    return new Promise(resove => {
+    return new Promise(resolve => {
       setTimeout(() => {
         commit('MUT_NAME',val)
-        resove()
+        resolve()
       },1000)
     })
   },

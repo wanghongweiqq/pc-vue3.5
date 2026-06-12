@@ -7,12 +7,14 @@ const instance = axios.create({
   headers: {
     'X-Requested-With': 'XMLHttpRequest',
     'X-jd-ajax': '1.0',
-    'X-jd-ts': new Date().getTime(),
   },
   withCredentials: true
 })
 // 添加一个请求拦截器
+
 instance.interceptors.request.use((config) => {
+  // 每次请求动态设置时间戳，避免静态初始化导致时间戳固定不变
+  config.headers['X-jd-ts'] = new Date().getTime()
   if (config.method === 'get') {
     if (config.params === undefined) {
       config.params = {

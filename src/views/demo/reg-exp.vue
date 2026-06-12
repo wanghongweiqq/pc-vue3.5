@@ -343,7 +343,7 @@
                 <p>用在正则表达式中，匹配前面第n个捕获组捕获的字符.</p>
                 <p>数字反向引用：\1是一种特殊的表示法，它代表第一个捕获组所匹配到的那个确切的字符。注意，\1必须与捕获组配合使用，它引用的是分组匹配到的具体内容，而不是分组本身的正则模式。\2代表第二个捕获组所匹配到的那个确切的字符。</p>
                 <p>具名反向引用：\k&lt;xxx&gt;</p>
-                <p>一般后面会结合量词使用：*（零个或多个）、+（一个或多个），匹配到的结果时连续的字符（*时有可能是单个字符）</p>
+                <p>一般后面会结合量词使用：*（零个或多个）、+（一个或多个），匹配到的结果是连续的字符（*时有可能是单个字符）</p>
               </td>
             </tr>
           </tbody>
@@ -389,7 +389,8 @@
         <h4>1.1、直接html书写，特殊：\n不换行当做普通字符串处理</h4>
         <p>hello word!\n<br>love you!</p>
         <h4>1.2、v-html，特殊：\n会被自动清除掉</h4>
-        <p v-html="whiteSpaceString" />
+        <!-- eslint-disable-next-line vue/no-v-html --><!-- 内容已由 safeWhiteSpaceHtml 白名单过滤，仅允许 <br>，非用户输入 -->
+        <p v-html="safeWhiteSpaceHtml" />
         <p>v-html容易导致XSS攻击，只有在可信内容上使用它，永远不要用在用户提交的内容上</p>
 
         <h3>2、\n换行</h3>
@@ -512,8 +513,18 @@ export default {
       url1: 'https://www.baidu.com?x=1&a#b=1'
     }
   },
+  computed: {
+    // 仅放行 <br> 标签，防止 v-html XSS：先转义所有 HTML 实体，再还原被转义的 <br>
+    safeWhiteSpaceHtml () {
+      return this.whiteSpaceString
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/&lt;br&gt;/gi, '<br>')
+    },
+  },
   mounted () {
-    this.searchToParams(this.url1)
+    // this.searchToParams(this.url1)
     // this.searchParams('a')
     // this.searchParams('b')
     // this.searchParams('c')
@@ -531,7 +542,6 @@ export default {
     // this.characterRepeat()
     // this.duanyanFun()
     // this.duanyanComplex()
-
   },
   methods: {
     // url中匹配某个单一key，返回该key对应的value
@@ -807,20 +817,33 @@ export default {
       // 具名引用
       const date = '2025-11-26'
       const pattern1 = /(\d{4})-(\d{2})-(\d{2})/g
+      // eslint-disable-next-line no-unused-vars
       const result1 = date.replace(pattern1,'$3/$2/$1')
-      console.log('数字引用：',date,pattern1,result1)
+      // console.log('数字引用：',date,pattern1,result1)
       const pattern2 = /(?<year>\d{4})-(?<month>\d{2})-(?<day>\d{2})/g
+      // eslint-disable-next-line no-unused-vars
       const result2 = date.replace(pattern2,'$<day>/$<month>/$<year>')
-      console.log('具名引用：',date,pattern2,result2)
+      // console.log('具名引用：',date,pattern2,result2)
 
       // 多个捕获组结合反向引
       // 数字反向引用
+      // eslint-disable-next-line no-unused-vars
       const strA = 'aaaabbbcc'
+      // eslint-disable-next-line no-unused-vars
       const regGroups = /((.)\2+)\1+/g // 捕获组2捕获的是单个字符连续>=1次，捕获组1捕获的是（单个字符连续>=2次）的>=1次，加一起的意思是两个连续字符的>=2次的重复，即单个字符连续重复2*n(n>=2)次
-      console.log(regGroups, strA.match(regGroups)) // ['aaaa']
+      // console.log(regGroups, strA.match(regGroups)) // ['aaaa']
       // 具名反向引用
+      // eslint-disable-next-line no-unused-vars
       const regGroups2 = /(?<double>(?<letter>.)\k<letter>+)\k<double>+/g
-      console.log(regGroups2,strA.match(regGroups2)) // ['aaaa']
+      // console.log(regGroups2,strA.match(regGroups2)) // ['aaaa']
+      // const str3 = '"双引号"普通内容'
+      // const reg3 = /(?<quote>['"])(?<content>.*?)\k<quote>/
+      // console.log(str3.match(reg3)) // ['aaaa']
+      const str4 = 'yyyy-mm-dd'
+      const reg4 = /([ymd])\1+/g
+      str4.replace(reg4,(...arg) => {
+        console.log(arg)
+      })
     },
 
     characterRepeat  () {

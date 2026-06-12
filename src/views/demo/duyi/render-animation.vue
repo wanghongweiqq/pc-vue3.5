@@ -58,7 +58,7 @@ let isAnimation = ref(false)
 
 function delay (duration) {
   let start = Date.now()
-  while(Date.now() - start < duration) {}
+  while(Date.now() - start < duration) { /* busy-wait demo */ }
 }
 
 function animationSwitch (bol) {

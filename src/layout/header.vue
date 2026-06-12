@@ -32,12 +32,16 @@ export default {
   },
   methods: {
     logoutHandler () {
-      this.$jsonp('https://zs.360cec.com/idp/logout',
-      ).then( () => {
-        window.location.href = '/xxx/logout'
-      }).catch(err => {
-        console.error(err)
-      })
+      // 原实现使用 this.$jsonp（未注册会崩溃），改用 fetch + CORS
+      fetch('https://zs.360cec.com/idp/logout', { credentials: 'include' })
+        .then(() => {
+          window.location.href = '/xxx/logout'
+        })
+        .catch(err => {
+          console.error(err)
+          // fetch 报错（如 CORS 未配置）时仍执行本地登出，避免卡死
+          window.location.href = '/xxx/logout'
+        })
     }
   }
 }

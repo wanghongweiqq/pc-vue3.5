@@ -30,14 +30,22 @@ export default {
       crumbsList: [],
     }
   },
-  mounted () {
-    this.crumbsList = (this.titleList && this.titleList.length > 0) ? this.titleList : this.$route.meta.crumb
+  watch: {
+    // 改用 watch + immediate:true，mounted 赋值一次不响应后续 prop 变化
+    titleList: {
+      immediate: true,
+      handler (val) {
+        this.crumbsList = (val && val.length > 0) ? val : this.$route.meta.crumb
+      }
+    }
   },
   methods: {
     goPage (item) {
+      // 判空前置：item.href 为空时直接返回，避免 .indexOf() 空指针崩溃
+      if(!item.href) return
       if(item.href.indexOf('/') === 0) {
         window.location.href = item.href
-      }else if(item.href) {
+      } else {
         this.$router.push({
           name: item.href
         })

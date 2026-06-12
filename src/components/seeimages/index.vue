@@ -59,6 +59,7 @@
 <script>
 
 export default {
+  // props的某属性的default只在父组件没声明该属性时才有用，声明了该属性，哪怕值为null，也不会用这里的default
   props: {
     imageIndex: {
       default: 0,

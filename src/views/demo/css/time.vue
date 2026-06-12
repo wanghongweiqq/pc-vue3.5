@@ -43,7 +43,12 @@
 </template>
 <!-- eslint-disable no-unused-vars -->
 <script setup>
-import{ ref,onMounted,onUnmounted,onBeforeMount,watchEffect } from 'vue'
+import{ ref,
+  watch,
+  onUnmounted,
+  onBeforeMount,
+  watchEffect,
+  computed } from 'vue'
 import TimeAnimation from './time-animation.vue'
 
 const second = ref(null)
@@ -67,15 +72,24 @@ const init = () => {
 }
 onBeforeMount(() => {
   init()
-  setTimeout(() => {
-    obj1.value = {
-      width: '300px'
-    }
-  },4000)
+  // setTimeout(() => {
+  //   obj1.value = {
+  //     width: '300px'
+  //   }
+  // },4000)
 })
 onUnmounted(() => {
   timer && cancelAnimationFrame(timer)
 })
+
+watch(second,(newValue,oldValue,) => {
+  // console.log('blueM',oldValue,newValue)
+},
+{ immediate: true }
+)
+// eslint-disable-next-line no-undef
+const prevSecond = computed(() => `${ animatingDuration.value / 1000 }s`) // eslint-disable-line no-unused-vars
+
 watchEffect(() => {
   if(second.value === 0) {
     minute.value = new Date().getMinutes()

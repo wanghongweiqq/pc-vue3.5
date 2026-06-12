@@ -61,31 +61,33 @@ export default {
     // 获取菜单列表
     getMenuList () {
       let list = []
-      routers.options.routes.map((item) => {
+      routers.options.routes.forEach((item) => {
         let arr = []
-        item.children && item.children.map((subItem) => {
+        item.children && item.children.forEach((subItem) => {
           let obj = subItem.meta
           if(obj) {
             if (obj.hidden) {
               return
             }
             if (this.listPermission[obj.key]) {
+              // 按需构造新对象，避免直接改写路由配置（component 等函数引用不可序列化）
+              let fullPath
               if(obj.notvue) {
-                subItem.fullPath = subItem.path
+                fullPath = subItem.path
               }else{
                 if(subItem.path.indexOf('/') === 0) {
-                  subItem.fullPath = item.path + subItem.path
+                  fullPath = item.path + subItem.path
                 }else{
-                  subItem.fullPath = item.path + '/' + subItem.path
+                  fullPath = item.path + '/' + subItem.path
                 }
               }
-              arr.push(subItem)
+              arr.push({ ...subItem, fullPath })
             }
           }
         })
         if (arr.length > 0) {
-          item.children = arr
-          list.push(item)
+          // 用新对象替代直接改写原路由配置
+          list.push({ ...item, children: arr })
         }
       })
       this.listMenu = list
@@ -100,9 +102,9 @@ export default {
       // if ( window.location.hash && window.location.hash.split('#').length > 1) {
       //   urlWindow = window.location.hash.split('#')[1]
       // }
-      for (let i in this.listMenu) {
-        for (let h in this.listMenu[i].children) {
-          let urlItem = this.listMenu[i].children[h].fullPath
+      for (const menuItem of this.listMenu) {
+        for (const child of menuItem.children) {
+          let urlItem = child.fullPath
           if (urlWindow && urlItem && urlWindow.indexOf(urlItem) !== -1) {
             this.defaultActive = urlItem
             return

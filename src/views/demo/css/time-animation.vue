@@ -92,7 +92,6 @@ watch(() => value,() => {
 { immediate: true })
 
 watch(() => styleCustom,() => {
-  console.log(111111,styleCustom)
   if(styleCustom) {
     // Object.assign(styleBind.value,styleCustom) // 也可以
     styleBind.value = {

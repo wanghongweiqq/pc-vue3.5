@@ -4,7 +4,8 @@
  * @return {*} 带颜色样式的console.log输出
  */
 
-// 格式化输出时间：时分秒毫秒
+// 格式化输出时间：时分秒毫秒（当前在注释调用中备用，暂不删除）
+// eslint-disable-next-line no-unused-vars
 const formatDateToString = () => {
   const reg = 'hh:mm:ss:lll'
   const time = new Date()

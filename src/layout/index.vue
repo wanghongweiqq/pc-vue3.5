@@ -4,7 +4,7 @@
     <div class="ly-contain">
       <ly-header />
       <router-view
-        :key="$route.fullpath"
+        :key="$route.fullPath"
         class="ly-main"
       />
     </div>

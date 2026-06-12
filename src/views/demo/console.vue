@@ -280,9 +280,9 @@ const group = () => {
   console.groupEnd() // 不支持设置参数
 }
 
-const time = () => {
+const time = async () => {
   console.time('myTimer')
-  // utils.delay(1000)
+  await utils.delay(1000)
 
   let sum = 0
   for (let i = 0; i < 5; i++) {
@@ -301,7 +301,7 @@ onMounted(() => {
   // console.log('blueM', '1243','abc' )
   // console.log( '1243','abc' )
   // console.log('red', objDeep )
-  console.log('redM14', objDeep )
+  // console.log('redM14', objDeep )
   // console.log(time )
   // log()
   // stringify()
@@ -310,7 +310,7 @@ onMounted(() => {
   // clear()
   // style()
   // group()
-  // time()
+  time()
   // trace()
 })
 

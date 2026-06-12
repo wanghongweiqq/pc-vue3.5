@@ -13,8 +13,8 @@ export default {
     const query = {}
     if (urlParams[1]) {
       const paramsItem = urlParams[1].split('&')
-      for (const i in paramsItem) {
-        const arr = paramsItem[i].split('=')
+      for (const item of paramsItem) {
+        const arr = item.split('=')
         query[arr[0]] = arr[1]
       }
     }
@@ -78,7 +78,7 @@ export default {
   },
   // 过滤查询参数
   filterParamsToString (obj) {
-    const params = this.filterParams(obj)
+    const params = this. Params(obj)
     const strArray = Object.keys(params).map((item,index) => {
       if(index === 0) {
         return `?${ item }=${ params[item] }`
@@ -320,7 +320,7 @@ export default {
       l: time.getMilliseconds(),
     }
     let timeObjKeys = Object.keys(timeObj).join('')
-    const regDate = new RegExp(`([${ timeObjKeys }])\\1*`, 'g') // 字面量形式：/([YMDhmsl])\1*/g，因不支持使用变量，顾使用的够构造函数形式。最初使用正则为：/([YMDhms])+/g，当有时间节点无缝拼接时会出错，如YYYYMMDD
+    const regDate = new RegExp(`([${ timeObjKeys }])\\1*`, 'g') // 字面量形式：/([YMDhmsl])\1*/g，因不支持使用变量，顾使用支持变量的构造函数形式。最初使用正则为：/([YMDhms])+/g，当有时间节点无缝拼接时会出错，如YYYYMMDD
     const result = newFormat.replace(
       regDate,
       (match, key) => timeObj[key].toString().padStart(match.length, '0')
@@ -391,7 +391,7 @@ export default {
     if(type === 'array' || type === 'object') {
       newData = type === 'array' ? [] : {}
       let proto = [...Object.keys(data), ...Object.getOwnPropertySymbols(data)]
-      proto.map((key) => {
+      proto.forEach((key) => {
         newData[key] = this.deepCopy(data[key])
       })
       return newData
@@ -405,14 +405,18 @@ export default {
  * @param {*} isShow 是否展示复制成功信息
  * @return {*} 无
  */
-  copyText (str, isShow = true) {
+  async copyText (str, isShow = true) {
     try{
-      let _textarea = document.createElement('textarea') // textarea相比input支持复制内容换行等
-      _textarea.value = str // 设置内容
-      document.body.appendChild(_textarea) // 添加临时实例
-      _textarea.select() // 选择实例内容
-      document.execCommand('Copy') // 执行复制
-      document.body.removeChild(_textarea) // 删除临时实例
+      // 旧版本
+      // let _textarea = document.createElement('textarea') // textarea相比input支持复制内容换行等
+      // _textarea.value = str // 设置内容
+      // document.body.appendChild(_textarea) // 添加临时实例
+      // _textarea.select() // 选择实例内容
+      // document.execCommand('Copy') // 执行复制
+      // document.body.removeChild(_textarea) // 删除临时实例
+
+      // navigator.clipboard.writeText 替代已废弃的 document.execCommand('Copy')
+      await navigator.clipboard.writeText(str)
       if(isShow) {
         alert('复制成功')
       }
@@ -420,23 +424,27 @@ export default {
       alert('当前浏览器版本不支持，请升级或使用其他浏览器')
     }
   },
-  copyText1 (str, isShow = true) {
+  async copyText1 (str, isShow = true) {
     try{
-      let _textarea = document.createElement('textarea') // textarea相比input支持复制内容换行等
-      _textarea.setAttribute('id', 'textId')
-      let _textareaText = document.createTextNode(str)
-      _textarea.appendChild(_textareaText)
-      document.body.appendChild(_textarea)
-      let range = document.createRange()
-      range.selectNodeContents(_textarea) // selectNodeContents:元素中的内容，不含元素自身 selectNode:含元素自身，复制功能两者都可以
-      const selection = window.getSelection()
-      if (selection.rangeCount > 0) {
-        selection.removeAllRanges()
-      }
-      selection.addRange(range)
-      document.execCommand('Copy')
-      // range.deleteContents()// range绑定dom时采用range.selectNode才可以使用该方法，否则不会删除临时dom，只会删除其子内容
-      document.body.removeChild(_textarea) // 删除临时dom
+      // 旧版本
+      // let _textarea = document.createElement('textarea') // textarea相比input支持复制内容换行等
+      // _textarea.setAttribute('id', 'textId')
+      // let _textareaText = document.createTextNode(str)
+      // _textarea.appendChild(_textareaText)
+      // document.body.appendChild(_textarea)
+      // let range = document.createRange()
+      // range.selectNodeContents(_textarea) // selectNodeContents:元素中的内容，不含元素自身 selectNode:含元素自身，复制功能两者都可以
+      // const selection = window.getSelection()
+      // if (selection.rangeCount > 0) {
+      //   selection.removeAllRanges()
+      // }
+      // selection.addRange(range)
+      // document.execCommand('Copy')
+      // // range.deleteContents()// range绑定dom时采用range.selectNode才可以使用该方法，否则不会删除临时dom，只会删除其子内容
+      // document.body.removeChild(_textarea) // 删除临时dom
+
+      // navigator.clipboard.writeText 替代已废弃的 document.execCommand('Copy')
+      await navigator.clipboard.writeText(str)
       if(isShow) {
         alert('复制成功')
       }
@@ -497,7 +505,12 @@ export default {
     return throttled
   },
   delay (duration) {
-    let start = Date.now()
-    while(Date.now() - start < duration) {}
+    // 旧版
+    // let start = Date.now()
+    // while(Date.now() - start < duration) {}
+
+    // 改用 Promise + setTimeout，避免同步忙等待阻塞主线程/冻结 UI
+    // 调用方需 await：await utils.delay(300)
+    return new Promise(resolve => setTimeout(resolve, duration))
   }
 }

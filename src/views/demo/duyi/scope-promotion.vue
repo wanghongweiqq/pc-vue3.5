@@ -33,6 +33,8 @@
   </div>
 </template>
 <script setup>
+/* eslint-disable */
+// 以下均为 JS 作用域提升的演示代码，故意包含非标准写法，禁用 ESLint 检查
 import { onMounted } from 'vue'
 
 // 经典案例-非严格模式下-可使用浏览器的控制台运行
