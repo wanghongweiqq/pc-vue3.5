@@ -11,7 +11,7 @@
   <div class="pg-func">
     <div class="ly-box">
       <cp-crumbs />
-    
+
       <div class="content">
         <h1>Event Loop</h1>
         <h2>同步任务和异步任务</h2>
@@ -27,7 +27,7 @@
         <p>macrotask 称为 Task，宏任务是由宿主（浏览器、Node）发起的，可以理解是每次执行栈执行的代码就是一个宏任务（包括每次从事件队列中获取一个事件回调并放到执行栈中执行）。</p>
         <h3>宏任务包含：</h3>
         <pre>
-            script(整体代码) 
+            script(整体代码)
             setTimeout
             setInterval
             I/O
@@ -78,25 +78,25 @@ export default {
     }
   },
   mounted () {
-    const request = { body: { username: 'username',password: 'password' } }
-    const { body, body: { username, password } } = request
+    // const request = { body: { username: 'username',password: 'password' } }
+    // const { body, body: { username, password } } = request
     // console.log(body,username,password)
     this.task0()
     // this.task1()
     // this.task1_2()
     // this.task2()
     // this.task3() // 原文链接：https://www.jianshu.com/p/fd15db94a034
-    // this.task4() 
-    // this.task5() 
-    // this.task6() 
-    // this.task7() 
+    // this.task4()
+    // this.task5()
+    // this.task6()
+    // this.task7()
   },
   methods: {
     // 简单版
     task0 () {
       console.log('script start') // 1
       // async2这个异步方法其实虚有其名，可以当做一个普通方法理解，因为内部并没有像Promise这样的异步返回，只定义了一个setTimeout的宏任务
-      function async2 () { 
+      function async2 () {
         // setTimeout(() => {
         //   console.log('async2 end') // 7
         // },0)
@@ -125,7 +125,7 @@ export default {
 
       console.log('script end') // 3
     },
-    
+
     // 复杂版
     task1 () {
       console.log('script start') // 1
@@ -257,7 +257,7 @@ export default {
       // new Promise 输出：g，此时微任务队列添加第2个任务：new Promis.then
       // console.log('i') 输出：i
 
-      // 此时代码块宏任务执行完毕后，开始清空微任务队列，具体如下： 
+      // 此时代码块宏任务执行完毕后，开始清空微任务队列，具体如下：
       // 1 function async2.then，输出：c3 2; 此时微任务队列添加第3个任务(其实此时是第2个，因为第1个已执行完)：async function async1中await后的代码
       // 2 new Promis.then，输出：h;
       // 3 async function async1中await后的代码，输出：b; 此时微任务队列添加第4个任务(其实此时是第1个，因为第1、2、3个已执行完)：async1().then
@@ -279,12 +279,12 @@ export default {
         return new Promise((resolve) => {
           console.log('c2') // 4
           resolve(2)
-        }).then((x) => { 
+        }).then((x) => {
           console.log('c3') // 7
           console.log(x)// 8
           return x + 1
-        }) 
-      } 
+        })
+      }
 
       console.log('d') // 1
 
@@ -296,7 +296,7 @@ export default {
         console.log('f') // 11
         console.log(res) // 12
       })
-      
+
       new Promise((resolve) => {
         console.log('g') // 5
         resolve()
@@ -306,19 +306,19 @@ export default {
 
       console.log('i')// 6
     },
-    
+
     // 宏任务队列
     task4 () {
-      console.log('script start')      
+      console.log('script start')
       const num = 100
-      setTimeout(() => { console.log('定时器2s') }, 2000) 
-      setTimeout(() => { console.log('定时器1s') }, 1000) 
-      console.log('我是中间的')      
-      for (let i = 0; i < num; i++) { 
-        console.log(`打印循环${ num }次: ${ i }`) 
-        // setTimeout(() => { console.log(`打印循环${ num }次: ${ i }`) },i * 1000) 
+      setTimeout(() => { console.log('定时器2s') }, 2000)
+      setTimeout(() => { console.log('定时器1s') }, 1000)
+      console.log('我是中间的')
+      for (let i = 0; i < num; i++) {
+        console.log(`打印循环${ num }次: ${ i }`)
+        // setTimeout(() => { console.log(`打印循环${ num }次: ${ i }`) },i * 1000)
       }
-      console.log('script end')      
+      console.log('script end')
     },
 
     // 奇葩的 return Promise.resolve
@@ -335,13 +335,13 @@ export default {
 
           // 方式2
           // return new Promise((resolve) => {
-          //   console.log('change-resolve') 
+          //   console.log('change-resolve')
           //   resolve(4)
           // })
-          //   .then((x) => { 
-          //     console.log('change-then') 
-          //     return x 
-          //   }) 
+          //   .then((x) => {
+          //     console.log('change-then')
+          //     return x
+          //   })
         })
         .then((res) => {
           console.log(res) // 11
@@ -377,11 +377,11 @@ export default {
         .then(function () {
           console.log('then3')// 10
         })
-      console.log('script end') // 2   
+      console.log('script end') // 2
     },
 
     // 首先1秒时绿灯亮一次，之后2秒时黄灯亮一次；再之后3秒时红灯亮一次，如何让三个灯不断交替重复前面的亮灯？三个亮灯函数已经存在：
-    // 以下用了三种方式实现，分别为：1、Promise 2、async/await 3、setInterval 
+    // 以下用了三种方式实现，分别为：1、Promise 2、async/await 3、setInterval
     task6 () {
       function green () {
         console.log('green')
@@ -403,6 +403,7 @@ export default {
       }
 
       console.log('script-start')
+      // eslint-disable-next-line no-unused-vars
       function step1 () {
         Promise.resolve().then(() => {
           console.log(1)
@@ -419,6 +420,7 @@ export default {
       }
       // step1()
 
+      // eslint-disable-next-line no-unused-vars
       async function step2 () {
         await light(1000, green)
         await light(2000, yellow)
@@ -442,7 +444,7 @@ export default {
       console.log('script-end')
 
     },
-    
+
     // then方法接受的参数是函数，而如果传递的并非是一个函数，它实际上会将其解释为then(null)，这就会导致前一个Promise的结果会传递下面。
     task7 () {
       Promise.resolve(1)

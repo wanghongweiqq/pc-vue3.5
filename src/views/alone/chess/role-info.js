@@ -45,7 +45,7 @@ const allRoleList = [
   {
     id: 2,
     name: '王家一',
-    // avatar: 'jiayi.jpeg',
+    // avatar: 'jiayi-4.jpeg',
     avatar: 'jiayi-4.jpeg',
     birth: '2020/10/23',
     get age () { return getAge(this.birth) },

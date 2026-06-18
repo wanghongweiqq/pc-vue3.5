@@ -18,7 +18,7 @@ module.exports = {
           target: target,
           changeOrigin: true,
           bypass: (req) => {
-            if(req.headers.accept.indexOf('html') !== -1 ) {
+            if((req.headers.accept || '').indexOf('html') !== -1 ) {
               return '/index'
             }
           },

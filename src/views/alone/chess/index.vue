@@ -9,10 +9,10 @@
   <div class="pg-chess">
     <!-- <div class="start-animation">
       <div class="left">
-        <img src="@/assets/images/ziyi.jpeg">
+        <img src="@/assets/images/ziyi-2.jpeg">
       </div>
       <div class="right">
-        <img src="@/assets/images/jiayi.jpeg">
+        <img src="@/assets/images/jiayi-4.jpeg">
       </div>
     </div> -->
 
