@@ -2,12 +2,6 @@
   <div class="pg-about">
     <div class="ly-box">
       <div class="content">
-        <input
-          ref="inputChildRef"
-          type="text"
-          placeholder="inputChild"
-        >
-
         <h2>ref和reactive</h2>
         <p>总的来说，vue3版本中 composition API的ref和reactive只要不改变引用地址就能触发响应式，而option API 中响应式基本不涉及引用地址是否改变，具体可见<a href="/demo/feature">feature页面</a>。</p>
         <p>2版本中的ref和reactive只要不改变引用地址就能触发渲染</p>
@@ -156,31 +150,6 @@
           </el-button>
         </p>
       </div>
-
-      <div class="content">
-        <p>
-          DOM ref:
-          <span
-            id="dom1"
-            ref="counterDisplay"
-          >
-            <b>{{ count }}</b>
-          </span>
-        </p>
-        <p id="count">
-          count：
-          <em style="visibility: hidden;">visibility-hidden文本</em>
-          <span>{{ count }}</span>
-          <em style="display: none;">display-none文本</em>
-        </p>
-        <el-button
-          size="small"
-          type="primary"
-          @click="domRefFunc"
-        >
-          通过dom的ref改变dom的内容
-        </el-button>
-      </div>
     </div>
   </div>
 </template>
@@ -190,29 +159,29 @@
 import {
   ref,
   reactive,
-  onMounted ,
-  onBeforeMount,
-  onUpdated,
-  nextTick,
   watch,
-  useTemplateRef,
 } from 'vue'
-
-const inputRef = useTemplateRef('inputChildRef')
+console.log('组件（ref-reactive）中的script setup中的普通代码只会在初始化时触发一次执行，当触发页面的事件如点击时会触发render函数来渲染模版template里的内容')
 
 // ref基本数据类型:count
 const count = ref(0)
 const countAdd = () => {
-  inputRef.value.focus()
   count.value++
+  console.log('点击事件count+1，count的value值立即更新。','count.value:',count.value,';  count:',count)
 }
 const countSubtract = () => count.value--
-watch(count,(newVal,oldVal) => {
-  console.log('watch-count')
-  console.log('newVal:', newVal)
-  console.log('oldVal:', oldVal)
-},)
-
+watch(
+  count,
+  (newVal,oldVal) => {
+    console.log('watch-count')
+    console.log('newVal:', newVal)
+    console.log('oldVal:', oldVal)
+  },
+  {
+    immediate: true, // 默认false
+    deep: true, // 默认false
+  }
+)
 // reactive object:obj
 const obj = reactive({ name: 'Vue3' })
 const objAddProperty = () => obj.age = 1
@@ -221,10 +190,9 @@ watch(obj,(newVal,oldVal) => {
   console.log('watch-obj')
   console.log('newVal:', newVal)
   console.log('oldVal:', oldVal)
-},)
+})
 
-const refArray = ref(
-  // 2
+let refArray = ref(
   [
     { name: 'vue',version: '2.5' },
     { name: 'react',version: '18.5' },
@@ -235,16 +203,20 @@ const subtractArrayProperty = () => delete refArray.value[1].version
 const pushArray = () => {
   // const a = [4,5]
   // refArray.value = [...refArray.value,...a]
-  // const a = [{ name: 'wanghognwei ' }]
-  // refArray.value = [...refArray.value,...a]
-  refArray.value.push({ name: 'wanghognwei ' })
+  const a = [{ name: 'wanghognwei ' }]
+  refArray.value = [...refArray.value,...a]
+  // refArray.value.push({ name: 'wanghognwei ' })
   // refArray.value ++
-
-  console.log('refArray',refArray)
+  // refArray = { value: [...refArray.value,...a] } // 千万不要这样使用，这样会失去响应式，但值是改了，当有其他行为触发选按时，会按这里的最新值更新，但这时的value已经不是当初的可以在模版中解包的value，它会作为一个属性被渲染出来
+  // console.log('refArray',refArray)
 }
 
 // ref 声明的Array数据，各种改变形式都能实现状态更新和渲染。
-// watch的情况，默认不是深度监听，这时，改变引用才能被watch到，也能比较新旧值。设置为深度监听时，都可以监听到，就是未改变引用的时候新旧值一样
+// watch默认不是深度监听
+// watch监听引用类型数据（本例为数组refArray）的情况，默认deep=false（不设置为深度监听），未改变引用而是改变value数据的某一子项值（如给数组类型的数据末尾添加一项）不会被监听到。改变其属性value的引用（ refArray.value = [……]）才能被watch到，也能比较具体的新旧值。但设置为深度监听时，都可以被监听到，但未改变引用的时候新旧值一样（都是展示最新的数据，这时要在监听里面做新旧值的逻辑判断处理就实现不了，如果只是按最新值判断是可以的）
+// 从中可以看出ref设定的数据，都是希望改变其value的引用地址，比如基本类型的数据，修改数据就相当于改变引用重新赋值，而引用类型的数据，value=新值，也是同样的道理。
+
+// 另外两个相关监听情形如下：
 // refArray.length无法被watch
 // refArra.value也能被watch，但只能是不改变引用才能监听到，类似于reactive的监听。因为没有改变引用，新旧值还是一样的
 watch(refArray,(newVal,oldVal) => {
@@ -252,7 +224,7 @@ watch(refArray,(newVal,oldVal) => {
   console.log('newVal:', newVal)
   console.log('oldVal:', oldVal)
 },
-{ deep: true }
+// { deep: true }
 )
 watch(refArray.value,(newVal,oldVal) => {
   console.log('watch-refArray.value')
@@ -263,10 +235,9 @@ watch(refArray.value,(newVal,oldVal) => {
 )
 
 let reactiveArray = reactive(
-  // 2
   [
-    // { name: 'Vue3' },
-    // { name: 'react',version: '18.5' },
+    { name: 'Vue3' },
+    { name: 'react',version: '18.5' },
   ]
 )
 const addArrayPropertyReactive = () => reactiveArray[0].version = '3.5'
@@ -275,10 +246,10 @@ const pushArrayReactive = () => {
   console.log('pushArrayReactive')
   // const a = [4,5]
   // reactiveArray = [...reactiveArray,...a]
-  // const a = [{ name: 'wanghognwei ' }]
-  // reactiveArray = [...reactiveArray,...a]
+  const a = [{ name: 'wanghognwei ' }]
+  reactiveArray = [...reactiveArray,...a]
   // console.log('reactiveArray',reactiveArray)
-  reactiveArray.push({ name: 'wanghognwei ' })
+  // reactiveArray.push({ name: 'wanghognwei ' })
   // reactiveArray.splice(reactiveArray.length ,0,...a)
   // reactiveArray ++
 }
@@ -293,69 +264,7 @@ watch(reactiveArray,(newVal,oldVal) => {
   console.log('newVal:', newVal)
   console.log('oldVal:', oldVal)
 },
-{ deep: true }
+// { deep: true }
 )
-
-const task0 = () => {
-  console.log(new Date().getTime())
-  setTimeout(() => {
-    console.log(2)
-  },1000)
-  var a = new Date(); a.setTime(1741165224452); console.log(a.getFullYear())
-}
-
-const task1 = () => {
-  console.log(new Date().getTime())
-  setTimeout(() => {
-    console.log(1)
-  },1000)
-  // 在 HTML 中，innerHTML、innerText、 和textContent是 DOM（文档对象模型）的属性。它们允许我们读取和更新 HTML 元素的内容。
-  console.log(document.getElementById('count').innerHTML) // count：<em style="visibility: hidden;">visibility-hidden文本</em><span>0</span><em style="display: none;">display-none文本</em>
-  console.log(document.getElementById('count').textContent) // count：visibility-hidden文本0display-none文本
-  console.log(document.getElementById('count').innerText) // count：0  不会获取使用 CSS 样式隐藏的文本（display:none/visibility:hidden）
-
-}
-
-onMounted(() => {
-  // task1()
-})
-
-onBeforeMount(() => {
-  // task0()
-})
-// 注册一个回调函数，在组件因为响应式状态变更而更新其 DOM 树之后调用。
-// onUpdated(() => {
-//   // 文本内容应该与当前的 `count.value` 一致
-//   console.log('onUpdated')
-//   console.log(count.value)
-//   console.log('onUpdated-innerText:',document.getElementById('count').innerText)
-// })
-
-// watch(refArray[0].version,(newVal,oldVal) => {
-//   console.log('watch-refArray[0].version')
-//   console.log('newVal:', newVal)
-//   console.log('oldVal:', oldVal)
-// }, { immediate: true })
-
-const counterDisplay = ref(null) // ref(null) 创建一个响应式引用变量   选项式/Options API 示例: this.$refs.inputRef
-const domRefFunc = async () => {
-  count.value++
-  console.log('domRefFunc-count.value',count.value)
-  if (counterDisplay.value) {
-    console.log('count改变后，立即获取dom结构中的数据，此时数据还未更新')
-    console.log(counterDisplay.value)
-    console.log(counterDisplay.value.innerHTML)
-    // 直接操作DOM元素的文本内容
-    // counterDisplay.value.innerHTML = '<b>dom中通过添加ref来操作该dom：</b>' + count.value
-    // counterDisplay.value.textContent = '<b>dom中通过添加ref来操作该dom：</b>' + count.value
-  }
-  await nextTick()
-  console.log('count改变后，nextTick后获取dom结构中的数据，此时数据已更新')
-  console.log(counterDisplay)
-  console.log(counterDisplay.value)
-  console.log(counterDisplay.value.innerHTML)
-  console.log(counterDisplay.value.id)
-  console.log(counterDisplay.value.ref)
-}
 
 </script>

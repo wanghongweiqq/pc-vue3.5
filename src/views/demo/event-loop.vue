@@ -403,7 +403,7 @@ export default {
       }
 
       console.log('script-start')
-      // eslint-disable-next-line no-unused-vars
+       
       function step1 () {
         Promise.resolve().then(() => {
           console.log(1)
@@ -419,8 +419,7 @@ export default {
         })
       }
       // step1()
-
-      // eslint-disable-next-line no-unused-vars
+       
       async function step2 () {
         await light(1000, green)
         await light(2000, yellow)

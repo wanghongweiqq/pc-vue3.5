@@ -1,7 +1,7 @@
 export default {
   path: '/demo',
   component: () => import('@/layout/index'),
-  icon: 'el-icon-document',
+  icon: 'Document',
   meta: {
     title: 'Demo',
   },
@@ -305,18 +305,18 @@ export default {
       }
     },
     {
-      path: 'setup',
-      name: 'setup',
-      component: () => import('@/views/demo/setup.vue'),
+      path: 'ref-reactive',
+      name: 'ref-reactive',
+      component: () => import('@/views/demo/ref-reactive.vue'),
       meta: {
-        title: 'setup',
+        title: 'ref-reactive',
         key: 'MENU_HAWK_DEMO',
         crumb: [
           {
             name: 'Demo',
           },
           {
-            name: 'setup',
+            name: 'ref-reactive',
           },
         ]
       }

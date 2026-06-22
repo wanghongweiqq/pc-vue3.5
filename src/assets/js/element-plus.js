@@ -1,4 +1,6 @@
 
+import * as ElementPlusIconsVue from '@element-plus/icons-vue'
+
 import {
   ElAlert,
   // ElAside,
@@ -63,7 +65,7 @@ import {
   // ElSlider,
   // ElStep,
   // ElSteps,
-  ElSubmenu,
+  ElSubMenu,
   // ElSwitch,
   ElTabPane,
   ElTable,
@@ -148,7 +150,7 @@ const components = [
   // ElSlider,
   // ElStep,
   // ElSteps,
-  ElSubmenu,
+  ElSubMenu,
   // ElSwitch,
   ElTabPane,
   ElTable,
@@ -174,5 +176,11 @@ export default {
     components.forEach(component => {
       V.component(component.name, component)
     })
+    // 全局注册所有 Element Plus 图标（@element-plus/icons-vue）
+    // 支持在任意组件中直接使用 <Document />、<Cellphone /> 等，
+    // 以及 <component :is="iconName"> 的动态渲染方式
+    for (const [key, component] of Object.entries(ElementPlusIconsVue)) {
+      V.component(key, component)
+    }
   }
 }

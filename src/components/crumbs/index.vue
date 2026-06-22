@@ -1,16 +1,15 @@
 <template>
   <div class="cp-crumb">
-    <a
-      href="/"
-      class="el-icon-s-home"
-    />
+    <a href="/">
+      <el-icon class="icon-home"><House /></el-icon>
+    </a>
     <el-link
       v-for="(item, index) in crumbsList"
       :key="index"
       :type="index===crumbsList.length-1?'primary':'info'"
       :class="item.href?'cursor-pointer':''"
-      :underline="false"
-      :icon="index===0?'':'el-icon-arrow-right'"
+      underline="never"
+      :icon="index===0?'':'ArrowRight'"
       @click="goPage(item)"
     >
       {{ item.name }}
@@ -58,7 +57,7 @@ export default {
 <style lang="scss">
 .cp-crumb{
   padding:10px 0;
-  .el-icon-s-home{
+  .icon-home{
     font-size:18px;
     vertical-align: middle;
     margin:-3px 5px 0 0;

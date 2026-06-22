@@ -8,6 +8,7 @@
   <div class="bcp-image-bg content">
     <h2>CSS 图片与背景图相关属性</h2>
 
+    <p>css新特性：<a href="https://blog.csdn.net/lgno2/article/details/139910826">2024 年 10 个很实用的 CSS 新特性，你不一定知道！</a></p>
     <!-- object-fit -->
     <h3>一、object-fit — 控制 img 如何填充容器</h3>
     <p>需先给 <em>img</em> 设置固定宽高，再通过 <em>object-fit</em> 控制图片的填充方式。</p>
@@ -312,7 +313,9 @@ background:
         </tr>
         <tr>
           <td>值语法</td>
-          <td colspan="2">完全相同：关键词 / 百分比 / px，如 <em>center top</em>、<em>20% 80%</em></td>
+          <td colspan="2">
+            完全相同：关键词 / 百分比 / px，如 <em>center top</em>、<em>20% 80%</em>
+          </td>
         </tr>
       </tbody>
     </table>
@@ -507,8 +510,8 @@ export default {
     border-radius: 6px;
 
     &::after {
-      content: '← minna-2 小图（右上）叠于 jiayi-4 底图之上';
       padding: 4px 8px;
+      content: '← minna-2 小图（右上）叠于 jiayi-4 底图之上';
       background: rgba(0, 0, 0, 0.5);
       border-radius: 4px;
     }
@@ -543,11 +546,11 @@ export default {
     margin-left: 4px;
     font-size: 11px;
     color: #e6a23c;
+    white-space: nowrap;
+    vertical-align: middle;
     background: #fdf6ec;
     border: 1px solid #f5dab1;
     border-radius: 3px;
-    vertical-align: middle;
-    white-space: nowrap;
   }
 }
 </style>

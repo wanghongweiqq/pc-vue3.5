@@ -87,8 +87,8 @@ watch(second,(newValue,oldValue,) => {
 },
 { immediate: true }
 )
-// eslint-disable-next-line no-undef
-const prevSecond = computed(() => `${ animatingDuration.value / 1000 }s`) // eslint-disable-line no-unused-vars
+ 
+const prevSecond = computed(() => `${ animatingDuration.value / 1000 }s`)  
 
 watchEffect(() => {
   if(second.value === 0) {
@@ -110,7 +110,7 @@ watchEffect(() => {
 
 </script>
 
-<style lang="scss" >
+<style lang="scss">
 .bcp-time {
   .my-time {
     display: flex;

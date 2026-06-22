@@ -13,6 +13,6 @@ export default {
   regExp0To99999Float2: /^(([1-9][0-9]{0,4})|0)(\.[0-9]{1,2})?$/, // 0-99999(含0/0.00，99999)之间的数值，最多允许两位小数
   regExpPassword: /[a-zA-Z]\w{5,17}$/, // 密码(以字母开头，长度在6~18之间，只能包含字母、数字和下划线)，(\w 元字符用于查找单词字符，单词字符包括：a-z、A-Z、0-9，以及_ (下划线) 字符。)
   regExpStrongPassword: /^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z]).{8,10}$/ // 强密码(必须包含大小写字母和数字的组合，不能使用特殊字符，长度在8-10之间)，（. 元字符用于查找单个字符，除了换行和行结束符，?=n 量词 匹配任何其后紧接指定字符串 n 的字符串）
-  // eslint-disable-next-line no-misleading-character-class
+   
   // regExpEmotion: /[\uD83C|\uD83D|\uD83E][\uDC00-\uDFFF][\u200D|\uFE0F]|[\uD83C|\uD83D|\uD83E][\uDC00-\uDFFF]|[0-9|*|#]\uFE0F\u20E3|[0-9|#]\u20E3|[\u203C-\u3299]\uFE0F\u200D|[\u203C-\u3299]\uFE0F|[\u2122-\u2B55]|\u303D|[\A9|\AE]\u3030|\uA9|\uAE|\u3030/gi, // 表情符号的emotion
 }

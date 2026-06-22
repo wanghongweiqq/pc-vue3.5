@@ -15,13 +15,13 @@
 <script>
 
 export default {
-  expose: ['domRefFunc'],
   props: {
     isFocus: {
       type: Boolean,
       default: false
     },
   },
+  expose: ['domRefFunc'],
   data () {
     return {
       message: 'Hello from child!'

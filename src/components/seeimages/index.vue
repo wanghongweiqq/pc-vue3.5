@@ -28,31 +28,34 @@
         </template>
       </li>
     </ul>
-    <span
-      class="el-icon-close"
+    <el-icon
+      class="icon-close"
       @click="popClose"
-    />
-    <span
-      class="el-icon-arrow-left"
+    >
+      <Close />
+    </el-icon>
+    <el-icon
+      class="icon-arrow-left"
       @click="imageSwitch(-1)"
-    />
-    <span
-      class="el-icon-arrow-right"
+    >
+      <ArrowLeft />
+    </el-icon>
+    <el-icon
+      class="icon-arrow-right"
       @click="imageSwitch(+1)"
-    />
+    >
+      <ArrowRight />
+    </el-icon>
     <div class="image-handle">
-      <i
-        class="el-icon-zoom-out"
-        @click="imageAdjust(0.8)"
-      />
-      <i
-        class="el-icon-refresh-right"
-        @click="imageRotate"
-      />
-      <i
-        class="el-icon-zoom-in"
-        @click="imageAdjust(1.2)"
-      />
+      <el-icon @click="imageAdjust(0.8)">
+        <ZoomOut />
+      </el-icon>
+      <el-icon @click="imageRotate">
+        <RefreshRight />
+      </el-icon>
+      <el-icon @click="imageAdjust(1.2)">
+        <ZoomIn />
+      </el-icon>
     </div>
   </div>
 </template>
@@ -182,7 +185,7 @@ export default {
     }
   }
 
-  .el-icon-close {
+  .icon-close {
     position: absolute;
     top: 25px;
     right: 25px;
@@ -191,20 +194,20 @@ export default {
     cursor: pointer;
   }
 
-  .el-icon-arrow-left,
-  .el-icon-arrow-right {
+  .icon-arrow-left,
+  .icon-arrow-right {
     position: absolute;
     top: 50%;
     font-size: 50px;
     color: #fff;
     cursor: pointer;
 
-    &.el-icon-arrow-left {
+    &.icon-arrow-left {
       left: 5%;
       transform: translate(-50%, -50%);
     }
 
-    &.el-icon-arrow-right {
+    &.icon-arrow-right {
       right: 5%;
       transform: translate(50%, -50%);
     }

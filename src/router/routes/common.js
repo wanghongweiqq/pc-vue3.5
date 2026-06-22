@@ -1,7 +1,7 @@
 export default {
   path: '/',
   component: () => import('@/layout/index'),
-  icon: 'el-icon-folder-opened',
+  icon: 'FolderOpened',
   meta: {
     title: '公共页面'
   },

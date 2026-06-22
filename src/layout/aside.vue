@@ -1,9 +1,13 @@
 <template>
   <aside class="ly-aside">
-    <i
-      :class="['btn-menu',isCollapse? 'el-icon-s-unfold':'el-icon-s-fold']"
+    <el-icon
+      class="btn-menu"
+      :class="{collapsed: isCollapse}"
       @click="menuToggle"
-    />
+    >
+      <Expand v-if="isCollapse" />
+      <Fold v-else />
+    </el-icon>
     <!-- <router-link
       :class="['logo',isCollapse?'logo-small':'logo-big']"
       to="/demo/index"
@@ -13,13 +17,13 @@
       :collapse="isCollapse"
       :default-active="defaultActive"
     >
-      <el-submenu
+      <el-sub-menu
         v-for="(item,index) in listMenu"
         :key="index"
         :index="String(index+1)"
       >
         <template #title>
-          <i :class="item.icon" />
+          <el-icon><component :is="item.icon" /></el-icon>
           <span>{{ item.meta.title }}</span>
         </template>
         <el-menu-item
@@ -31,7 +35,7 @@
         >
           {{ subItem.meta.title }}
         </el-menu-item>
-      </el-submenu>
+      </el-sub-menu>
     </el-menu>
   </aside>
 </template>
@@ -162,7 +166,7 @@ export default {
     cursor: pointer;
     transition: all 0.4s ease-in-out 0s;
 
-    &.el-icon-s-unfold {
+    &.collapsed {
       left: $menuWidthCollapse+15;
     }
   }
@@ -195,7 +199,7 @@ export default {
       width: $menuWidthCollapse;
     }
 
-    .el-submenu__title {
+    .el-sub-menu__title {
       height: 46px;
       font-size: 13px;
       line-height: 46px;
@@ -204,12 +208,12 @@ export default {
         color: $menu-font;
       }
 
-      i[class^=el-icon-] {
+      .el-icon {
         font-size: 16px;
         color: $themeColor;
       }
 
-      i.el-submenu__icon-arrow {
+      i.el-sub-menu__icon-arrow {
         font-size: 16px;
         color: $themeColor;
       }
@@ -221,21 +225,21 @@ export default {
           color: $menu-font-active;
         }
 
-        i.el-submenu__icon-arrow {
+        i.el-sub-menu__icon-arrow {
           color: $menu-font-active;
         }
       }
     }
 
     .is-active {
-      .el-submenu__title {
+      .el-sub-menu__title {
         background: $menu-bg-active;
 
         span {
           color: $menu-font-active;
         }
 
-        i.el-submenu__icon-arrow {
+        i.el-sub-menu__icon-arrow {
           color: $menu-font-active;
         }
       }

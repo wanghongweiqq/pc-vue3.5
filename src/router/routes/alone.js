@@ -8,7 +8,7 @@
 export default {
   path: '/alone',
   component: () => import('@/layout/alone'),
-  icon: 'el-icon-mobile',
+  icon: 'Cellphone',
   meta: {
     title: 'Alone',
   },

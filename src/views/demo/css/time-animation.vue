@@ -21,7 +21,7 @@
 <!-- eslint-disable no-unused-vars -->
 
 <script setup>
-import{ ref,defineProps,watch,computed } from 'vue'
+import{ ref,watch,computed } from 'vue'
 
 // const props = defineProps({
 //   value: {
@@ -31,7 +31,7 @@ import{ ref,defineProps,watch,computed } from 'vue'
 // })
 const {
   value = 0,
-  type,
+  type = '',
   styleCustom = {},
 } = defineProps({
   value: Number,
@@ -105,7 +105,7 @@ watch(() => styleCustom,() => {
 
 </script>
 
-<style lang="scss" >
+<style lang="scss">
 .bcp-time-animation {
   position: relative;
   display: flex;

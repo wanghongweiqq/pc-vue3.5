@@ -172,7 +172,7 @@
         >
           <template #default="scope">
             <el-link
-              :underline="false"
+              underline="never"
               type="primary"
               @click="toPopDetail(scope.row)"
             >

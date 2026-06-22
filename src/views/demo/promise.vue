@@ -360,7 +360,7 @@ export default {
     // asyncFunc1:切菜
     asyncFunc1 () {
       console.log('开始切菜。')
-      // eslint-disable-next-line no-unused-vars
+       
       return new Promise(function (resolve,reject) { // 做一些异步操作
         setTimeout(function () {
           // console.log('切菜完毕！')
@@ -384,7 +384,7 @@ export default {
     // asyncFunc3:煮粥
     asyncFunc3 () {
       console.log('开始煮粥。')
-      // eslint-disable-next-line no-unused-vars
+       
       return new Promise(function (resolve,reject) { // 做一些异步操作
         setTimeout(function () {
           console.log('煮粥完毕！')

@@ -1,7 +1,7 @@
 export default {
   path: '/demo1',
   component: () => import('@/layout/index'),
-  icon: 'el-icon-mobile',
+  icon: 'Cellphone',
   meta: {
     title: 'Demo1',
   },

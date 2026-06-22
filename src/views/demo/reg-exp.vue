@@ -506,7 +506,7 @@ export default {
     return{
       whiteSpaceString: 'hello word!\n<br>love you!',// 含有换行符\n
       whiteSpaceString2: 'hello word!<br />love you!',// 不含换行符\n
-      // eslint-disable-next-line no-useless-escape
+       
       slashString: '数据中4个\\\\，显示为2个，数据中5个\\\\\，显示为2个，建议是偶数个，否则会有eslint的警告',
       stringReplace: 'Y1Y2Y3Y456-MM-DD',
       url: 'https://www.baidu.com?a=[1.1,2,"中"]&b={x:2.1}&c=3.1&a=1',
@@ -817,23 +817,23 @@ export default {
       // 具名引用
       const date = '2025-11-26'
       const pattern1 = /(\d{4})-(\d{2})-(\d{2})/g
-      // eslint-disable-next-line no-unused-vars
+       
       const result1 = date.replace(pattern1,'$3/$2/$1')
       // console.log('数字引用：',date,pattern1,result1)
       const pattern2 = /(?<year>\d{4})-(?<month>\d{2})-(?<day>\d{2})/g
-      // eslint-disable-next-line no-unused-vars
+       
       const result2 = date.replace(pattern2,'$<day>/$<month>/$<year>')
       // console.log('具名引用：',date,pattern2,result2)
 
       // 多个捕获组结合反向引
       // 数字反向引用
-      // eslint-disable-next-line no-unused-vars
+       
       const strA = 'aaaabbbcc'
-      // eslint-disable-next-line no-unused-vars
+       
       const regGroups = /((.)\2+)\1+/g // 捕获组2捕获的是单个字符连续>=1次，捕获组1捕获的是（单个字符连续>=2次）的>=1次，加一起的意思是两个连续字符的>=2次的重复，即单个字符连续重复2*n(n>=2)次
       // console.log(regGroups, strA.match(regGroups)) // ['aaaa']
       // 具名反向引用
-      // eslint-disable-next-line no-unused-vars
+       
       const regGroups2 = /(?<double>(?<letter>.)\k<letter>+)\k<double>+/g
       // console.log(regGroups2,strA.match(regGroups2)) // ['aaaa']
       // const str3 = '"双引号"普通内容'

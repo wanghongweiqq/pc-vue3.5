@@ -21,7 +21,6 @@
 <script setup>
 import {
   useTemplateRef,
-  defineExpose,
 } from 'vue'
 
 const inputRef = useTemplateRef('inputRefUseTemplateRef')

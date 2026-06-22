@@ -1,10 +1,9 @@
-/* 改变主题色变量 */
-$--color-primary: #409eff; //default:#409EFF
+/* 改变主题色变量（2.x 变量名去掉了 -- 前缀） */
+$color-primary: #409eff; //default:#409EFF
 
-/* 改变 icon 字体路径变量，必需 */
-$--font-path: '~element-plus/lib/theme-chalk/fonts';
+/* 2.x 已改用 SVG 图标，无需再配置字体路径 */
 
-@import "~element-plus/packages/theme-chalk/src/index"; //全部引入,使主题色生效，打包时再利用babel-plugin-import的按需引入使用到的组件样式
+@import "~element-plus/theme-chalk/src/index"; //全部引入,使主题色生效，打包时再利用babel-plugin-import的按需引入使用到的组件样式
 
 .el-loading-mask {
   .el-loading-spinner {

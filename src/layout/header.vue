@@ -6,14 +6,20 @@
     <div class="part-right">
       <dl class="login-infor">
         <dt>
-          <i class="el-icon-user-solid el-icon--left" />
+          <el-icon class="icon-user">
+            <UserFilled />
+          </el-icon>
           <span>{{ infor.sellerId }}</span>
-          <i class="el-icon-caret-bottom el-icon--right" />
+          <el-icon class="icon-caret">
+            <CaretBottom />
+          </el-icon>
         </dt>
         <dd>
           <ul>
             <li @click="logoutHandler">
-              <i class="el-icon-right el-icon--left" /> 退出
+              <el-icon class="icon-right">
+                <Right />
+              </el-icon> 退出
             </li>
           </ul>
         </dd>
@@ -76,7 +82,7 @@ export default {
       &:hover{
         dt{
           background: #f2f3f5;
-          .el-icon-caret-bottom{
+          .icon-caret{
             transform: rotate(-180deg);
           }
         }
@@ -95,13 +101,15 @@ export default {
         box-sizing: border-box;
         border-left:1px solid #eaedf4;
         cursor: pointer;
-        .el-icon-user-solid{
+        .icon-user{
           border:1px solid #8098b0;
           padding:1px;
           border-radius: 50%;
+          margin-right: 5px;
         }
-        .el-icon-caret-bottom{
+        .icon-caret{
           transition: all 0.4s ease-in-out 0s;
+          margin-left: 5px;
         }
         span{
           flex-grow: 1;
@@ -133,29 +141,9 @@ export default {
             &:hover{
               color: #ffffff;
               background-color: #02aadb;
-              .el-icon-right{
-                &:after{
-                  border-color:#ffffff;
-                }
-              }
             }
-            .el-icon-right{
-              position: relative;
-              padding-left:5px;
-              font-weight: bold;
-              &:before{
-                position: relative;
-                z-index: 1;
-              }
-              &:after{
-                position: absolute;
-                left:0px;
-                top:-1px;
-                width:8px;
-                height:13px;
-                content:'';
-                border:1px solid #8098b0;
-              }
+            .icon-right{
+              margin-right: 5px;
             }
           }
         }

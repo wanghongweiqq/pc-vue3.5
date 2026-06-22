@@ -81,7 +81,7 @@
         </p>
 
         <CpSeeimages
-          v-model:imageShow="isShowImage"
+          v-model:image-show="isShowImage"
           :image-data="imageData"
         />
         <h3>Vue 3.0+ 使用v-model的形式修改</h3>

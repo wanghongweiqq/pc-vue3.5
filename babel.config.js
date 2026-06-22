@@ -7,19 +7,11 @@
  * @Description: 页面/组件/功能的描述
  * @FilePath: /vue3.0/babel.config.js
  */
-// element-plus 按需引入.scss
+// Vue CLI 5.x 的 @vue/babel-preset-app 内置 @babel/preset-env，
+// 已自动支持 ?.、??、||=、&&= 等现代语法，无需手动添加 proposal 插件。
 module.exports = {
-  plugins: [
-    [
-      'import',
-      {
-        libraryName: 'element-plus',
-        customStyleName: (name) => {
-          name = name.slice(3)
-          return `element-plus/packages/theme-chalk/src/${ name }.scss`
-        },
-      },
-    ],
+  presets: [
+    ['@vue/cli-plugin-babel/preset'],
   ],
 }
 
