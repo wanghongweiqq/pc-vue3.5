@@ -17,7 +17,9 @@
     <table class="table">
       <tbody>
         <tr>
-          <th width="60">顺序</th>
+          <th width="60">
+            顺序
+          </th>
           <th>比较</th>
           <th>命中时的操作</th>
         </tr>
