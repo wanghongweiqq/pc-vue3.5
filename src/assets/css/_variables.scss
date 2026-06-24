@@ -28,9 +28,9 @@ $color-danger:#d81e06;
 /* n行出省略号，默认1行 */
 @mixin ellipsis ($line:1) {
   display: -webkit-box !important;
-  -webkit-box-orient: vertical;
-  -webkit-line-clamp: $line;
   overflow: hidden;
+  -webkit-line-clamp: $line;
+  -webkit-box-orient: vertical;
 }
 
 //左侧栏变量

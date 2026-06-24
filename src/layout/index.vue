@@ -46,15 +46,15 @@ body { height: 100%; }
 
     .ly-contain {
       display: flex;
-      flex-direction: column;
       flex-grow: 1;
+      flex-direction: column;
       min-width: 1000px;
     }
 
     .ly-main {
       display: flex;
-      flex-direction: column;
       flex-grow: 1;
+      flex-direction: column;
       padding-left: 15px;
       overflow: auto;
       background: #eef3f6;

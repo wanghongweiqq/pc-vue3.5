@@ -450,8 +450,8 @@ export default {
   .demo-img-ratio {
     display: block;
     width: 200px;
-    border: 1px solid #ddd;
     object-fit: cover;
+    border: 1px solid #ddd;
   }
 
   .demo-bg {
@@ -491,7 +491,7 @@ export default {
       height: 120px;
       font-size: 14px;
       color: #fff;
-      background: rgba(0, 0, 0, 0.6);
+      background: rgb(0 0 0 / 60%);
     }
   }
 
@@ -512,7 +512,7 @@ export default {
     &::after {
       padding: 4px 8px;
       content: '← minna-2 小图（右上）叠于 jiayi-4 底图之上';
-      background: rgba(0, 0, 0, 0.5);
+      background: rgb(0 0 0 / 50%);
       border-radius: 4px;
     }
   }
@@ -545,9 +545,9 @@ export default {
     padding: 1px 5px;
     margin-left: 4px;
     font-size: 11px;
+    vertical-align: middle;
     color: #e6a23c;
     white-space: nowrap;
-    vertical-align: middle;
     background: #fdf6ec;
     border: 1px solid #f5dab1;
     border-radius: 3px;

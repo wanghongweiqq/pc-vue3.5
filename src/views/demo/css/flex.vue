@@ -222,18 +222,18 @@
       flex: 1;
       justify-self: flex-start;
       overflow: hidden;
+      text-overflow: ellipsis;
       text-align: center;
       // text-indent: -2em;
       text-indent: -28px;
-      text-overflow: ellipsis;
       white-space: nowrap;
-      background: rgba(red, 0.4);
+      background: rgb(red, 0.4);
     }
 
     .right {
       // flex: 1;
       justify-self: flex-end;
-      background: rgba(green, 0.4);
+      background: rgb(green, 0.4);
     }
   }
 }

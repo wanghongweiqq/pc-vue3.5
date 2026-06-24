@@ -8,17 +8,50 @@
 <template>
   <div class="pg-duyi">
     <div class="ly-box">
-      <TrafficLight />
-      <ScopePromotion />
-      <RemoveDuplicateArray />
-      <QueueOrder />
-      <RenderOrder />
-      <RenderAnimation />
+      <el-tabs v-model="activeTab">
+        <el-tab-pane
+          label="信号灯"
+          name="traffic"
+        >
+          <TrafficLight />
+        </el-tab-pane>
+        <el-tab-pane
+          label="作用域提升"
+          name="scope"
+        >
+          <ScopePromotion />
+        </el-tab-pane>
+        <el-tab-pane
+          label="数组去重"
+          name="duplicate"
+        >
+          <RemoveDuplicateArray />
+        </el-tab-pane>
+        <el-tab-pane
+          label="交互/延时队列"
+          name="queue"
+        >
+          <QueueOrder />
+        </el-tab-pane>
+        <el-tab-pane
+          label="渲染顺序"
+          name="render"
+        >
+          <RenderOrder />
+        </el-tab-pane>
+        <el-tab-pane
+          label="动画与渲染"
+          name="animation"
+        >
+          <RenderAnimation />
+        </el-tab-pane>
+      </el-tabs>
     </div>
   </div>
 </template>
 
 <script setup>
+import { ref } from 'vue'
 import TrafficLight from './duyi/traffic-light.vue'
 import QueueOrder from './duyi/queue-order'
 import RenderOrder from './duyi/render-order'
@@ -26,4 +59,5 @@ import RenderAnimation from './duyi/render-animation'
 import RemoveDuplicateArray from './duyi/remove-duplicate-array'
 import ScopePromotion from './duyi/scope-promotion'
 
+const activeTab = ref('traffic')
 </script>

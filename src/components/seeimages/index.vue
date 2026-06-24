@@ -149,7 +149,7 @@ export default {
   z-index: 999999;
   width: 100%;
   height: 100%;
-  background: rgba(0, 0, 0, 0.8);
+  background: rgb(0 0 0 / 80%);
 
   .image-list {
     display: flex;

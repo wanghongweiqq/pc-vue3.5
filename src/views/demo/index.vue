@@ -149,200 +149,167 @@
             :page-sizes="pageSizes"
             :total="count"
             background
+            size="small"
             layout="total, prev, next, sizes"
             @size-change="handleSizeChange"
             @current-change="handleCurrentChange"
           />
         </div>
       </div>
-      <el-table
-        :data="queryList"
-        height="540"
-      >
-        <el-table-column
-          type="index"
-          label="序号"
-          min-width="40"
+      <div class="content">
+        <el-table
+          :data="queryList"
+          :max-height="tableMaxHeight"
+        >
+          <el-table-column
+            type="index"
+            label="序号"
+            width="60"
+          />
+          <el-table-column
+            prop="customerName"
+            label="客户名称"
+            show-overflow-tooltip
+            min-width="166"
+          />
+          <el-table-column
+            prop="cloudsGatherStatus"
+            label="实名认证"
+            min-width="90"
+          >
+            <template #default="scope">
+              <span v-if="scope.row&&scope.row.cloudsGatherStatus===1">
+                已认证
+              </span>
+              <span v-else>
+                未认证
+              </span>
+            </template>
+          </el-table-column>
+          <el-table-column
+            prop="accountPeriodStatus"
+            label="云采状态"
+            min-width="90"
+          >
+            <template #default="scope">
+              <span v-if="scope.row.accountPeriodStatus===0">
+                开启
+              </span>
+              <span v-else>
+                停止
+              </span>
+            </template>
+          </el-table-column>
+          <el-table-column
+            prop="totalAmount"
+            label="总额度"
+            align="right"
+            min-width="110"
+          />
+          <el-table-column
+            prop="usedAmount"
+            label="已用额度"
+            align="right"
+            min-width="110"
+          />
+          <el-table-column
+            prop="availableAmount"
+            label="可用额度"
+            align="right"
+            min-width="110"
+          />
+          <el-table-column
+            prop="status"
+            label="是否逾期"
+            align="right"
+            min-width="90"
+          >
+            <template #default="scope">
+              <span v-if="scope.row.status===0">
+                未逾期
+              </span>
+              <span v-else-if="scope.row.status===1">
+                逾期
+              </span>
+              <span v-else>
+                状态不明
+              </span>
+            </template>
+          </el-table-column>
+          <el-table-column
+            prop="sumUsedAmount"
+            label="历史使用额度"
+            align="right"
+            min-width="110"
+          />
+          <el-table-column
+            prop="lastOrderTime"
+            label="最近下单时间"
+            align="center"
+            min-width="140"
+          />
+          <el-table-column
+            label="操作"
+            min-width="210"
+            fixed="right"
+          >
+            <template #default="scope">
+              <el-button
+                type="primary"
+                plain
+                size="small"
+                @click="imageOpen"
+              >
+                查看大图
+              </el-button>
+              <el-button
+                v-if="scope.row.accountPeriodStatus===0"
+                size="small"
+                type="danger"
+                plain
+              >
+                停止
+              </el-button>
+              <el-button
+                v-else
+                size="small"
+                type="success"
+                plain
+              >
+                开启
+              </el-button>
+            </template>
+          </el-table-column>
+        </el-table>
+        <el-pagination
+          class="table-pagination"
+          :current-page="currentPage"
+          :page-size="pageSize"
+          :page-sizes="pageSizes"
+          :total="count"
+          background
+          size="small"
+          layout="total, sizes, prev, pager, next, jumper"
+          @size-change="handleSizeChange"
+          @current-change="handleCurrentChange"
         />
-        <el-table-column
-          prop="customerName"
-          label="客户名称"
-          show-overflow-tooltip
-          min-width="166"
-        >
-          <template #default="scope">
-            <el-link
-              underline="never"
-              type="primary"
-              @click="toPopDetail(scope.row)"
-            >
-              <!-- {{ scope.row.customerName }} -->
-            </el-link>
-          </template>
-        </el-table-column>
-        <el-table-column
-          prop="cloudsGatherStatus"
-          label="实名认证"
-          min-width="80"
-        >
-          <template #default="scope">
-            <span v-if="scope.row&&scope.row.cloudsGatherStatus===1">
-              已认证
-            </span>
-            <span v-else>
-              未认证
-            </span>
-          </template>
-        </el-table-column>
-        <el-table-column
-          prop="accountPeriodStatus"
-          label="云采状态"
-          min-width="80"
-        >
-          <template #default="scope">
-            <span v-if="scope.row.accountPeriodStatus===0">
-              开启
-            </span>
-            <span v-else>
-              停止
-            </span>
-          </template>
-        </el-table-column>
-        <el-table-column
-          prop="totalAmount"
-          label="总额度"
-          align="right"
-          min-width="110"
-        >
-          <template #default="scope">
-            {{ scope.row.totalAmount }}
-          </template>
-        </el-table-column>
-        <el-table-column
-          prop="usedAmount"
-          label="已用额度"
-          align="right"
-          min-width="110"
-        >
-          <template #default="scope">
-            {{ scope.row.usedAmount }}
-          </template>
-        </el-table-column>
-        <el-table-column
-          prop="availableAmount"
-          label="可用额度"
-          align="right"
-          min-width="110"
-        >
-          <template #default="scope">
-            {{ scope.row.availableAmount }}
-          </template>
-        </el-table-column>
-        <el-table-column
-          prop="status"
-          label="是否逾期"
-          align="right"
-          min-width="80"
-        >
-          <template #default="scope">
-            <span v-if="scope.row.status===0">
-              未逾期
-            </span>
-            <span v-else-if="scope.row.status===1">
-              逾期
-            </span>
-            <span v-else>
-              状态不明
-            </span>
-          </template>
-        </el-table-column>
-        <el-table-column
-          prop="sumUsedAmount"
-          label="历史使用额度"
-          align="right"
-          min-width="110"
-        >
-          <template #default="scope">
-            {{ scope.row.sumUsedAmount }}
-          </template>
-        </el-table-column>
-        <el-table-column
-          prop="lastOrderTime"
-          label="最近下单时间"
-          align="center"
-          min-width="140"
-        >
-          <template #default="scope">
-            {{ scope.row.lastOrderTime }}
-          </template>
-        </el-table-column>
-        <el-table-column
-          label="操作"
-          min-width="210"
-          align="center"
-          fixed="right"
-        >
-          <template #default="scope">
-            <el-button
-              size="mini"
-              type="primary"
-              plain
-            >
-              设置额度
-            </el-button>
-            <el-button
-              type="primary"
-              plain
-              size="mini"
-              @click="imageOpen"
-            >
-              查看大图
-            </el-button>
-            <el-button
-              v-if="scope.row.accountPeriodStatus===0"
-              size="mini"
-              type="danger"
-              plain
-            >
-              停止
-            </el-button>
-            <el-button
-              v-else
-              size="mini"
-              type="success"
-              plain
-            >
-              开启
-            </el-button>
-          </template>
-        </el-table-column>
-      </el-table>
-      <el-pagination
-        :current-page="currentPage"
-        :page-size="pageSize"
-        :page-sizes="pageSizes"
-        :total="count"
-        background
-        layout="total, sizes, prev, pager, next, jumper"
-        @size-change="handleSizeChange"
-        @current-change="handleCurrentChange"
-      />
+      </div>
       <cp-seeimages
         v-model:image-show="showImg"
         :image-data="imageData"
         :image-index="imageIndex"
       />
     </div>
-    <div class="bottom-bar">
+    <div class="content">
       <el-button
-        size="mini"
+        size="small"
         type="primary"
         @click="handleSearch"
       >
         确定筛选
       </el-button>
       <el-button
-        size="mini"
+        size="small"
         @click="clearSearch"
       >
         重置筛选
@@ -355,6 +322,7 @@ import utils from '@/assets/js/utils'
 import CpCrumbs from '@/components/crumbs/'
 import CpSeeimages from '@/components/seeimages/'
 import ajax from '@/service/apis/demo'
+import { listStatus as mockListStatus, queryList as mockQueryList } from './mock'
 
 export default {
   components: {
@@ -371,7 +339,7 @@ export default {
         textNum: null,
         select: null,
       },
-      showImg: true,
+      showImg: false,
       imageIndex: 0,
       // imageData: [
       //   'http://img.yunpei.com/images/operation/156163104408985156.jpg',
@@ -393,22 +361,21 @@ export default {
         }
       ],
       // 云采状态列表
-      listStatus: [
-        {
-          id: 0,
-          status: '开启'
-        },
-        {
-          id: 1,
-          status: '停止'
-        }
-      ],
-      queryList: [],
+      listStatus: mockListStatus,
+      queryList: mockQueryList,
       currentPage: 1,
       pageSize: 10,
       pageSizes: [10, 20, 30, 40],
       count: 0,
     }
+  },
+  computed: {
+    // 行高 40px + 1px 边框 = 41px，表头同高，精确匹配当前行数
+    // 空数组时返回 null 不限制高度，让表格自然展示默认空状态
+    tableMaxHeight () {
+      if (!this.queryList.length) return null
+      return this.queryList.length * 41 + 41
+    },
   },
   created () {
     // this.getList()
@@ -482,14 +449,3 @@ export default {
   }
 }
 </script>
-
-<style lang="scss">
-.pg-demo {
-  .bottom-bar {
-    padding: 10px 0 10px 30px;
-    background: #fff;
-    border-top: 1px solid #d9d9d9;
-    border-left: 1px solid #d9d9d9;
-  }
-}
-</style>

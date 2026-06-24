@@ -11,6 +11,3 @@
     class="ly-alone"
   />
 </template>
-
-<style lang='scss'>
-</style>

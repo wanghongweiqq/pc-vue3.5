@@ -119,7 +119,7 @@ watchEffect(() => {
     line-height: 1;
 
     >span {
-      margin: -16px 5px 0 5px;
+      margin: -16px 5px 0;
     }
   }
 }

@@ -124,19 +124,19 @@ select:disabled {
   border-color: #e4e7ed !important;
 }
 
-::-webkit-input-placeholder { /* WebKit, Blink, Edge */
+::input-placeholder { /* WebKit, Blink, Edge */
   color: #c0c4cc;
 }
 
-::-moz-placeholder { /* Mozilla Firefox 19+ */
+::placeholder { /* Mozilla Firefox 19+ */
   color: #c0c4cc;
 }
 
-:-moz-placeholder { /* Mozilla Firefox 4 to 18 */
+:placeholder { /* Mozilla Firefox 4 to 18 */
   color: #c0c4cc;
 }
 
-:-ms-input-placeholder { /* Internet Explorer 10-11 */
+:input-placeholder { /* Internet Explorer 10-11 */
   color: #c0c4cc;
 }
 
@@ -148,10 +148,10 @@ pre {
   *zoom: 1;
 
   &::after {
-    display: block;
-    overflow: hidden;
     clear: both;
+    display: block;
     visibility: hidden;
+    overflow: hidden;
     content: '';
   }
 }
@@ -266,8 +266,8 @@ pre {
 //布局样式
 .ly-box {
   display: flex;
-  flex-direction: column;
   flex-grow: 1;
+  flex-direction: column;
   padding-right: 10px;
   padding-bottom: 10px;
   overflow: auto;
@@ -393,6 +393,7 @@ pre {
 
   .table {
     width: 100%;
+    margin-bottom: 5px;
 
     th,
     td {

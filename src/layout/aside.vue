@@ -138,18 +138,17 @@ export default {
   z-index: 10;
   flex-shrink: 0;
   height: 100%;
-  overflow-x: hidden;
-  overflow-y: auto;
+  overflow: hidden auto;
+  scrollbar-color: rgb(255 255 255 / 40%) $menu-bg;
   background-color: $menu-bg;
   transition: all 0.5s;
-  scrollbar-color: rgba(255, 255, 255, 0.4) $menu-bg;
 
   &::-webkit-scrollbar {
     width: 4px;
   }
 
   &::-webkit-scrollbar-thumb {
-    background: rgba(255, 255, 255, 0.4);
+    background: rgb(255 255 255 / 40%);
     border-radius: 4px;
   }
 
@@ -179,12 +178,12 @@ export default {
     background-position: center center;
 
     &.logo-big {
-      background-image: url(../assets/images/logo_big.png);
+      background-image: url("../assets/images/logo_big.png");
       background-size: 79% auto;
     }
 
     &.logo-small {
-      background-image: url(../assets/images/logo_small.png);
+      background-image: url("../assets/images/logo_small.png");
     }
   }
 

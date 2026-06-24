@@ -57,21 +57,26 @@ export default {
 <style lang="scss">
 .cp-crumb{
   padding:10px 0;
+
   .icon-home{
+    margin:-3px 5px 0 0;
     font-size:18px;
     vertical-align: middle;
-    margin:-3px 5px 0 0;
   }
+
   .el-link{
     font-size:13px;
     cursor:default;
+
     i{
       margin:0 5px;
       color:#9b9b9b;
     }
+
     span{
       margin:0;
     }
+
     &.el-link--primary{
       cursor: default;
     }

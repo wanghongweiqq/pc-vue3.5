@@ -200,7 +200,7 @@ const parentRefFuncUseTemplateRef = () => {
 </script>
 <style lang="scss">
 .pg-ref-dom {
-  input[type=text] {
+  input[type="text"] {
     box-sizing: border-box;
     height: 32px;
     padding: 12px;

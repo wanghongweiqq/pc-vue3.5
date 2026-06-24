@@ -85,8 +85,8 @@ watch(second,() => {
         width: 100%;
         height: 50%;
         overflow: hidden;
-        transition: all 0.6s ease-in 0s;
         backface-visibility: hidden;
+        transition: all 0.6s ease-in 0s;
 
         &:nth-of-type(2n+1) {
           top: 0;

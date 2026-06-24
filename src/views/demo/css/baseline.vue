@@ -107,19 +107,19 @@
       // margin-top: 20px;
       font-size: 14px;
       // line-height: 42px;
-      background: rgba(green, 1);
+      background: rgb(green, 1);
     }
 
     .text-2 {
       padding-bottom: 20px;
       font-size: 20px;
-      background: rgba(red, 1);
+      background: rgb(red, 1);
     }
 
     .text-3 {
       margin-top: 20px;
       font-size: 30px;
-      background: rgba(blue, 1);
+      background: rgb(blue, 1);
     }
   }
 

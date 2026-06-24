@@ -105,7 +105,6 @@
       grid-template-columns: 50px 50px 50px;
       // justify-items: start;
       grid-auto-rows: 80px;
-      grid-column-gap: 0; //grid在最新的语法中可省略
       // grid-template-rows: 50px 50px 50px;
       // grid-gap: <grid-row-gap> <grid-column-gap>;
       column-gap: 0; //grid在最新的gap相关的3个语法中可省略
@@ -157,13 +156,11 @@
 
       &.container-01 {
         .item-1 {
-          grid-column-start: 1;
-          grid-column-end: 3;
+          grid-column: 1 / 3;
         }
 
         .item-2 {
-          grid-column-start: 1;
-          grid-column-end: 3;
+          grid-column: 1 / 3;
         }
       }
 

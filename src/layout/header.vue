@@ -54,94 +54,108 @@ export default {
 </script>
 <style lang="scss">
 .ly-header {
-  height: 50px;
-  background: #ffffff;
-  box-shadow: 0px 0px 5px rgba(0,0,0,0.3);
   display: flex;
-  padding: 0 20px 0 60px;
   flex-shrink: 0;
-  justify-content:space-between;
   align-items: center;
+  justify-content:space-between;
+  height: 50px;
+  padding: 0 20px 0 60px;
   color: #8098b0;
+  background: #fff;
+  box-shadow: 0 0 5px rgb(0 0 0 / 30%);
+
   .part-left{
     padding-left:12px;
+    font-size:12px;
     line-height: 30px;
     border-left:1px solid #eaedf4;
-    font-size:12px;
   }
+
   .part-right{
     display: flex;
     align-items: center;
     height: 100%;
+
     .login-infor{
       position: relative;
       display: flex;
-      height:100%;
       align-items: center;
+      height:100%;
       font-size:13px;
+
       &:hover{
         dt{
           background: #f2f3f5;
+
           .icon-caret{
             transform: rotate(-180deg);
           }
         }
+
         dd{
           top:100%;
           visibility: visible;
         }
       }
+
       dt {
+        box-sizing: border-box;
         display: flex;
         align-items: center;
-        height:100%;
         min-width: 100px;
         max-width: 200px;
+        height:100%;
         padding:0 12px;
-        box-sizing: border-box;
-        border-left:1px solid #eaedf4;
         cursor: pointer;
+        border-left:1px solid #eaedf4;
+
         .icon-user{
-          border:1px solid #8098b0;
           padding:1px;
-          border-radius: 50%;
           margin-right: 5px;
+          border:1px solid #8098b0;
+          border-radius: 50%;
         }
+
         .icon-caret{
-          transition: all 0.4s ease-in-out 0s;
           margin-left: 5px;
+          transition: all 0.4s ease-in-out 0s;
         }
+
         span{
           flex-grow: 1;
           overflow: hidden;
-          white-space: nowrap;
           text-overflow: ellipsis;
+          white-space: nowrap;
         }
       }
+
       dd{
-        z-index: 5;
         position: absolute;
-        left:0;
         top:70%;
+        left:0;
+        z-index: 5;
+        visibility: hidden;
         width:100%;
-        background: #ffffff;
+        background: #fff;
         border:1px solid #eaedf4;
         transition: all 0.4s ease-in-out 0s;
-        visibility: hidden;
+
         ul{
           max-height: 270px;
-          overflow-x: hidden;
-          overflow-y: auto;
+          overflow: hidden auto;
+
           li{
             display: flex;
             align-items: center;
             padding-left:12px;
             line-height: 40px;
             color: #8098b0;
+
             &:hover{
-              color: #ffffff;
+              color: #fff;
               background-color: #02aadb;
             }
+
             .icon-right{
               margin-right: 5px;
             }
