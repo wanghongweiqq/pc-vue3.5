@@ -1,16 +1,15 @@
 import ajax from '@/service/axios'
 export default {
   // 获取活动列表
-  getList: (data) => ajax({
-    url: '/msg/getWebMsg',
+  getList: (params) => ajax({
+    url: '/api/demo/list',
     method: 'get',
-    data,
-    showLoading: true
+    params,
+    isKeepLoading: true,
   }),
-  // /搜索客户
-  searchtList: (data) => ajax({
-    url: '/brilliant/common/search',
+  // 搜索客户
+  searchList: (data) => ajax({
+    url: '/api/demo/search',
     data,
-    showLoading: true
   })
 }

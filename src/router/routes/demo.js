@@ -158,6 +158,19 @@ export default {
       }
     },
     {
+      path: 'http',
+      name: 'http',
+      component: () => import('@/views/demo/http/'),
+      meta: {
+        title: 'http',
+        key: 'MENU_HAWK_DEMO',
+        crumb: [
+          { name: 'Demo' },
+          { name: 'http' },
+        ]
+      }
+    },
+    {
       path: 'index',
       name: 'demoIndex',
       component: () => import('@/views/demo/index.vue'),

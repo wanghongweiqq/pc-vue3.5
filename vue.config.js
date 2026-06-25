@@ -20,6 +20,7 @@ module.exports = {
           changeOrigin: true,
           ws: false, // 不代理 WebSocket，避免 HMR 热更新连接报 TypeError
           bypass: (req) => {
+            console.log('reqreqreq',req)
             // target='/' 表示无真实后端，所有请求均走本地，避免 http-proxy 解析无效 URL 报错
             if (target === '/') return req.url
             if ((req.headers.accept || '').indexOf('html') !== -1) return '/index'
@@ -45,7 +46,7 @@ module.exports = {
         // 若将 @import 插到前面会导致编译报错。
         additionalData: (content, { resourcePath }) => {
           if (resourcePath.includes('node_modules')) return content
-          return `@import "@/assets/css/_variables.scss";\n${content}`
+          return `@import "@/assets/css/_variables.scss";\n${ content }`
         }
       }
     }

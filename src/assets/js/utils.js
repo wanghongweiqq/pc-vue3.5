@@ -1,5 +1,6 @@
 
 import Constant from './constant'
+import regExp from './reg-exp'
 
 export default {
   /**
@@ -362,10 +363,13 @@ export default {
       return [this.dayStart(monthStart), this.dayEnd(monthEnd)]
     }
   },
-  // 数据类型判断，返回：element、string、number、boolean、object……
+  // 数据类型判断，返回：element、file、string、number、boolean、object……
   dataType (data) {
     if (data instanceof Element) {
       return 'element'
+    }
+    if (data instanceof File) {
+      return 'file'
     }
     if (typeof data === 'symbol') {
       return 'symbol'
@@ -384,20 +388,44 @@ export default {
     }
     return map[Object.prototype.toString.call(data)]
   },
-  // 数据深拷贝，支持Symbal
-  deepCopy (data) {
+  /**
+   * @description: 数据深拷贝，支持 Symbol，可按需过滤空格/空值
+   * @param {*} data 源数据，必传
+   * @param {*} params 配置项，非必传
+   * {
+   *   isFilterStringSpace  是否过滤字符串首尾空格，默认 false
+   *   isFilterObjectParams 是否过滤对象空属性（null/undefined/''/[]/{}），默认 false
+   * }
+   * @return {*} 深拷贝后的数据
+   */
+  copyDeep (data, params = {}) {
+    const { regExpSpace } = regExp
+    const { isFilterStringSpace = false, isFilterObjectParams = false } = params
     let newData = null
     const type = this.dataType(data)
-    if(type === 'array' || type === 'object') {
+
+    if (type === 'string' && isFilterStringSpace) {
+      newData = data.replace(regExpSpace, '')
+    } else if (type === 'array' || type === 'object') {
       newData = type === 'array' ? [] : {}
-      let proto = [...Object.keys(data), ...Object.getOwnPropertySymbols(data)]
+      const proto = [...Object.keys(data), ...Object.getOwnPropertySymbols(data)]
       proto.forEach((key) => {
-        newData[key] = this.deepCopy(data[key])
+        if (isFilterObjectParams && type === 'object') {
+          const typeChild = this.dataType(data[key])
+          if (
+            typeChild === 'null' ||
+            typeChild === 'undefined' ||
+            (typeChild === 'string' && data[key].replace(regExpSpace, '') === '') ||
+            (typeChild === 'array' && data[key].length === 0) ||
+            (typeChild === 'object' && Object.keys(data[key]).length === 0)
+          ) return
+        }
+        newData[key] = this.copyDeep(data[key], params)
       })
-      return newData
-    }else{
-      return data
+    } else {
+      newData = data
     }
+    return newData
   },
   /**
  * @description: 复制文本

@@ -387,7 +387,7 @@ export default {
     },
     // 搜索客户
     querySearchAsync (queryString, cb) {
-      ajax.searchtList({
+      ajax.searchList({
         content: queryString,
         page: 1,
         pageSize: 10
@@ -429,18 +429,12 @@ export default {
       this.$router.push({ name: 'test01Detail' })
     },
     getList () {
-      ajax.getList({
-        ...utils.filterParams(this.query),
-        pageSize: this.pageSize,
-        page: this.currentPage
-      }).then((res) => {
+      ajax.searchList({ a: 1 } ).then((res) => {
+      // ajax.getList(['a','b'] ).then((res) => {
+      // ajax.getList({ a: 1 } ).then((res) => {
         if (res.success) {
-          this.count = res.data.totalElements
-          if (res.data.content && res.data.content.length > 0) {
-            this.queryList = res.data.content
-          } else {
-            this.queryList = []
-          }
+          this.count = res.data.total
+          this.queryList = res.data.list || []
         } else {
           this.queryList = []
         }
