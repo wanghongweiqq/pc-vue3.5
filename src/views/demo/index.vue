@@ -314,6 +314,13 @@
       >
         重置筛选
       </el-button>
+      <el-button
+        size="small"
+        type="warning"
+        @click="triggerRequestInterceptorError"
+      >
+        触发请求拦截器报错
+      </el-button>
     </div>
   </div>
 </template>
@@ -322,6 +329,7 @@ import utils from '@/assets/js/utils'
 import CpCrumbs from '@/components/crumbs/'
 import CpSeeimages from '@/components/seeimages/'
 import ajax from '@/service/apis/demo'
+import axiosInstance from '@/service/axios'
 import { listStatus as mockListStatus, queryList as mockQueryList } from './mock'
 
 export default {
@@ -428,9 +436,20 @@ export default {
     goDetail () {
       this.$router.push({ name: 'test01Detail' })
     },
+    // 触发请求拦截器报错示例
+    // 原理：axios 请求拦截器按 LIFO 顺序执行，注册一个主动抛错的临时拦截器，
+    //       它先于主拦截器执行并抛出异常，异常会传递给主拦截器的 error 回调
+    triggerRequestInterceptorError () {
+      const id = axiosInstance.interceptors.request.use(config => {
+        throw new Error('手动触发：请求拦截器异常（demo）')
+      })
+      axiosInstance({ url: '/api/demo/list' }).finally(() => {
+        axiosInstance.interceptors.request.eject(id) // 用完立即卸载，不影响后续请求
+      })
+    },
     getList () {
-      ajax.searchList({ a: 1 } ).then((res) => {
-      // ajax.getList(['a','b'] ).then((res) => {
+      // ajax.searchList({ a: 1 } ).then((res) => {
+      ajax.getList(['a','b'] ).then((res) => {
       // ajax.getList({ a: 1 } ).then((res) => {
         if (res.success) {
           this.count = res.data.total

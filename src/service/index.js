@@ -6,7 +6,7 @@ export default {
     return ajax({
       url: '/brilliant/common/tableList',
       data,
-      showLoading: false
+      isShowLoading: false
     })
   }
 }

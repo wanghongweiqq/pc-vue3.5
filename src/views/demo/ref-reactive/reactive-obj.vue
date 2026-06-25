@@ -60,6 +60,23 @@ const obj = reactive({
       </li>
     </ul>
 
+    <h3>watch(() => obj.name) 的 deep 行为</h3>
+    <p>getter 函数只追踪<em>返回值的变化</em>，<code>deep</code> 是否需要取决于 <code>obj.name</code> 是原始值还是对象：</p>
+    <pre>
+const obj = reactive({ name: { title: 'Vue3' } })
+
+// ① 直接 watch reactive 对象 → 默认 deep: true，可感知内部所有属性变化
+watch(obj, handler)
+
+// ② getter 返回对象 → 默认 deep: false，只感知引用替换，感知不到内部属性变化
+watch(() => obj.name, handler)
+obj.name.title = 'React'    // ❌ 不触发（引用未变）
+obj.name = { title: 'React' } // ✅ 触发（引用变了）
+
+// ③ getter 返回原始值 → 直接感知，无需 deep（推荐，精准监听）
+watch(() => obj.name.title, handler) // ✅ 精准追踪到 title 的变化</pre>
+    <p><em>建议：能精准到具体属性就不要开 deep: true</em>，deep 会递归遍历对象所有层级，数据复杂时有性能开销。</p>
+
     <h3>Vue 3 watch 源合法类型总结</h3>
     <table class="table">
       <tbody>
@@ -129,5 +146,7 @@ watch(() => obj.name,(newVal,oldVal) => {
   console.log('watch-reactive-() => obj.name')
   console.log('newVal:', newVal)
   console.log('oldVal:', oldVal)
+},{
+  // deep: true // 对象类型的数据时，默认deep=true
 })
 </script>
