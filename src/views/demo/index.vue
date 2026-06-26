@@ -330,7 +330,6 @@ import CpCrumbs from '@/components/crumbs/'
 import CpSeeimages from '@/components/seeimages/'
 import ajax from '@/service/apis/demo'
 import axiosInstance from '@/service/axios'
-import { listStatus as mockListStatus, queryList as mockQueryList } from './mock'
 
 export default {
   components: {
@@ -369,8 +368,11 @@ export default {
         }
       ],
       // 云采状态列表
-      listStatus: mockListStatus,
-      queryList: mockQueryList,
+      listStatus: [
+        { id: 0, status: '开启' },
+        { id: 1, status: '停止' },
+      ],
+      queryList: [],
       currentPage: 1,
       pageSize: 10,
       pageSizes: [10, 20, 30, 40],
@@ -378,15 +380,18 @@ export default {
     }
   },
   computed: {
-    // 行高 40px + 1px 边框 = 41px，表头同高，精确匹配当前行数
+    // 行高 41px + 1px 边框 = 41px，表头同高，精确匹配当前行数
     // 空数组时返回 null 不限制高度，让表格自然展示默认空状态
     tableMaxHeight () {
       if (!this.queryList.length) return null
-      return this.queryList.length * 41 + 41
+      return this.queryList.length * 42 + 40
     },
   },
   created () {
-    // this.getList()
+    this.getList()
+    let a = [1,2,3,4]
+    a = a.sort(() => Math.random() - 0.5)
+    console.log('created',a)
   },
   methods: {
     // 大图展示
@@ -448,12 +453,17 @@ export default {
       })
     },
     getList () {
-      // ajax.searchList({ a: 1 } ).then((res) => {
-      ajax.getList(['a','b'] ).then((res) => {
-      // ajax.getList({ a: 1 } ).then((res) => {
+      ajax.getList(this.query).then((res) => {
         if (res.success) {
-          this.count = res.data.total
-          this.queryList = res.data.list || []
+          let list = res.data.list || []
+          // mock 返回全量数据，随机打乱模拟每次请求数据变化（实际由后端处理）
+          // list = list.sort(() => Math.random() - 0.5) // 不更新， 原地排序，引用没变
+          // list = [...list].sort(() => Math.random() - 0.5)
+          // list = list.toSorted(() => Math.random() - 0.5)
+          console.log('list',list)
+          this.count = list.length
+          this.queryList = list
+          this.queryList.sort(() => Math.random() - 0.5) // 直接操作响应式数组
         } else {
           this.queryList = []
         }

@@ -2,7 +2,7 @@ import ajax from '@/service/axios'
 export default {
   // 获取活动列表
   getList: (params) => ajax({
-    url: '/api/demo/list123',
+    url: '/api/demo/list',
     method: 'get',
     params,
     // isKeepLoading: true

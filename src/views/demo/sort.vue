@@ -35,7 +35,7 @@ const list = reactive([4, 0, 1, 2, 3, 5])// 9次循环
 // const list1 = reactive([0, 1, 2, 3, 4, 5]) // 5次循环
 
 const bubble = (arr) => {
-  let val = utils.deepCopy(arr)
+  let val = utils.copyDeep(arr)
   // let val = arr
   let x = 0 // 用于计算循环次数
   for(let i = 0; i < val.length - 1; i++) {

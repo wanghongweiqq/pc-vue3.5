@@ -11,7 +11,6 @@
       isShowLoading:        是否开启 loading，默认 true
       isKeepLoading:        是否保持 loading（接口嵌套时非最后一个可设为 true），默认 false
       isShowError:          是否开启错误提示，默认 true
-      isFormData:           是否为 FormData 格式，默认 false
       isFilterStringSpace:  过滤参数值首尾空格，默认 false
       isFilterObjectParams: 过滤 null/undefined/''/[]/{}，默认 false
  */
@@ -29,7 +28,7 @@ let loadRef = null // loading 实例引用，保证只创建一个
 // 关闭 loading（isKeepLoading 为 true 时保持 loading 不关闭）
 function closeLoading (isShowLoading, isKeepLoading) {
   if (isShowLoading) {
-    loadCount--
+    loadCount = Math.max(0, loadCount - 1)
     if (loadCount <= 0 && !isKeepLoading) {
       loadRef && loadRef.close()
       loadRef = null
@@ -60,7 +59,6 @@ const instance = axios.create({
   isShowLoading: true,
   isKeepLoading: false,
   isShowError: true,
-  isFormData: false,
   isFilterStringSpace: false,
   isFilterObjectParams: false,
 })
@@ -69,7 +67,7 @@ const instance = axios.create({
 
 // 请求拦截器
 instance.interceptors.request.use(config => {
-  console.log('添加一个请求拦截器', config)
+  if (process.env.NODE_ENV === 'development') console.log('添加一个请求拦截器', config)
 
   // development 环境命中 mockMap，注入自定义 adapter，不发真实请求
   if (process.env.NODE_ENV === 'development' && mockMap[config.url] !== undefined) {
@@ -84,7 +82,7 @@ instance.interceptors.request.use(config => {
   }
 
   // 读取自定义字段（已由 instance.defaults 提供默认值，经 axios 合并后直接从 config 取）
-  const { isKeepLoading, isFormData, isFilterStringSpace, isFilterObjectParams } = config
+  const { isKeepLoading, isFilterStringSpace, isFilterObjectParams } = config
 
   // isKeepLoading 时强制开启 loading
   if (isKeepLoading) config.isShowLoading = true
@@ -102,11 +100,6 @@ instance.interceptors.request.use(config => {
     }
   }
 
-  // FormData 格式
-  if (isFormData) {
-    config.headers['Content-Type'] = 'multipart/form-data'
-  }
-
   // 开启 loading
   if (isShowLoading) {
     loadCount++
@@ -117,7 +110,7 @@ instance.interceptors.request.use(config => {
 
   return config
 }, error => {
-  console.log('添加一个请求拦截器-error', error)
+  if (process.env.NODE_ENV === 'development') console.log('添加一个请求拦截器-error', error)
   // 典型来源: 前置拦截器抛错,拦截器链内部出错,极少出现。本项目只注册了一个请求拦截器，没有其他拦截器在它之前抛错，所以这个错误回调几乎不会被触发。
   // 不在此处理，error会透传到响应拦截器那边，统一交给响应拦截器的 error 回调处理，这样可以防止重复处理（错误信息提示两次、loading计算错误等）
   return Promise.reject(error)
@@ -126,7 +119,7 @@ instance.interceptors.request.use(config => {
 // 响应拦截器
 instance.interceptors.response.use(
   response => {
-    console.log('添加一个响应拦截器', response)
+    if (process.env.NODE_ENV === 'development') console.log('添加一个响应拦截器', response)
     const { isShowLoading = true, isKeepLoading = false, isShowError = true } = response.config
     closeLoading(isShowLoading, isKeepLoading)
     // 业务错误提示（接口正常返回但业务失败）
@@ -137,7 +130,7 @@ instance.interceptors.response.use(
     return res
   },
   error => {
-    console.log('添加一个响应拦截器-error', error)
+    if (process.env.NODE_ENV === 'development') console.log('添加一个响应拦截器-error', error)
     const { isShowLoading = true, isShowError = true } = error.config || {} // config 可能为 undefined（来自请求拦截器的错误）
     closeLoading(isShowLoading, false) // 异常时强制关闭 loading
     if (isShowError) {

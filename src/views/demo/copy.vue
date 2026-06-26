@@ -159,7 +159,7 @@ export default {
         i: [1,2],
         [s]: 'Symbol',
       }
-      const deep0 = this.$utils.deepCopy(data0)
+      const deep0 = this.$utils.copyDeep(data0)
       const copy0 = JSON.parse(JSON.stringify(data0))
 
       console.log('复制：原数据-深拷贝ok-深拷贝JSON')

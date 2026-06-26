@@ -36,6 +36,13 @@
         >
           <ReactiveArray />
         </el-tab-pane>
+
+        <el-tab-pane
+          label="proxy 与响应式边界"
+          name="proxyReactivity"
+        >
+          <ProxyReactivity />
+        </el-tab-pane>
       </el-tabs>
     </div>
   </div>
@@ -47,6 +54,7 @@ import RefCount from './ref-count'
 import ReactiveObj from './reactive-obj'
 import RefArray from './ref-array'
 import ReactiveArray from './reactive-array'
+import ProxyReactivity from './proxy-reactivity'
 
 const activeTab = ref('intro')
 </script>

@@ -53,7 +53,7 @@ const activeTab = ref('create')
 
 function jieGou () {
   let obj = { a: { l: 1 }, b: { l: 1 }, c: 3, d: 4,e: null }
-  let objCopy = utils.deepCopy(obj)
+  let objCopy = utils.copyDeep(obj)
   let { a, b, c, d,e = 1 } = obj
   a = { m: 2 }
   b.l = 2
