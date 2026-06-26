@@ -1,25 +1,21 @@
-<!--
- * @Author: 王宏伟
- * @Email：wanghongwei@hualala.com
- * @Date: 2021-11-29 10:10:36
- * @LastEditTime: 2025-03-21 10:05:34
- * @LastEditors: Please set LastEditors
- * @Description: async-await
- * @FilePath: /vue3.0/src/views/demo/async-await.vue
--->
 <template>
   <div class="pg-async-await">
     <div class="ly-box">
       <cp-crumbs />
-      <div class="content">
-        <h1>async</h1>
-        <p>async 是一个修饰符，async 定义的函数会默认的返回一个Promise对象resolve的值，因此对async函数可以直接进行then操作,返回的值即为then方法的传入函数</p>
-        <h1>await</h1>
-        <p>await 关键字 只能放在 async 函数内部， await关键字的作用 就是获取 Promise中返回的内容， 获取的是Promise函数中resolve或者reject的值</p>
-        <p>// 如果await 后面并不是一个Promise的返回值，则会按照同步程序返回值处理</p>
+      <el-tabs v-model="activeTab">
+        <el-tab-pane
+          label="async / await"
+          name="asyncAwait"
+        >
+          <div class="content">
+            <h1>async</h1>
+            <p>async 是一个修饰符，async 定义的函数会默认的返回一个Promise对象resolve的值，因此对async函数可以直接进行then操作,返回的值即为then方法的传入函数</p>
+            <h1>await</h1>
+            <p>await 关键字 只能放在 async 函数内部， await关键字的作用 就是获取 Promise中返回的内容， 获取的是Promise函数中resolve或者reject的值</p>
+            <p>// 如果await 后面并不是一个Promise的返回值，则会按照同步程序返回值处理</p>
 
-        <h2>await 关键字 只能放在 async 函数内部， await关键字的作用 就是获取 Promise中返回的内容， 获取的是Promise函数中resolve或者reject的值</h2>
-        <pre>
+            <h2>await 关键字 只能放在 async 函数内部， await关键字的作用 就是获取 Promise中返回的内容， 获取的是Promise函数中resolve或者reject的值</h2>
+            <pre>
           test1 () {
             const x = function () { return 'step1' }
             const y = new Promise((resolve, reject) => {
@@ -43,8 +39,8 @@
             })
           }
         </pre>
-        <h2>如果await 后面并不是一个Promise的返回值，则会按照同步程序返回值处理,为undefined</h2>
-        <pre>
+            <h2>如果await 后面并不是一个Promise的返回值，则会按照同步程序返回值处理,为undefined</h2>
+            <pre>
           test2 () {
             const x = function () { return 'step1' }
             const y = () => {
@@ -66,11 +62,11 @@
               const step3 = await 'step3'
               console.log(`step3=${ step3 }`) // step3=step3，三个结果按顺序同时输出
             }
-            asyFun() 
+            asyFun()
           }
         </pre>
-        <h2>await的重要应用,将异步调用设置为同步执行，</h2>
-        <pre>
+            <h2>await的重要应用,将异步调用设置为同步执行，</h2>
+            <pre>
           test3 () {
             const timeStart = new Date().getTime()
             const asy = function (x) {
@@ -93,7 +89,7 @@
             }
 
             asyFun()
-             
+
             // 使用promise亦可实现，方法1
             const asyFun2 = function () {
               const step1 = () => {
@@ -106,13 +102,13 @@
                 return asy('step3')
               }
               step1().then(step1 => {
-                console.log(`step1=${ step1 }`) 
+                console.log(`step1=${ step1 }`)
                 return step2()
               }).then(step2 => {
-                console.log(`step2=${ step2 }`) 
+                console.log(`step2=${ step2 }`)
                 return step3()
               }).then(step3 => {
-                console.log(`step3=${ step3 }`) 
+                console.log(`step3=${ step3 }`)
                 const timeEnd = new Date().getTime()
                 console.log(`时间：${ parseInt((timeEnd - timeStart) / 1000) }s`) // 时间：3s
               })
@@ -122,22 +118,22 @@
             // 使用promise亦可实现，方法2
             const asyFun3 = function () {
               asy('step1').then(step1 => {
-                console.log(`step1=${ step1 }`) 
+                console.log(`step1=${ step1 }`)
                 return asy('step2')
               }).then(step2 => {
-                console.log(`step2=${ step2 }`) 
+                console.log(`step2=${ step2 }`)
                 return asy('step3')
               }).then(step3 => {
-                console.log(`step3=${ step3 }`) 
+                console.log(`step3=${ step3 }`)
                 const timeEnd = new Date().getTime()
                 console.log(`时间：${ parseInt((timeEnd - timeStart) / 1000) }s`) // 时间：3s
               })
             }
-            asyFun3() 
+            asyFun3()
           }
         </pre>
-        <h3> 虽然promis.then亦可实现，但可读性和复杂度方面没有前者优秀，具体如下，每一个步骤都需要之前每个步骤的结果</h3>
-        <pre>
+            <h3>虽然 promise.then 亦可实现，但可读性和复杂度方面没有前者优秀，具体如下，每一个步骤都需要之前每个步骤的结果</h3>
+            <pre>
           test4 () {
             const timeStart = new Date().getTime()
             const asy = function () {
@@ -164,7 +160,7 @@
               const timeEnd = new Date().getTime()
               console.log(`时间：${ parseInt((timeEnd - timeStart) / 1000) }s`)// 时间：3s
             }
-            // asyFun() 
+            // asyFun()
 
             // 使用promise亦可实现
             const asyFun2 = function () {
@@ -178,11 +174,11 @@
                 return asy(step1,step2,'step3')
               }
               step1().then(step1 => {
-                console.log(`step1=${ step1 }`) 
+                console.log(`step1=${ step1 }`)
                 return step2(step1).then(step2 => [step1,step2])
               }).then(array => {
                 const [step1,step2] = array
-                console.log(`step2=${ step2 }`) 
+                console.log(`step2=${ step2 }`)
                 return step3(step1,step2)
               }).then(step3 => {
                 console.log(`step3=${ step3 }`)
@@ -190,22 +186,34 @@
                 console.log(`时间：${ parseInt((timeEnd - timeStart) / 1000) }s`) // 时间：3s
               })
             }
-            asyFun2() 
+            asyFun2()
           }
         </pre>
-      </div>
+          </div>
+        </el-tab-pane>
+
+        <el-tab-pane
+          label="$nextTick"
+          name="nextTick"
+        >
+          <async-await-nexttick />
+        </el-tab-pane>
+      </el-tabs>
     </div>
   </div>
 </template>
 <script>
 import CpCrumbs from '@/components/crumbs/'
+import AsyncAwaitNexttick from './nexttick'
 
 export default {
   components: {
     CpCrumbs,
+    AsyncAwaitNexttick,
   },
   data () {
-    return{
+    return {
+      activeTab: 'asyncAwait',
     }
   },
   mounted () {
@@ -217,7 +225,6 @@ export default {
   methods: {
     // await的值含有Promise，会按照同步顺序等待后执行
     test1 () {
-      // const x = function () { return 'step1' }
       function x () { return 'step1' }
       const y = new Promise((resolve) => {
         setTimeout(function () {
@@ -243,11 +250,6 @@ export default {
     test2 () {
       const x = function () { return 'step1' }
       const y = () => {
-        // return new Promise((resolve, reject) => {
-        //   setTimeout(function () {
-        //     resolve('step2')
-        //   }, 1000)
-        // })
         setTimeout(function () {
           return('step2')
         }, 1000)
@@ -261,9 +263,9 @@ export default {
         const step3 = await 'step3'
         console.log(`step3=${ step3 }`) // step3=step3，三个结果按顺序同时输出
       }
-      asyFun() 
+      asyFun()
     },
-    // await的重要应用,将异步调用设置为同步执行，
+    // await的重要应用,将异步调用设置为同步执行
     test3 () {
       const timeStart = new Date().getTime()
       const asy = function (x) {
@@ -287,48 +289,40 @@ export default {
 
       asyFun()
 
-      // 使用promise亦可实现，方法1
       const asyFun2 = function () {
-        const step1 = () => {
-          return asy('step1')
-        }
-        const step2 = () => {
-          return asy('step2')
-        }
-        const step3 = () => {
-          return asy('step3')
-        }
+        const step1 = () => { return asy('step1') }
+        const step2 = () => { return asy('step2') }
+        const step3 = () => { return asy('step3') }
         step1().then(step1 => {
-          console.log(`step1=${ step1 }`) 
+          console.log(`step1=${ step1 }`)
           return step2()
         }).then(step2 => {
-          console.log(`step2=${ step2 }`) 
+          console.log(`step2=${ step2 }`)
           return step3()
         }).then(step3 => {
-          console.log(`step3=${ step3 }`) 
+          console.log(`step3=${ step3 }`)
           const timeEnd = new Date().getTime()
           console.log(`时间：${ parseInt((timeEnd - timeStart) / 1000) }s`) // 时间：3s
         })
       }
       asyFun2()
 
-      // 使用promise亦可实现，方法2
       const asyFun3 = function () {
         asy('step1').then(step1 => {
-          console.log(`step1=${ step1 }`) 
+          console.log(`step1=${ step1 }`)
           return asy('step2')
         }).then(step2 => {
-          console.log(`step2=${ step2 }`) 
+          console.log(`step2=${ step2 }`)
           return asy('step3')
         }).then(step3 => {
-          console.log(`step3=${ step3 }`) 
+          console.log(`step3=${ step3 }`)
           const timeEnd = new Date().getTime()
           console.log(`时间：${ parseInt((timeEnd - timeStart) / 1000) }s`) // 时间：3s
         })
       }
-      asyFun3() 
+      asyFun3()
     },
-    // 虽然promis.then亦可实现，但可读性和复杂度方面没有前者优秀，具体如下，每一个步骤都需要之前每个步骤的结果
+    // 虽然promise.then亦可实现，但可读性和复杂度方面没有前者优秀
     test4 () {
       const timeStart = new Date().getTime()
       const asy = function () {
@@ -338,13 +332,11 @@ export default {
         }
         return new Promise((resolve) => {
           setTimeout(() => {
-            // console.log(x)
             resolve(arg)
           }, 1000)
         })
       }
 
-      // 使用async/await亦可实现
       const asyFun = async function () {
         const step1 = await asy('step1')
         console.log(`step1=${ step1 }`) // step1=step1 ,1秒后执行
@@ -355,25 +347,18 @@ export default {
         const timeEnd = new Date().getTime()
         console.log(`时间：${ parseInt((timeEnd - timeStart) / 1000) }s`)// 时间：3s
       }
-      asyFun() 
+      asyFun()
 
-      // 使用promise亦可实现
       const asyFun2 = function () {
-        const step1 = () => {
-          return asy('step1')
-        }
-        const step2 = (step1) => {
-          return asy(step1,'step2')
-        }
-        const step3 = (step1,step2) => {
-          return asy(step1,step2,'step3')
-        }
+        const step1 = () => { return asy('step1') }
+        const step2 = (step1) => { return asy(step1,'step2') }
+        const step3 = (step1,step2) => { return asy(step1,step2,'step3') }
         step1().then(step1 => {
-          console.log(`step1=${ step1 }`) 
+          console.log(`step1=${ step1 }`)
           return step2(step1).then(step2 => [step1,step2])
         }).then(array => {
           const [step1,step2] = array
-          console.log(`step2=${ step2 }`) 
+          console.log(`step2=${ step2 }`)
           return step3(step1,step2)
         }).then(step3 => {
           console.log(`step3=${ step3 }`)
@@ -381,7 +366,7 @@ export default {
           console.log(`时间：${ parseInt((timeEnd - timeStart) / 1000) }s`) // 时间：3s
         })
       }
-      asyFun2() 
+      asyFun2()
     }
   }
 }

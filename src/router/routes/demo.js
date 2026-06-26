@@ -22,7 +22,7 @@ export default {
     {
       path: 'async-await',
       name: 'async-await',
-      component: () => import('@/views/demo/async-await.vue'),
+      component: () => import('@/views/demo/async-await/index.vue'),
       meta: {
         title: 'async-await',
         key: 'MENU_HAWK_DEMO',
@@ -267,21 +267,6 @@ export default {
         crumb: [
           { name: 'Demo' },
           { name: 'task', href: 'task' },
-        ]
-      }
-    },
-    {
-      path: 'test01/detail',
-      name: 'test01Detail',
-      component: () => import('@/views/demo/about.vue'),
-      meta: {
-        title: 'test01-detail',
-        key: 'MENU_HAWK_DEMO',
-        hidden: true,
-        crumb: [
-          { name: 'Demo' },
-          { name: 'index', href: 'ui' },
-          { name: 'test01-detail' },
         ]
       }
     },

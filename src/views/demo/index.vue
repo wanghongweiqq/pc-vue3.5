@@ -137,12 +137,6 @@
           >
             重置筛选
           </el-button>
-          <el-button
-            size="small"
-            @click="goDetail"
-          >
-            跳转详情
-          </el-button>
           <el-pagination
             :current-page="currentPage"
             :page-size="pageSize"
@@ -321,6 +315,17 @@
       >
         触发请求拦截器报错
       </el-button>
+      <el-button
+        size="small"
+        type="success"
+        @click="getFetchDetail"
+      >
+        fetch adapter 请求
+      </el-button>
+      <pre
+        v-if="fetchResult"
+        class="fetch-result"
+      >{{ fetchResult }}</pre>
     </div>
   </div>
 </template>
@@ -373,6 +378,7 @@ export default {
         { id: 1, status: '停止' },
       ],
       queryList: [],
+      fetchResult: null, // fetch adapter 请求结果
       currentPage: 1,
       pageSize: 10,
       pageSizes: [10, 20, 30, 40],
@@ -400,6 +406,7 @@ export default {
     },
     // 搜索客户
     querySearchAsync (queryString, cb) {
+      console.log(1)
       ajax.searchList({
         content: queryString,
         page: 1,
@@ -438,8 +445,13 @@ export default {
       this.query = {}
       this.currentPage = 1
     },
-    goDetail () {
-      this.$router.push({ name: 'test01Detail' })
+    // fetch adapter 请求示例
+    getFetchDetail () {
+      ajax.getDetail({ id: 1 }).then(res => {
+        if (res.success) {
+          this.fetchResult = JSON.stringify(res.data, null, 2)
+        }
+      })
     },
     // 触发请求拦截器报错示例
     // 原理：axios 请求拦截器按 LIFO 顺序执行，注册一个主动抛错的临时拦截器，

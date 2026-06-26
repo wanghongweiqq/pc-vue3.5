@@ -43,6 +43,13 @@
         >
           <ProxyReactivity />
         </el-tab-pane>
+
+        <el-tab-pane
+          label="watch / watchEffect"
+          name="watchWatchEffect"
+        >
+          <WatchWatchEffect />
+        </el-tab-pane>
       </el-tabs>
     </div>
   </div>
@@ -55,6 +62,7 @@ import ReactiveObj from './reactive-obj'
 import RefArray from './ref-array'
 import ReactiveArray from './reactive-array'
 import ProxyReactivity from './proxy-reactivity'
+import WatchWatchEffect from './watch-watcheffect'
 
 const activeTab = ref('intro')
 </script>

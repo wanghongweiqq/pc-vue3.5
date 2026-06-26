@@ -33,6 +33,36 @@
         >
           <HttpStatus />
         </el-tab-pane>
+        <el-tab-pane
+          label="TCP / UDP / QUIC"
+          name="tcp"
+        >
+          <HttpTcp />
+        </el-tab-pane>
+        <el-tab-pane
+          label="HTTP 版本"
+          name="versions"
+        >
+          <HttpVersions />
+        </el-tab-pane>
+        <el-tab-pane
+          label="缓存"
+          name="cache"
+        >
+          <HttpCache />
+        </el-tab-pane>
+        <el-tab-pane
+          label="跨域"
+          name="cors"
+        >
+          <HttpCors />
+        </el-tab-pane>
+        <el-tab-pane
+          label="axios 封装总结"
+          name="axiosSummary"
+        >
+          <AxiosSummary />
+        </el-tab-pane>
       </el-tabs>
     </div>
   </div>
@@ -45,6 +75,11 @@ import HttpMethod from './http-method'
 import HttpBody from './http-body'
 import HttpHeaders from './http-headers'
 import HttpStatus from './http-status'
+import HttpTcp from './http-tcp'
+import HttpVersions from './http-versions'
+import HttpCache from './http-cache'
+import HttpCors from './http-cors'
+import AxiosSummary from './axios-summary'
 
 const activeTab = ref('base')
 </script>

@@ -49,6 +49,7 @@ function applyFilter (val, isFilterStringSpace, isFilterObjectParams) {
 const instance = axios.create({
   baseURL: '/',
   timeout: 30000,
+  method: 'post',
   headers: {
     // Cache-Control 是请求头，浏览器会不会遵守，最终还是看服务端响应，可以查看响应头是否展示（可以找后端统一配置）：Cache-Control: no-cache。可以和时间戳防缓存2选1
     'Cache-Control': 'no-cache', // 现代写法，每次都向服务器确认
@@ -120,7 +121,7 @@ instance.interceptors.request.use(config => {
 instance.interceptors.response.use(
   response => {
     if (process.env.NODE_ENV === 'development') console.log('添加一个响应拦截器', response)
-    const { isShowLoading = true, isKeepLoading = false, isShowError = true } = response.config
+    const { isShowLoading, isKeepLoading, isShowError } = response.config
     closeLoading(isShowLoading, isKeepLoading)
     // 业务错误提示（接口正常返回但业务失败）
     const res = response.data
