@@ -395,6 +395,7 @@ export default {
    * {
    *   isFilterStringSpace  是否过滤字符串首尾空格，默认 false
    *   isFilterObjectParams 是否过滤对象空属性（null/undefined/''/[]/{}），默认 false
+   *   isDeleteOssParams 是否删除oss资源带的参数，非必传，默认false
    * }
    * @return {*} 深拷贝后的数据
    */
@@ -404,8 +405,14 @@ export default {
     let newData = null
     const type = this.dataType(data)
 
-    if (type === 'string' && isFilterStringSpace) {
-      newData = data.replace(regExpSpace, '')
+    if (type === 'string') {
+      if(isFilterStringSpace) {
+        newData = data.replace(regExpSpace, '')
+      }
+      if(isDeleteOssParams && newData.indexOf('https://tiaofangzi.oss-cn-beijing.aliyuncs.com/') === 0) {
+        newData = data.split('?')[0]
+      }
+
     } else if (type === 'array' || type === 'object') {
       newData = type === 'array' ? [] : {}
       const proto = [...Object.keys(data), ...Object.getOwnPropertySymbols(data)]
@@ -419,6 +426,8 @@ export default {
             (typeChild === 'array' && data[key].length === 0) ||
             (typeChild === 'object' && Object.keys(data[key]).length === 0)
           ) return
+          // 由于是从对象的外往里层层递归，所以当里层的对象为{}时，外层的对象此时即使为{}，也不会删除该键值对。
+          // 如：{a: { b: undefined }, x: 1}，转换后为：{a:{}, x: 1}，而不是：{x: 1}
         }
         newData[key] = this.copyDeep(data[key], params)
       })

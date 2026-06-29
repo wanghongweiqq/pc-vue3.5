@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>王宏伟 · 简历</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: "Times New Roman", "SimSun", "宋体", Georgia, serif;
+    background: #f5f3ef;
+    color: #1c1c1c;
+    font-size: 13px;
+    line-height: 1.75;
+  }
+  .page {
+    max-width: 880px;
+    margin: 28px auto;
+    background: #fffef9;
+    box-shadow: 0 2px 16px rgba(0,0,0,0.12);
+    display: grid;
+    grid-template-columns: 260px 1fr;
+  }
+
+  /* ── Sidebar ── */
+  .sidebar {
+    background: #1b2a3b;
+    color: #d4cfc6;
+    padding: 40px 24px;
+    min-height: 100%;
+  }
+  .avatar-circle {
+    width: 88px; height: 88px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #c9a96e, #a07840);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 30px; font-weight: 700;
+    color: #fff;
+    margin: 0 auto 20px;
+    border: 3px solid rgba(255,255,255,0.15);
+    font-family: -apple-system, sans-serif;
+  }
+  .s-name { text-align: center; font-size: 20px; font-weight: 700; color: #fff; letter-spacing: 3px; margin-bottom: 4px; font-family: -apple-system, sans-serif; }
+  .s-role { text-align: center; font-size: 11px; color: #c9a96e; letter-spacing: 1px; margin-bottom: 28px; font-family: -apple-system, sans-serif; }
+  .s-divider { border: none; border-top: 1px solid rgba(255,255,255,0.1); margin: 20px 0; }
+
+  /* ── Sidebar section ── */
+  .s-sec-title {
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: #c9a96e;
+    margin-bottom: 12px;
+    padding-bottom: 5px;
+    border-bottom: 1px solid rgba(201,169,110,0.3);
+    font-family: -apple-system, sans-serif;
+  }
+  .s-sec { margin-bottom: 22px; }
+  .contact-item {
+    display: flex; align-items: flex-start; gap: 8px;
+    font-size: 12px; color: #bbb5aa; margin-bottom: 8px;
+    font-family: -apple-system, sans-serif;
+  }
+  .c-icon { color: #c9a96e; font-size: 13px; flex-shrink: 0; margin-top: 2px; }
+  .s-tag {
+    display: inline-block;
+    border: 1px solid rgba(255,255,255,0.15);
+    color: #c0bbb2;
+    border-radius: 3px;
+    padding: 2px 8px;
+    font-size: 11px;
+    margin: 2px 3px 2px 0;
+    font-family: -apple-system, sans-serif;
+  }
+
+  /* ── Edu in sidebar ── */
+  .edu-item { margin-bottom: 14px; }
+  .edu-school { font-size: 13px; font-weight: 700; color: #e0dbd2; font-family: -apple-system, sans-serif; }
+  .edu-deg { font-size: 11.5px; color: #c9a96e; font-family: -apple-system, sans-serif; }
+  .edu-yr { font-size: 11px; color: #888; font-family: -apple-system, sans-serif; }
+
+  /* ── Main ── */
+  .main { padding: 36px 40px; }
+
+  /* ── Name banner ── */
+  .name-banner {
+    border-bottom: 2.5px solid #1b2a3b;
+    padding-bottom: 14px;
+    margin-bottom: 24px;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+  }
+  .nb-left h1 { font-size: 28px; font-weight: 700; color: #1b2a3b; letter-spacing: 4px; }
+  .nb-left .position { font-size: 13px; color: #c9a96e; letter-spacing: 1px; margin-top: 3px; }
+  .nb-right { text-align: right; font-size: 12px; color: #888; line-height: 1.9; }
+  .nb-right strong { color: #1b2a3b; }
+
+  /* ── Section ── */
+  .section { margin-bottom: 26px; }
+  .sec-title {
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: #1b2a3b;
+    border-left: 4px solid #c9a96e;
+    padding-left: 10px;
+    margin-bottom: 14px;
+  }
+
+  /* ── Job ── */
+  .job { margin-bottom: 18px; }
+  .job-top { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 1px; }
+  .job-co { font-size: 15px; font-weight: 700; color: #1b2a3b; }
+  .job-period { font-size: 11.5px; color: #999; }
+  .job-role { font-size: 12.5px; color: #c9a96e; font-style: italic; margin-bottom: 7px; }
+  .job-rule { border: none; border-top: 1px solid #e5e0d6; margin: 0 0 10px; }
+  ul { list-style: none; padding: 0; }
+  ul li { font-size: 12.5px; color: #333; margin-bottom: 5px; padding-left: 16px; position: relative; }
+  ul li::before { content: '◆'; position: absolute; left: 0; font-size: 7px; top: 5px; color: #c9a96e; }
+  .sub-head { font-size: 12px; font-weight: 700; color: #1b2a3b; margin: 9px 0 5px; }
+
+  /* ── Data strip ── */
+  .data-strip { display: flex; gap: 0; margin-top: 10px; border: 1px solid #d4cfc6; border-radius: 4px; overflow: hidden; }
+  .data-cell {
+    flex: 1; padding: 6px 10px; text-align: center;
+    border-right: 1px solid #d4cfc6;
+    background: #f9f7f3;
+  }
+  .data-cell:last-child { border-right: none; }
+  .data-cell .val { font-size: 16px; font-weight: 700; color: #1b2a3b; }
+  .data-cell .lbl { font-size: 10.5px; color: #888; }
+
+  /* ── Advantage ── */
+  .adv-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+  .adv-item {
+    border: 1px solid #e5e0d6;
+    border-top: 3px solid #1b2a3b;
+    border-radius: 3px;
+    padding: 10px 12px;
+    background: #faf8f4;
+  }
+  .adv-item strong { font-size: 12.5px; color: #1b2a3b; display: block; margin-bottom: 4px; }
+  .adv-item p { font-size: 12px; color: #555; }
+
+  @media print {
+    body { background: #fffef9; }
+    .page { box-shadow: none; margin: 0; max-width: 100%; }
+  }
+</style>
+</head>
+<body>
+<div class="page">
+
+  <!-- Sidebar -->
+  <div class="sidebar">
+    <div class="avatar-circle">王</div>
+    <div class="s-name">王宏伟</div>
+    <div class="s-role">Senior Frontend Engineer</div>
+    <hr class="s-divider">
+
+    <div class="s-sec">
+      <div class="s-sec-title">联系方式</div>
+      <div class="contact-item"><span class="c-icon">📱</span>18511132567</div>
+      <div class="contact-item"><span class="c-icon">✉</span>845487715@qq.com</div>
+      <div class="contact-item"><span class="c-icon">📍</span>期望城市：北京</div>
+      <div class="contact-item"><span class="c-icon">💰</span>期望薪资：20-30K</div>
+      <div class="contact-item"><span class="c-icon">👤</span>男 · 39岁 · 16年经验</div>
+    </div>
+    <hr class="s-divider">
+
+    <div class="s-sec">
+      <div class="s-sec-title">技术技能</div>
+      <div style="margin-bottom:10px">
+        <div style="font-size:11px;color:#c9a96e;margin-bottom:6px;font-family:sans-serif">前端框架</div>
+        <span class="s-tag">Vue 2/3</span><span class="s-tag">React</span>
+        <span class="s-tag">React Native</span><span class="s-tag">Max</span>
+        <span class="s-tag">小程序</span>
+      </div>
+      <div style="margin-bottom:10px">
+        <div style="font-size:11px;color:#c9a96e;margin-bottom:6px;font-family:sans-serif">工程化</div>
+        <span class="s-tag">Webpack</span><span class="s-tag">Git</span>
+        <span class="s-tag">ESLint</span><span class="s-tag">Nginx</span>
+        <span class="s-tag">CDN</span><span class="s-tag">OSS</span>
+      </div>
+      <div style="margin-bottom:10px">
+        <div style="font-size:11px;color:#c9a96e;margin-bottom:6px;font-family:sans-serif">CI/CD</div>
+        <span class="s-tag">Jenkins</span><span class="s-tag">Apollo</span>
+        <span class="s-tag">Fedo</span><span class="s-tag">Talos</span>
+      </div>
+      <div>
+        <div style="font-size:11px;color:#c9a96e;margin-bottom:6px;font-family:sans-serif">AI Coding</div>
+        <span class="s-tag">Spec+Harness</span>
+        <span class="s-tag">Claude Code</span>
+        <span class="s-tag">Skill 开发</span>
+      </div>
+    </div>
+    <hr class="s-divider">
+
+    <div class="s-sec">
+      <div class="s-sec-title">教育背景</div>
+      <div class="edu-item">
+        <div class="edu-school">南昌大学</div>
+        <div class="edu-deg">本科 · 软件工程</div>
+        <div class="edu-yr">2007 — 2010</div>
+      </div>
+      <div class="edu-item">
+        <div class="edu-school">南昌大学</div>
+        <div class="edu-deg">大专 · 计算机网络技术</div>
+        <div class="edu-yr">2007 — 2010</div>
+      </div>
+      <div style="font-size:11px;color:#888;margin-top:4px;font-family:sans-serif">特等奖学金 · 优秀学生干部</div>
+    </div>
+
+  </div>
+
+  <!-- Main -->
+  <div class="main">
+
+    <div class="name-banner">
+      <div class="nb-left">
+        <h1>王宏伟</h1>
+        <div class="position">高级 / 资深前端开发工程师</div>
+      </div>
+      <div class="nb-right">
+        <div>工作年限：<strong>16 年</strong></div>
+        <div>期望薪资：<strong>20 — 30K</strong></div>
+        <div>期望城市：<strong>北京</strong></div>
+      </div>
+    </div>
+
+    <div class="section">
+      <div class="sec-title">个人优势</div>
+      <div class="adv-grid">
+        <div class="adv-item">
+          <strong>深厚技术积累</strong>
+          <p>16年前端开发经验，扎实掌握 HTML/CSS/JS，熟练运用 Vue、React、RN、小程序、Max 等主流框架</p>
+        </div>
+        <div class="adv-item">
+          <strong>多端全栈交付</strong>
+          <p>覆盖 PC、H5、小程序、RN 全端，B 端与 C 端均有落地经验，独立承接需求至上线全流程</p>
+        </div>
+        <div class="adv-item">
+          <strong>AI Coding 践行者</strong>
+          <p>主动落地 Spec + Harness 工作流，自研多个 Skill 工具，交付周期缩短约 50%</p>
+        </div>
+        <div class="adv-item">
+          <strong>团队领导力</strong>
+          <p>曾带领近 20 人前端团队，建立规范体系，推动技术分享，获 2022 年优秀员工</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="section">
+      <div class="sec-title">工作经历</div>
+
+      <div class="job">
+        <div class="job-top">
+          <div class="job-co">美团（Meituan）</div>
+          <div class="job-period">2025年8月 — 至今</div>
+        </div>
+        <div class="job-role">前端开发工程师 · 到餐履约业务</div>
+        <hr class="job-rule">
+        <div class="sub-head">核心工作</div>
+        <ul>
+          <li>负责排队取号页核心重构，重写交互逻辑，提升页面性能与可维护性</li>
+          <li>完成鸿蒙（HarmonyOS）适配专项，解决鸿蒙端特有 Bug，保障多端一致性</li>
+          <li>主导 DealID 升级专项治理，梳理修复多项目历史技术债，影响面广、风险可控</li>
+          <li>接手并维护涵盖 Max、Vue、React、Popcorn 等技术栈的 10+ 项目，保持 0 投诉、0 线上事故</li>
+        </ul>
+        <div class="sub-head">AI Coding 实践</div>
+        <ul>
+          <li>将 Spec + Harness 工作流落地到日常项目，用自然语言完成需求开发，大幅降低重复劳动</li>
+          <li>自研团队级 Skill 工具：<em>project-guard</em>（前置校验）、<em>simulator-debug</em>（iOS 调试工作流）</li>
+          <li>通过 Spec 编写倒逼需求细化，结合模拟器全流程验证，构建完善质量保障体系</li>
+        </ul>
+        <div class="data-strip">
+          <div class="data-cell"><div class="val">-50%</div><div class="lbl">交付周期缩短</div></div>
+          <div class="data-cell"><div class="val">+30%</div><div class="lbl">需求交付量提升</div></div>
+          <div class="data-cell"><div class="val">-30%</div><div class="lbl">缺陷率下降</div></div>
+        </div>
+      </div>
+
+      <div class="job">
+        <div class="job-top">
+          <div class="job-co">北京多来点信息技术有限公司</div>
+          <div class="job-period">2021年4月 — 2025年8月</div>
+        </div>
+        <div class="job-role">资深前端开发工程师 · 前端负责人</div>
+        <hr class="job-rule">
+        <div class="sub-head">团队管理</div>
+        <ul>
+          <li>统筹近 20 人前端团队，制定 UI/交互规范、代码规范、Git 规范、目录结构规范</li>
+          <li>组织半月一次技术分享与线上事故复盘，显著提升团队整体技术水平</li>
+          <li>获评 2022 年度优秀员工，获领导与同事一致好评</li>
+        </ul>
+        <div class="sub-head">重点项目：跳房子 APP — RN 转 H5（2022年4月—10月）</div>
+        <ul>
+          <li>主导 React Native → Vue + H5 迁移，解决 JS 注入、消息收发、路由栈维护、相机唤起等通信机制</li>
+          <li>H5 页面 PV 占比不低于 40%，用户无感知升级，测试发版效率大幅提升</li>
+        </ul>
+        <div class="sub-head">重点项目：跳房子指标卡 H5（2022年5月—6月）</div>
+        <ul>
+          <li>实现动态组件渲染、异步注册、懒加载与组件缓存去重，显著降低页面接口并发量</li>
+        </ul>
+      </div>
+
+      <div class="job">
+        <div class="job-top">
+          <div class="job-co">京东（JD.com）</div>
+          <div class="job-period">2018年1月 — 2021年4月</div>
+        </div>
+        <div class="job-role">高级前端研发工程师</div>
+        <hr class="job-rule">
+        <ul>
+          <li>负责京东云配 B2B 商城整体技术选型、架构设计与通用组件封装（Vue + Element-UI）</li>
+          <li>搭建 Jenkins + Apollo 自动化部署方案，完成 ESLint、pre-commit、Webpack 工程化配置</li>
+          <li>独立完成活动场、购物车、结算等核心模块开发</li>
+          <li>日常维护大前端团队 50+ 项目（PC/H5/小程序/RN），推进前后端分离与自动化部署</li>
+        </ul>
+      </div>
+
+      <div class="job">
+        <div class="job-top">
+          <div class="job-co">搜狐畅游</div>
+          <div class="job-period">2014年4月 — 2018年1月</div>
+        </div>
+        <div class="job-role">高级前端研发工程师</div>
+        <hr class="job-rule">
+        <ul>
+          <li>负责游戏官网、各类活动与专题页面的前端开发，尤其注重动画与交互体验设计</li>
+          <li>封装 JS 插件与通用组件，协调需求、设计、研发各环节排期与可实现性问题</li>
+        </ul>
+      </div>
+
+    </div>
+
+  </div>
+</div>
+</body>
+</html>

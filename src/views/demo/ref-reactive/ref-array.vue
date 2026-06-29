@@ -15,10 +15,10 @@
 
     <h3>另外两个相关监听情形</h3>
     <p>1、<code>refArray.length</code> 无法被 watch</p>
-    <p>2、<code>refArray.length</code> 要慎重，理解其监听的是最初分配给它的那个引用地址的数据</p>
+    <p>2、<code>refArray.value</code> 要慎重，理解其监听的是最初分配给它的那个引用地址的数据</p>
     <ul>
       <li><code>refArray.value</code> 也能被 watch，但只有不改变引用时才能监听到（类似 reactive），且新旧值相同</li>
-      <li><code>refArray.value</code> 之所以说要慎重，是应为获取的数据可能和你想象的会不一样（或者叫不准），比如先“末尾添加数组”（使用refArray.value = []的这种改变引用形式，其实此时watch->refArray.value 监听的还是最初的引用地址，那个地址的数据没有变化，所以不会触发watch），refArray.value换了新的引用地址，数组由两个变为了三个（前两个数组项还是引用的最初的地址，虽然是结构而来，但扔保持响应式），这时再点击“修改第一个数组项的version属性”来改变第一个数组的某个属性的值，这时watch->refArray.value 感应到了初始的数据的第一项的值改变了。结果就是watch->refArray.value还是按最初的两个数组时的数据进行的改变，而watch->refArray的数据由来是：前两个旧的数据+末尾添加数组，在deep为true时能感应到数据变化</li>
+      <li><code>refArray.value</code> 之所以说要慎重，是应为获取的数据可能和你想象的会不一样（或者叫不准），比如先“末尾添加数组”（使用refArray.value = []的这种改变引用形式，其实此时watch->refArray.value 监听的还是最初的引用地址，那个地址的数据没有变化，所以不会触发watch），refArray.value换了新的引用地址，数组由两个变为了三个（前两个数组项还是引用的最初的地址，虽然是解构而来，但扔保持响应式），这时再点击“修改第一个数组项的version属性”来改变第一个数组的某个属性的值，这时watch->refArray.value 感应到了初始的数据的第一项的值改变了。结果就是watch->refArray.value还是按最初的两个数组时的数据进行的改变，而watch->refArray的数据由来是：前两个旧的数据+末尾添加数组，在deep为true时能感应到数据变化</li>
     </ul>
 
     <h3>示例</h3>

@@ -1,0 +1,744 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+<meta charset="UTF-8">
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: -apple-system, "PingFang SC", "Helvetica Neue", sans-serif;
+    background: #fff;
+    width: 1536px;
+    padding: 48px 56px;
+    color: #1a1a2e;
+  }
+
+  /* ── 标题 ── */
+  .title-row {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    margin-bottom: 12px;
+  }
+  .title-tag {
+    background: #1a1a2e;
+    color: #fff;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    padding: 4px 10px;
+    border-radius: 4px;
+    text-transform: uppercase;
+  }
+  h1 {
+    font-size: 26px;
+    font-weight: 800;
+    color: #1a1a2e;
+    letter-spacing: 0.5px;
+  }
+
+  /* ── 整体架构横向流 ── */
+  .arch-flow {
+    display: flex;
+    align-items: center;
+    gap: 0;
+    background: #f7f8fa;
+    border: 1.5px solid #e2e8f0;
+    border-radius: 14px;
+    padding: 18px 24px;
+    margin-bottom: 40px;
+    flex-wrap: nowrap;
+    overflow-x: auto;
+  }
+  .arch-step {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: 5px;
+    flex-shrink: 0;
+  }
+  .arch-icon {
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 20px;
+    margin-bottom: 2px;
+  }
+  .arch-name {
+    font-size: 12px;
+    font-weight: 700;
+    color: #1a1a2e;
+    line-height: 1.3;
+    max-width: 90px;
+  }
+  .arch-tool {
+    font-size: 10px;
+    color: #7a8a9a;
+    max-width: 100px;
+    line-height: 1.3;
+  }
+  .arch-arrow {
+    font-size: 22px;
+    color: #c8cdd6;
+    flex-shrink: 0;
+    padding: 0 8px;
+    margin-bottom: 18px;
+  }
+  .arch-title {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    color: #94a3b8;
+    text-transform: uppercase;
+    margin-bottom: 14px;
+  }
+
+  /* ── 主体：左侧编号轴 + 右侧内容 ── */
+  .timeline {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+    position: relative;
+  }
+  .timeline::before {
+    content: '';
+    position: absolute;
+    left: 28px;
+    top: 28px;
+    bottom: 28px;
+    width: 2px;
+    background: #e8eaee;
+  }
+
+  /* ── 每个阶段行 ── */
+  .phase {
+    display: flex;
+    align-items: flex-start;
+    gap: 24px;
+    margin-bottom: 28px;
+    position: relative;
+  }
+  .phase-num {
+    flex-shrink: 0;
+    width: 56px;
+    height: 56px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 20px;
+    font-weight: 800;
+    color: #fff;
+    position: relative;
+    z-index: 1;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+  }
+  .phase-content {
+    flex: 1;
+    padding-top: 6px;
+  }
+  .phase-label {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-bottom: 4px;
+    opacity: 0.5;
+  }
+  .phase-title {
+    font-size: 18px;
+    font-weight: 700;
+    margin-bottom: 12px;
+    color: #1a1a2e;
+  }
+
+  /* ── 步骤卡片（横排） ── */
+  .steps-row {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+    align-items: flex-start;
+  }
+  .step-card {
+    background: #f7f8fa;
+    border: 1px solid #e8eaee;
+    border-radius: 10px;
+    padding: 12px 14px;
+    font-size: 13px;
+    color: #2c3e50;
+    line-height: 1.5;
+    flex: 0 0 auto;
+    min-width: 160px;
+    max-width: 240px;
+  }
+  .step-card .step-icon {
+    font-size: 18px;
+    margin-bottom: 4px;
+    display: block;
+  }
+  .step-card .step-name {
+    font-weight: 700;
+    font-size: 13px;
+    margin-bottom: 4px;
+    color: #1a1a2e;
+  }
+  .step-card .step-detail {
+    font-size: 11px;
+    color: #7a8a9a;
+    line-height: 1.6;
+  }
+  .step-card code {
+    background: #eef2f7;
+    border-radius: 3px;
+    padding: 1px 4px;
+    font-size: 10px;
+    font-family: "SF Mono", Menlo, monospace;
+    color: #3b4a6b;
+  }
+
+  /* 箭头连接线 */
+  .arrow-between {
+    display: flex;
+    align-items: center;
+    color: #c8cdd6;
+    font-size: 20px;
+    align-self: center;
+    flex-shrink: 0;
+    margin-top: -4px;
+  }
+
+  /* ── 注意事项气泡 ── */
+  .notice {
+    display: inline-flex;
+    align-items: flex-start;
+    gap: 6px;
+    background: #fffbeb;
+    border: 1px solid #fde68a;
+    border-radius: 8px;
+    padding: 8px 12px;
+    font-size: 11px;
+    color: #92400e;
+    line-height: 1.5;
+    margin-top: 8px;
+    max-width: 560px;
+  }
+
+  /* ── 坐标换算核心公式卡片 ── */
+  .formula-card {
+    background: #f0f9ff;
+    border: 1.5px solid #bae6fd;
+    border-radius: 10px;
+    padding: 14px 18px;
+    font-size: 12px;
+    color: #0c4a6e;
+    line-height: 1.8;
+    font-family: "SF Mono", Menlo, monospace;
+  }
+  .formula-card .formula-title {
+    font-family: -apple-system, "PingFang SC", sans-serif;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 1px;
+    color: #0369a1;
+    margin-bottom: 8px;
+    text-transform: uppercase;
+  }
+
+  /* ── 对比表 ── */
+  .compare-table {
+    border-collapse: collapse;
+    font-size: 12px;
+    margin-top: 4px;
+    border-radius: 8px;
+    overflow: hidden;
+    border: 1px solid #e2e8f0;
+  }
+  .compare-table th {
+    background: #1a1a2e;
+    color: #fff;
+    padding: 7px 14px;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+    text-align: left;
+  }
+  .compare-table td {
+    padding: 7px 14px;
+    border-bottom: 1px solid #f1f5f9;
+    color: #334155;
+    vertical-align: top;
+    line-height: 1.5;
+  }
+  .compare-table tr:last-child td { border-bottom: none; }
+  .compare-table tr:nth-child(even) td { background: #f8fafc; }
+  .tag-pt {
+    background: #dbeafe;
+    color: #1d4ed8;
+    border-radius: 4px;
+    padding: 1px 6px;
+    font-size: 10px;
+    font-weight: 700;
+  }
+  .tag-px {
+    background: #fce7f3;
+    color: #9d174d;
+    border-radius: 4px;
+    padding: 1px 6px;
+    font-size: 10px;
+    font-weight: 700;
+  }
+
+  /* ── 完整数据流 loop 框 ── */
+  .loop-container {
+    background: #f9fffe;
+    border: 2px dashed #86efac;
+    border-radius: 14px;
+    padding: 20px 20px 16px;
+    width: 100%;
+    margin-top: 4px;
+  }
+  .loop-header {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 16px;
+  }
+  .loop-badge {
+    background: #1a1a2e;
+    color: #fff;
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 1.5px;
+    padding: 3px 8px;
+    border-radius: 20px;
+    text-transform: uppercase;
+  }
+  .loop-desc {
+    font-size: 12px;
+    color: #7a8a9a;
+  }
+  .loop-steps {
+    display: flex;
+    align-items: center;
+    gap: 0;
+    flex-wrap: wrap;
+  }
+  .loop-step {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    position: relative;
+    min-width: 100px;
+  }
+  .loop-step-icon {
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 18px;
+    margin-bottom: 6px;
+    flex-shrink: 0;
+  }
+  .loop-step-num {
+    font-size: 10px;
+    font-weight: 700;
+    color: #adb5bd;
+    margin-bottom: 2px;
+    letter-spacing: 0.5px;
+  }
+  .loop-step-name {
+    font-size: 12px;
+    font-weight: 700;
+    color: #2c3e50;
+    line-height: 1.3;
+  }
+  .loop-step-sub {
+    font-size: 10px;
+    color: #7a8a9a;
+    margin-top: 2px;
+  }
+  .loop-connector {
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    padding: 0 4px;
+    color: #dee2e6;
+    font-size: 16px;
+    margin-bottom: 28px;
+  }
+  .loop-footer {
+    margin-top: 12px;
+    padding-top: 10px;
+    border-top: 1px dashed #e8eaee;
+    font-size: 11px;
+    color: #adb5bd;
+    text-align: right;
+    font-style: italic;
+  }
+
+  /* ── 颜色主题 ── */
+  .c1 { background: #3b82f6; }
+  .c2 { background: #10b981; }
+  .c3 { background: #f59e0b; }
+  .c4 { background: #8b5cf6; }
+  .c5 { background: #ef4444; }
+  .c6 { background: #06b6d4; }
+  .c7 { background: #64748b; }
+  .c8 { background: #0ea5e9; }
+</style>
+</head>
+<body>
+
+<div class="title-row">
+  <span class="title-tag">Core Tech</span>
+  <h1>模拟器调试场景中使用的核心技术体系</h1>
+</div>
+
+<!-- 整体架构流 -->
+<div class="arch-flow">
+  <div style="margin-right:20px;">
+    <div class="arch-title">整体架构</div>
+  </div>
+  <div class="arch-step">
+    <div class="arch-icon" style="background:#e8f4fd;">📸</div>
+    <div class="arch-name">截图</div>
+    <div class="arch-tool">xcrun simctl</div>
+  </div>
+  <div class="arch-arrow">→</div>
+  <div class="arch-step">
+    <div class="arch-icon" style="background:#f3e8ff;">🔍</div>
+    <div class="arch-name">OCR 识别</div>
+    <div class="arch-tool">macOS Vision</div>
+  </div>
+  <div class="arch-arrow">→</div>
+  <div class="arch-step">
+    <div class="arch-icon" style="background:#e8f5e9;">📐</div>
+    <div class="arch-name">坐标换算</div>
+    <div class="arch-tool">Quartz + Accessibility</div>
+  </div>
+  <div class="arch-arrow">→</div>
+  <div class="arch-step">
+    <div class="arch-icon" style="background:#fff3e0;">👆</div>
+    <div class="arch-name">模拟点击</div>
+    <div class="arch-tool">CGEvent</div>
+  </div>
+  <div class="arch-arrow">→</div>
+  <div class="arch-step">
+    <div class="arch-icon" style="background:#fce4ec;">✅</div>
+    <div class="arch-name">截图验证</div>
+    <div class="arch-tool">循环</div>
+  </div>
+</div>
+
+<div class="timeline">
+
+  <!-- ① xcrun simctl -->
+  <div class="phase">
+    <div class="phase-num c1">1</div>
+    <div class="phase-content">
+      <div class="phase-label">xcrun simctl · 模拟器控制</div>
+      <div class="phase-title">Apple 官方命令行 — 截图是整个流程的"眼睛"</div>
+      <div class="steps-row">
+        <div class="step-card">
+          <span class="step-icon">🚀</span>
+          <div class="step-name">启动设备</div>
+          <div class="step-detail"><code>xcrun simctl boot &lt;UDID&gt;</code></div>
+        </div>
+        <div class="arrow-between">›</div>
+        <div class="step-card">
+          <span class="step-icon">📸</span>
+          <div class="step-name">截取画面</div>
+          <div class="step-detail"><code>xcrun simctl io booted screenshot &lt;path&gt;</code><br>所有后续判断的基础</div>
+        </div>
+        <div class="arrow-between">›</div>
+        <div class="step-card">
+          <span class="step-icon">🔗</span>
+          <div class="step-name">发送深链</div>
+          <div class="step-detail"><code>xcrun simctl openurl booted &lt;deeplink&gt;</code><br>触发页面跳转</div>
+        </div>
+        <div class="arrow-between">›</div>
+        <div class="step-card">
+          <span class="step-icon">📳</span>
+          <div class="step-name">摇一摇</div>
+          <div class="step-detail"><code>xcrun simctl io booted shake</code><br>打开 Dev Menu</div>
+        </div>
+        <div class="arrow-between">›</div>
+        <div class="step-card">
+          <span class="step-icon">📍</span>
+          <div class="step-name">设置 GPS</div>
+          <div class="step-detail"><code>xcrun simctl location booted set &lt;lat,lng&gt;</code></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ② Vision OCR -->
+  <div class="phase">
+    <div class="phase-num c2">2</div>
+    <div class="phase-content">
+      <div class="phase-label">macOS Vision 框架 · OCR 文字识别</div>
+      <div class="phase-title">pyobjc-framework-Vision 调用 Apple 原生 Vision API</div>
+      <div class="steps-row">
+        <div class="step-card">
+          <span class="step-icon">🌏</span>
+          <div class="step-name">配置识别语言</div>
+          <div class="step-detail">zh-Hans<br>en-US<br>精准识别模式</div>
+        </div>
+        <div class="arrow-between">›</div>
+        <div class="step-card">
+          <span class="step-icon">🔍</span>
+          <div class="step-name">OCR 文字识别</div>
+          <div class="step-detail">VNRecognizeTextRequest<br>返回文字 + bbox<br>坐标系：左下角原点</div>
+        </div>
+        <div class="arrow-between">›</div>
+        <div class="step-card" style="border-color:#fde68a;background:#fffbeb;">
+          <span class="step-icon">⚠️</span>
+          <div class="step-name">Y 轴翻转</div>
+          <div class="step-detail">Vision 坐标系 y 轴向上<br>需翻转为屏幕坐标：<br><code>py = (1 - y - h) * H</code></div>
+        </div>
+        <div class="arrow-between">›</div>
+        <div class="step-card">
+          <span class="step-icon">📌</span>
+          <div class="step-name">输出像素坐标</div>
+          <div class="step-detail">pic_x, pic_y（px）<br>用于定位 UI 元素<br>如"立即取号"按钮</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ③ Quartz CGWindowList -->
+  <div class="phase">
+    <div class="phase-num c3">3</div>
+    <div class="phase-content">
+      <div class="phase-label">Quartz CGWindowList · 窗口位置获取</div>
+      <div class="phase-title">枚举屏幕所有窗口，找到 Simulator 的逻辑点坐标</div>
+      <div class="steps-row">
+        <div class="step-card">
+          <span class="step-icon">🖥</span>
+          <div class="step-name">枚举屏幕窗口</div>
+          <div class="step-detail"><code>CGWindowListCopyWindowInfo</code><br>OnScreenOnly<br>ExcludeDesktopElements</div>
+        </div>
+        <div class="arrow-between">›</div>
+        <div class="step-card">
+          <span class="step-icon">🎯</span>
+          <div class="step-name">过滤 Simulator</div>
+          <div class="step-detail">kCGWindowOwnerName<br>包含 "Simulator"</div>
+        </div>
+        <div class="arrow-between">›</div>
+        <div class="step-card">
+          <span class="step-icon">📍</span>
+          <div class="step-name">提取窗口位置</div>
+          <div class="step-detail">WIN_X, WIN_Y<br><span class="tag-pt">逻辑点 pt</span><br>CGEvent 直接使用</div>
+        </div>
+        <div class="arrow-between" style="visibility:hidden;">›</div>
+        <div class="notice">
+          ⚡ 每次点击必须<strong>实时重新获取</strong> WIN_X/WIN_Y，因为用户可能移动了模拟器窗口
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ④ AppleScript + Accessibility -->
+  <div class="phase">
+    <div class="phase-num c4">4</div>
+    <div class="phase-content">
+      <div class="phase-label">AppleScript + Accessibility API · Bezel 获取</div>
+      <div class="phase-title">获取模拟器内容区位置，计算边框（Bezel）偏移</div>
+      <div class="steps-row">
+        <div class="step-card">
+          <span class="step-icon">🖼</span>
+          <div class="step-name">为什么需要 Bezel</div>
+          <div class="step-detail">截图不含边框<br>但点击坐标从<br>窗口左上角算起</div>
+        </div>
+        <div class="arrow-between">›</div>
+        <div class="step-card">
+          <span class="step-icon">⌨️</span>
+          <div class="step-name">osascript 调用</div>
+          <div class="step-detail">System Events<br>→ process "Simulator"<br>→ group 1 of window 1</div>
+        </div>
+        <div class="arrow-between">›</div>
+        <div class="step-card">
+          <span class="step-icon">📦</span>
+          <div class="step-name">获取内容区信息</div>
+          <div class="step-detail">grp_x, grp_y（position）<br>grp_w, grp_h（size）</div>
+        </div>
+        <div class="arrow-between">›</div>
+        <div class="step-card">
+          <span class="step-icon">📐</span>
+          <div class="step-name">计算 Bezel</div>
+          <div class="step-detail">BEZEL_LEFT = grp_x − WIN_X<br>BEZEL_TOP = grp_y − WIN_Y</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ⑤ 坐标换算 -->
+  <div class="phase">
+    <div class="phase-num c5">5</div>
+    <div class="phase-content">
+      <div class="phase-label">坐标换算 · 关键桥接</div>
+      <div class="phase-title">截图像素坐标 → 屏幕逻辑点坐标（CGEvent 所需）</div>
+      <div class="steps-row" style="align-items:flex-start;gap:16px;">
+        <div class="formula-card" style="min-width:320px;">
+          <div class="formula-title">换算公式</div>
+          scale_x = screenshot_width(px) / content_area_width(pt)<br>
+          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;— Retina 屏通常 ≈ 3.47<br><br>
+          screen_x = WIN_X + BEZEL_LEFT + <strong>pic_x / scale_x</strong><br>
+          screen_y = WIN_Y + BEZEL_TOP &nbsp;+ <strong>pic_y / scale_y</strong>
+        </div>
+        <div style="display:flex;flex-direction:column;gap:10px;">
+          <table class="compare-table">
+            <tr>
+              <th>坐标来源</th>
+              <th>单位</th>
+              <th>用途</th>
+            </tr>
+            <tr>
+              <td>OCR 输出 pic_x/pic_y</td>
+              <td><span class="tag-px">像素 px</span></td>
+              <td>截图内文字位置</td>
+            </tr>
+            <tr>
+              <td>CGWindowList WIN_X/WIN_Y</td>
+              <td><span class="tag-pt">逻辑点 pt</span></td>
+              <td>窗口在屏幕上的位置</td>
+            </tr>
+            <tr>
+              <td>CGEvent 点击坐标</td>
+              <td><span class="tag-pt">逻辑点 pt</span></td>
+              <td>鼠标事件目标位置</td>
+            </tr>
+            <tr>
+              <td>Cmd+Shift+4 拖选数字</td>
+              <td><span class="tag-pt">逻辑点 pt</span></td>
+              <td>直接传 CGEvent，无需除 scale</td>
+            </tr>
+            <tr>
+              <td>Preview 截图内坐标</td>
+              <td><span class="tag-px">像素 px</span></td>
+              <td>需除以 scale 再传 CGEvent</td>
+            </tr>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ⑥ CGEvent 模拟点击 -->
+  <div class="phase">
+    <div class="phase-num c6">6</div>
+    <div class="phase-content">
+      <div class="phase-label">CGEvent · 模拟鼠标点击</div>
+      <div class="phase-title">系统级事件注入 — 突破 AppleScript 新版安全拦截</div>
+      <div class="steps-row">
+        <div class="step-card" style="border-color:#fde68a;background:#fffbeb;">
+          <span class="step-icon">⚠️</span>
+          <div class="step-name">为何选 CGEvent</div>
+          <div class="step-detail">macOS 新版安全机制<br>会拦截 AppleScript<br>的 keystroke/click</div>
+        </div>
+        <div class="arrow-between">›</div>
+        <div class="step-card">
+          <span class="step-icon">🖱</span>
+          <div class="step-name">Move（移动）</div>
+          <div class="step-detail">kCGEventMouseMoved<br>delay 0.05s<br>模拟真实鼠标移动</div>
+        </div>
+        <div class="arrow-between">›</div>
+        <div class="step-card">
+          <span class="step-icon">👇</span>
+          <div class="step-name">Down（按下）</div>
+          <div class="step-detail">kCGEventLeftMouseDown<br>delay 0.1s</div>
+        </div>
+        <div class="arrow-between">›</div>
+        <div class="step-card">
+          <span class="step-icon">☝️</span>
+          <div class="step-name">Up（抬起）</div>
+          <div class="step-detail">kCGEventLeftMouseUp<br>delay 0.05s</div>
+        </div>
+        <div class="arrow-between">›</div>
+        <div class="step-card">
+          <span class="step-icon">✅</span>
+          <div class="step-name">CGEventPost</div>
+          <div class="step-detail">kCGHIDEventTap<br>三步序列模拟<br>真实点击行为</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ⑦ 完整数据流 -->
+  <div class="phase">
+    <div class="phase-num c8">↻</div>
+    <div class="phase-content">
+      <div class="phase-label">Complete Data Flow · 一次点击操作</div>
+      <div class="phase-title">完整数据流：从截图到点击验证</div>
+      <div class="loop-container">
+        <div class="loop-header">
+          <span class="loop-badge">Pipeline</span>
+          <span style="background:#dcfce7;color:#15803d;font-size:10px;font-weight:700;padding:3px 8px;border-radius:20px;border:1px solid #86efac;">纯系统级，无 WebDriver</span>
+          <span class="loop-desc">对任何私有 App（包括美团）均有效 — 完全不依赖模拟器内部 API</span>
+        </div>
+        <div class="loop-steps">
+          <div class="loop-step">
+            <div class="loop-step-icon" style="background:#e8f4fd;font-size:20px;">📸</div>
+            <div class="loop-step-num">① CAPTURE</div>
+            <div class="loop-step-name">截图</div>
+            <div class="loop-step-sub">xcrun simctl</div>
+          </div>
+          <div class="loop-connector">—›</div>
+          <div class="loop-step">
+            <div class="loop-step-icon" style="background:#f3e8ff;font-size:20px;">🔍</div>
+            <div class="loop-step-num">② OCR</div>
+            <div class="loop-step-name">文字识别</div>
+            <div class="loop-step-sub">Vision → pic_x, pic_y (px)</div>
+          </div>
+          <div class="loop-connector">—›</div>
+          <div class="loop-step">
+            <div class="loop-step-icon" style="background:#fff8e1;font-size:20px;">🖥</div>
+            <div class="loop-step-num">③ WINDOW</div>
+            <div class="loop-step-name">窗口位置</div>
+            <div class="loop-step-sub">CGWindowList<br>WIN_X, WIN_Y (pt)</div>
+          </div>
+          <div class="loop-connector">—›</div>
+          <div class="loop-step">
+            <div class="loop-step-icon" style="background:#e8f5e9;font-size:20px;">📦</div>
+            <div class="loop-step-num">④ BEZEL</div>
+            <div class="loop-step-name">边框偏移</div>
+            <div class="loop-step-sub">osascript<br>BEZEL_LEFT/TOP</div>
+          </div>
+          <div class="loop-connector">—›</div>
+          <div class="loop-step">
+            <div class="loop-step-icon" style="background:#fce4ec;font-size:20px;">📐</div>
+            <div class="loop-step-num">⑤ TRANSFORM</div>
+            <div class="loop-step-name">坐标换算</div>
+            <div class="loop-step-sub">scale = SW / grp_w<br>px → pt</div>
+          </div>
+          <div class="loop-connector">—›</div>
+          <div class="loop-step">
+            <div class="loop-step-icon" style="background:#fff3e0;font-size:20px;">👆</div>
+            <div class="loop-step-num">⑥ CLICK</div>
+            <div class="loop-step-name">模拟点击</div>
+            <div class="loop-step-sub">CGEventPost<br>Move → Down → Up</div>
+          </div>
+          <div class="loop-connector">—›</div>
+          <div class="loop-step">
+            <div class="loop-step-icon" style="background:#e8eaf6;font-size:20px;">✅</div>
+            <div class="loop-step-num">⑦ VERIFY</div>
+            <div class="loop-step-name">截图验证</div>
+            <div class="loop-step-sub">再次截图 + OCR<br>核对页面状态</div>
+          </div>
+        </div>
+        <div class="loop-footer">↩ 验证失败则重试 | scale = 截图宽(px) / 内容区宽(pt)，Retina 屏 ≈ 3.47</div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+</body>
+</html>

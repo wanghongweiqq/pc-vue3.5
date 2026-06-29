@@ -1,0 +1,677 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+<meta charset="UTF-8">
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: -apple-system, "PingFang SC", "Helvetica Neue", sans-serif;
+    background: #fff;
+    width: 1536px;
+    padding: 48px 56px;
+    color: #1a1a2e;
+  }
+
+  /* ── 标题 ── */
+  .title-row {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    margin-bottom: 40px;
+  }
+  .title-tag {
+    background: #1a1a2e;
+    color: #fff;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    padding: 4px 10px;
+    border-radius: 4px;
+    text-transform: uppercase;
+  }
+  h1 {
+    font-size: 26px;
+    font-weight: 800;
+    color: #1a1a2e;
+    letter-spacing: 0.5px;
+  }
+
+  /* ── 主体：左侧编号轴 + 右侧内容 ── */
+  .timeline {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+    position: relative;
+  }
+
+  /* 左侧垂直线 */
+  .timeline::before {
+    content: '';
+    position: absolute;
+    left: 28px;
+    top: 28px;
+    bottom: 28px;
+    width: 2px;
+    background: #e8eaee;
+  }
+
+  /* ── 每个阶段行 ── */
+  .phase {
+    display: flex;
+    align-items: flex-start;
+    gap: 24px;
+    margin-bottom: 28px;
+    position: relative;
+  }
+
+  /* 左侧圆形编号 */
+  .phase-num {
+    flex-shrink: 0;
+    width: 56px;
+    height: 56px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 20px;
+    font-weight: 800;
+    color: #fff;
+    position: relative;
+    z-index: 1;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+  }
+
+  /* 右侧卡片区 */
+  .phase-content {
+    flex: 1;
+    padding-top: 6px;
+  }
+
+  .phase-label {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-bottom: 6px;
+    opacity: 0.55;
+  }
+
+  .phase-title {
+    font-size: 18px;
+    font-weight: 700;
+    margin-bottom: 14px;
+    color: #1a1a2e;
+  }
+
+  /* ── 步骤卡片（横排） ── */
+  .steps-row {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+  }
+
+  .step-card {
+    background: #f7f8fa;
+    border: 1px solid #e8eaee;
+    border-radius: 10px;
+    padding: 12px 14px;
+    font-size: 13px;
+    color: #2c3e50;
+    line-height: 1.5;
+    flex: 0 0 auto;
+    min-width: 160px;
+    position: relative;
+  }
+
+  .step-card .step-icon {
+    font-size: 18px;
+    margin-bottom: 4px;
+    display: block;
+  }
+
+  .step-card .step-name {
+    font-weight: 700;
+    font-size: 13px;
+    margin-bottom: 2px;
+    color: #1a1a2e;
+  }
+
+  .step-card .step-detail {
+    font-size: 11px;
+    color: #7a8a9a;
+  }
+
+  /* 箭头连接线（步骤之间） */
+  .arrow-between {
+    display: flex;
+    align-items: center;
+    color: #c8cdd6;
+    font-size: 20px;
+    align-self: center;
+    flex-shrink: 0;
+  }
+
+  /* ── 分支卡片 ── */
+  .branch-row {
+    display: flex;
+    gap: 10px;
+    align-items: flex-start;
+  }
+  .branch-divider {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    color: #adb5bd;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 1px;
+    gap: 3px;
+    margin-top: 4px;
+  }
+  .branch-divider::before,
+  .branch-divider::after {
+    content: '';
+    width: 1px;
+    height: 18px;
+    background: #dee2e6;
+  }
+  .branch-group {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+  .branch-card {
+    border-radius: 8px;
+    padding: 10px 14px;
+    font-size: 12px;
+    line-height: 1.5;
+    min-width: 180px;
+  }
+  .branch-yes {
+    background: #f0faf5;
+    border: 1px solid #b2dfdb;
+    color: #2e7d32;
+  }
+  .branch-no {
+    background: #fff5f5;
+    border: 1px solid #ffcdd2;
+    color: #c62828;
+  }
+  .branch-label {
+    font-weight: 700;
+    font-size: 11px;
+    margin-bottom: 2px;
+  }
+
+  /* ── 条件门控 ── */
+  .conditional-gate {
+    display: flex;
+    align-items: center;
+    gap: 0;
+    margin: 6px 0 6px 80px;
+  }
+  .gate-line {
+    flex: 1;
+    height: 1.5px;
+    background: linear-gradient(to right, #86efac, #22c55e);
+    opacity: 0.5;
+  }
+  .gate-badge {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    background: #f0fdf4;
+    border: 1.5px solid #86efac;
+    border-radius: 20px;
+    padding: 6px 16px;
+    font-size: 12px;
+    font-weight: 700;
+    color: #15803d;
+    white-space: nowrap;
+  }
+  .gate-badge .gate-arrow {
+    font-size: 14px;
+    color: #22c55e;
+  }
+  .gate-stop {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    background: #fef2f2;
+    border: 1px solid #fca5a5;
+    border-radius: 6px;
+    padding: 3px 8px;
+    font-size: 11px;
+    font-weight: 700;
+    color: #dc2626;
+    margin-left: 8px;
+    white-space: nowrap;
+  }
+
+  /* ── 循环框（Step 5 特殊样式） ── */
+  .loop-container {
+    background: #f9fffe;
+    border: 2px dashed #86efac;
+    border-radius: 14px;
+    padding: 20px 20px 16px;
+    width: 100%;
+    margin-top: 4px;
+  }
+  .loop-header {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 16px;
+  }
+  .loop-badge {
+    background: #1a1a2e;
+    color: #fff;
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 1.5px;
+    padding: 3px 8px;
+    border-radius: 20px;
+    text-transform: uppercase;
+  }
+  .loop-desc {
+    font-size: 12px;
+    color: #7a8a9a;
+  }
+
+  .loop-steps {
+    display: flex;
+    align-items: center;
+    gap: 0;
+  }
+
+  .loop-step {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    position: relative;
+  }
+
+  .loop-step-icon {
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 18px;
+    margin-bottom: 6px;
+    flex-shrink: 0;
+  }
+
+  .loop-step-num {
+    font-size: 10px;
+    font-weight: 700;
+    color: #adb5bd;
+    margin-bottom: 2px;
+    letter-spacing: 0.5px;
+  }
+
+  .loop-step-name {
+    font-size: 12px;
+    font-weight: 700;
+    color: #2c3e50;
+    line-height: 1.3;
+  }
+
+  .loop-step-sub {
+    font-size: 10px;
+    color: #7a8a9a;
+    margin-top: 2px;
+  }
+
+  .loop-connector {
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    padding: 0 4px;
+    color: #dee2e6;
+    font-size: 16px;
+    margin-bottom: 28px; /* align with icon center */
+  }
+
+  .loop-footer {
+    margin-top: 12px;
+    padding-top: 10px;
+    border-top: 1px dashed #e8eaee;
+    font-size: 11px;
+    color: #adb5bd;
+    text-align: right;
+    font-style: italic;
+  }
+
+  /* ── 颜色主题 ── */
+  .c1 { background: #3b82f6; }   /* 蓝 */
+  .c2 { background: #10b981; }   /* 绿 */
+  .c3 { background: #f59e0b; }   /* 橙 */
+  .c4 { background: #8b5cf6; }   /* 紫 */
+  .c5 { background: #ef4444; }   /* 红 */
+  .c0 { background: #64748b; }   /* 灰 - intent */
+
+  /* intent 标签条 */
+  .intent-tags {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+    margin-top: 8px;
+  }
+  .intent-tag {
+    background: #f1f5f9;
+    border: 1px solid #e2e8f0;
+    border-radius: 20px;
+    padding: 4px 12px;
+    font-size: 12px;
+    font-weight: 600;
+    color: #475569;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+  }
+  .intent-tag .dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: #64748b;
+  }
+</style>
+</head>
+<body>
+
+<div class="title-row">
+  <span class="title-tag">Workflow</span>
+  <h1>iOS 模拟器调试工作流</h1>
+</div>
+
+<div class="timeline">
+
+  <!-- ① 识别意图 -->
+  <div class="phase">
+    <div class="phase-num c0">→</div>
+    <div class="phase-content">
+      <div class="phase-label">Trigger</div>
+      <div class="phase-title">识别调试意图</div>
+      <div class="intent-tags">
+        <span class="intent-tag"><span class="dot"></span>打开模拟器</span>
+        <span class="intent-tag"><span class="dot"></span>连接 MRN</span>
+        <span class="intent-tag"><span class="dot"></span>打开页面</span>
+        <span class="intent-tag"><span class="dot"></span>截图查看</span>
+        <span class="intent-tag"><span class="dot"></span>点击 UI</span>
+        <span class="intent-tag"><span class="dot"></span>Dev Menu</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- ① 启动模拟器 -->
+  <div class="phase">
+    <div class="phase-num c1">1</div>
+    <div class="phase-content">
+      <div class="phase-label">Step 01</div>
+      <div class="phase-title">启动模拟器</div>
+      <div class="steps-row">
+        <div class="step-card">
+          <span class="step-icon">📋</span>
+          <div class="step-name">读取偏好</div>
+          <div class="step-detail">prefs.json<br>记录设备 UDID</div>
+        </div>
+        <div class="arrow-between">›</div>
+
+        <!-- 分支 -->
+        <div style="display:flex;align-items:flex-start;gap:8px;">
+          <div class="branch-group">
+            <div class="branch-card branch-yes">
+              <div class="branch-label">✅ 有保存偏好</div>
+              直接使用保存的设备
+            </div>
+            <div class="branch-card branch-no">
+              <div class="branch-label">❌ 首次 / 更换</div>
+              xcrun simctl list → 用户选择 → 保存偏好
+            </div>
+          </div>
+        </div>
+
+        <div class="arrow-between">›</div>
+        <div class="step-card">
+          <span class="step-icon">🚀</span>
+          <div class="step-name">Boot 设备</div>
+          <div class="step-detail">xcrun simctl boot<br>open -a Simulator</div>
+        </div>
+        <div class="arrow-between">›</div>
+        <div class="step-card">
+          <span class="step-icon">📍</span>
+          <div class="step-name">设置定位</div>
+          <div class="step-detail">北京<br>39.9042, 116.4074</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ② 启动 MRN -->
+  <div class="phase">
+    <div class="phase-num c2">2</div>
+    <div class="phase-content">
+      <div class="phase-label">Step 02</div>
+      <div class="phase-title">启动 MRN 开发服务器</div>
+      <div class="steps-row">
+        <div class="step-card">
+          <span class="step-icon">⚙️</span>
+          <div class="step-name">检查 Node 版本</div>
+          <div class="step-detail">.nvmrc / package.json<br>engines 字段</div>
+        </div>
+        <div class="arrow-between">›</div>
+        <div style="display:flex;align-items:flex-start;gap:8px;">
+          <div class="branch-group">
+            <div class="branch-card branch-yes">
+              <div class="branch-label">✅ 版本符合</div>
+              继续
+            </div>
+            <div class="branch-card branch-no">
+              <div class="branch-label">❌ 版本不符</div>
+              fnm / n / nvm 切换版本
+            </div>
+          </div>
+        </div>
+        <div class="arrow-between">›</div>
+        <div class="step-card">
+          <span class="step-icon">🔍</span>
+          <div class="step-name">检测是否运行</div>
+          <div class="step-detail">lsof + 进程路径<br>过滤本项目</div>
+        </div>
+        <div class="arrow-between">›</div>
+        <div style="display:flex;align-items:flex-start;gap:8px;">
+          <div class="branch-group">
+            <div class="branch-card branch-yes">
+              <div class="branch-label">✅ 已运行</div>
+              复用端口，跳过启动
+            </div>
+            <div class="branch-card branch-no">
+              <div class="branch-label">❌ 未运行</div>
+              osascript 开 Terminal<br>yarn start:mrn
+            </div>
+          </div>
+        </div>
+        <div class="arrow-between">›</div>
+        <div class="step-card">
+          <span class="step-icon">🔌</span>
+          <div class="step-name">检测端口</div>
+          <div class="step-detail">lsof 动态提取<br>→ MRN_PORT</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ③ 连接页面 -->
+  <div class="phase">
+    <div class="phase-num c3">3</div>
+    <div class="phase-content">
+      <div class="phase-label">Step 03</div>
+      <div class="phase-title">连接模拟器到页面</div>
+      <div class="steps-row">
+        <div class="step-card">
+          <span class="step-icon">🌐</span>
+          <div class="step-name">获取本机 IP</div>
+          <div class="step-detail">ipconfig getifaddr en0</div>
+        </div>
+        <div class="arrow-between">›</div>
+        <div class="step-card">
+          <span class="step-icon">🔗</span>
+          <div class="step-name">发送深链</div>
+          <div class="step-detail">xcrun simctl openurl<br>imeituan://mrn/debug?server=…<br>⚠️ 只触发一次</div>
+        </div>
+        <div class="arrow-between">›</div>
+        <div class="step-card">
+          <span class="step-icon">⏳</span>
+          <div class="step-name">等待加载</div>
+          <div class="step-detail">10–15 秒<br>有 loading = 正常</div>
+        </div>
+        <div class="arrow-between">›</div>
+        <div style="display:flex;align-items:flex-start;gap:8px;">
+          <div class="branch-group">
+            <div class="branch-card branch-yes">
+              <div class="branch-label">✅ 有内容</div>
+              继续等待加载完成
+            </div>
+            <div class="branch-card branch-no">
+              <div class="branch-label">❌ 纯白屏</div>
+              重试一次深链
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ④ 测试场景 -->
+  <div class="phase">
+    <div class="phase-num c4">4</div>
+    <div class="phase-content">
+      <div class="phase-label">Step 04</div>
+      <div class="phase-title">测试场景选择</div>
+      <div class="steps-row">
+        <div class="step-card">
+          <span class="step-icon">🗂</span>
+          <div class="step-name">扫描测试目录</div>
+          <div class="step-detail">tests/simulator/**/<br>test_*.py</div>
+        </div>
+        <div class="arrow-between">›</div>
+        <!-- 决策分支 -->
+        <div style="display:flex;flex-direction:column;gap:8px;">
+          <div class="branch-card branch-yes" style="display:flex;align-items:center;justify-content:space-between;gap:12px;">
+            <div>
+              <div class="branch-label">✅ 有场景</div>
+              展示编号列表，等待用户选择
+            </div>
+            <span style="font-size:18px;color:#15803d;font-weight:700;">↓ Step 5</span>
+          </div>
+          <div class="branch-card branch-no" style="display:flex;align-items:center;justify-content:space-between;gap:12px;">
+            <div>
+              <div class="branch-label">❌ 无场景</div>
+              跳过
+            </div>
+            <span class="gate-stop">■ 调试结束</span>
+          </div>
+        </div>
+        <div class="arrow-between">›</div>
+        <div class="step-card">
+          <span class="step-icon">▶️</span>
+          <div class="step-name">运行脚本</div>
+          <div class="step-detail">python3 test_*.py<br>全自动执行</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 条件门控 -->
+  <div class="conditional-gate">
+    <div class="gate-line"></div>
+    <div class="gate-badge">
+      <span>✅ 有场景时才进入</span>
+      <span class="gate-arrow">↓</span>
+    </div>
+    <div class="gate-line"></div>
+  </div>
+
+  <!-- ⑤ 自动化测试循环 -->
+  <div class="phase">
+    <div class="phase-num c5">5</div>
+    <div class="phase-content">
+      <div class="phase-label">Step 05 · Conditional · Automation Loop</div>
+      <div class="phase-title">自动化测试脚本内部流程</div>
+      <div class="loop-container">
+        <div class="loop-header">
+          <span class="loop-badge">Loop</span>
+          <span style="background:#dcfce7;color:#15803d;font-size:10px;font-weight:700;padding:3px 8px;border-radius:20px;border:1px solid #86efac;">条件执行</span>
+          <span class="loop-desc">每个测试步骤：截图 → 识别 → 点击 → 验证，失败则重试</span>
+        </div>
+        <div class="loop-steps">
+          <div class="loop-step">
+            <div class="loop-step-icon" style="background:#fff0f0;font-size:20px;">🔧</div>
+            <div class="loop-step-num">① SETUP</div>
+            <div class="loop-step-name">开启 Mock</div>
+            <div class="loop-step-sub">AppMock API</div>
+          </div>
+          <div class="loop-connector">—›</div>
+          <div class="loop-step">
+            <div class="loop-step-icon" style="background:#fff8e1;font-size:20px;">🔗</div>
+            <div class="loop-step-num">② TRIGGER</div>
+            <div class="loop-step-name">发送深链</div>
+            <div class="loop-step-sub">xcrun simctl</div>
+          </div>
+          <div class="loop-connector">—›</div>
+          <div class="loop-step">
+            <div class="loop-step-icon" style="background:#e8f4fd;font-size:20px;">📸</div>
+            <div class="loop-step-num">③ CAPTURE</div>
+            <div class="loop-step-name">截图</div>
+            <div class="loop-step-sub">xcrun simctl io</div>
+          </div>
+          <div class="loop-connector">—›</div>
+          <div class="loop-step">
+            <div class="loop-step-icon" style="background:#f3e8ff;font-size:20px;">🔍</div>
+            <div class="loop-step-num">④ OCR</div>
+            <div class="loop-step-name">文字识别</div>
+            <div class="loop-step-sub">Vision 框架</div>
+          </div>
+          <div class="loop-connector">—›</div>
+          <div class="loop-step">
+            <div class="loop-step-icon" style="background:#e8f5e9;font-size:20px;">📐</div>
+            <div class="loop-step-num">⑤ TRANSFORM</div>
+            <div class="loop-step-name">坐标换算</div>
+            <div class="loop-step-sub">px → pt</div>
+          </div>
+          <div class="loop-connector">—›</div>
+          <div class="loop-step">
+            <div class="loop-step-icon" style="background:#fff3e0;font-size:20px;">👆</div>
+            <div class="loop-step-num">⑥ CLICK</div>
+            <div class="loop-step-name">模拟点击</div>
+            <div class="loop-step-sub">CGEvent</div>
+          </div>
+          <div class="loop-connector">—›</div>
+          <div class="loop-step">
+            <div class="loop-step-icon" style="background:#e8eaf6;font-size:20px;">✅</div>
+            <div class="loop-step-num">⑦ VERIFY</div>
+            <div class="loop-step-name">截图验证</div>
+            <div class="loop-step-sub">OCR 核对结果</div>
+          </div>
+          <div class="loop-connector">—›</div>
+          <div class="loop-step">
+            <div class="loop-step-icon" style="background:#fce4ec;font-size:20px;">🔒</div>
+            <div class="loop-step-num">⑧ TEARDOWN</div>
+            <div class="loop-step-name">关闭 Mock</div>
+            <div class="loop-step-sub">全部清理</div>
+          </div>
+        </div>
+        <div class="loop-footer">↩ 步骤 ③–⑦ 循环执行，验证失败则重试当前步骤</div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+</body>
+</html>
