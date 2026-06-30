@@ -1,0 +1,72 @@
+/**
+ * TV 编辑器公共样式
+ * 配置面板表单行布局，Element Plus 组件接管所有交互元素样式
+ */
+
+.config-form {
+  &__item {
+    display: flex;
+    align-items: center;
+    margin-bottom: 12px;
+    font-size: 13px;
+    min-width: 0;
+    overflow: hidden;
+
+    label {
+      width: 56px;
+      min-width: 56px;
+      color: #666;
+      font-size: 12px;
+      flex-shrink: 0;
+    }
+
+    // 让 Element Plus 表单组件填满剩余宽度，不超出容器
+    .el-input,
+    .el-textarea,
+    .el-select {
+      flex: 1;
+      min-width: 0;
+      max-width: 100%;
+    }
+
+    &--slider {
+      align-items: center;
+
+      label {
+        line-height: 1;
+      }
+
+      .el-slider {
+        flex: 1;
+        margin: 0 8px;
+      }
+
+      .config-form__tip {
+        line-height: 1;
+      }
+    }
+
+    .config-form__color-addon {
+      margin-left: 8px;
+    }
+  }
+
+  &__tip {
+    margin-left: 8px;
+    font-size: 11px;
+    color: #999;
+    flex-shrink: 0;
+  }
+}
+
+.config-readonly {
+  font-size: 13px;
+  color: #333;
+}
+
+.config-panel__title {
+  margin-bottom: 12px;
+  font-size: 14px;
+  font-weight: 700;
+  color: #333;
+}

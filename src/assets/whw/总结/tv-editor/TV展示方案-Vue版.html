@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+<meta charset="UTF-8">
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: -apple-system, "PingFang SC", "Helvetica Neue", sans-serif;
+    background: #fff;
+    width: 1536px;
+    padding: 48px 56px;
+    color: #1a1a2e;
+  }
+  .title-row { display: flex; align-items: center; gap: 16px; margin-bottom: 40px; }
+  .title-tag { background: #1a1a2e; color: #fff; font-size: 11px; font-weight: 700; letter-spacing: 2px; padding: 4px 10px; border-radius: 4px; text-transform: uppercase; }
+  h1 { font-size: 26px; font-weight: 800; color: #1a1a2e; letter-spacing: 0.5px; }
+
+  .timeline { display: flex; flex-direction: column; gap: 0; position: relative; }
+  .timeline::before { content: ''; position: absolute; left: 28px; top: 28px; bottom: 28px; width: 2px; background: #e8eaee; }
+
+  .phase { display: flex; align-items: flex-start; gap: 24px; margin-bottom: 28px; position: relative; }
+  .phase-num { flex-shrink: 0; width: 56px; height: 56px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 20px; font-weight: 800; color: #fff; position: relative; z-index: 1; box-shadow: 0 2px 8px rgba(0,0,0,0.15); }
+  .phase-content { flex: 1; padding-top: 6px; }
+  .phase-label { font-size: 11px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 6px; opacity: 0.55; }
+  .phase-title { font-size: 18px; font-weight: 700; margin-bottom: 14px; color: #1a1a2e; }
+
+  .steps-row { display: flex; gap: 10px; flex-wrap: wrap; align-items: flex-start; }
+  .step-card { background: #f7f8fa; border: 1px solid #e8eaee; border-radius: 10px; padding: 12px 14px; font-size: 13px; color: #2c3e50; line-height: 1.5; flex: 0 0 auto; min-width: 160px; }
+  .step-card .step-icon { font-size: 18px; margin-bottom: 4px; display: block; }
+  .step-card .step-name { font-weight: 700; font-size: 13px; margin-bottom: 2px; color: #1a1a2e; }
+  .step-card .step-detail { font-size: 11px; color: #7a8a9a; }
+
+  .arrow-between { display: flex; align-items: center; color: #c8cdd6; font-size: 20px; align-self: center; flex-shrink: 0; }
+
+  .branch-group { display: flex; flex-direction: column; gap: 8px; }
+  .branch-card { border-radius: 8px; padding: 10px 14px; font-size: 12px; line-height: 1.5; min-width: 200px; }
+  .branch-yes { background: #f0faf5; border: 1px solid #b2dfdb; color: #2e7d32; }
+  .branch-no  { background: #fff5f5; border: 1px solid #ffcdd2; color: #c62828; }
+  .branch-label { font-weight: 700; font-size: 11px; margin-bottom: 2px; }
+
+  .loop-container { background: #f9fffe; border: 2px dashed #86efac; border-radius: 14px; padding: 20px 20px 16px; width: 100%; margin-top: 4px; }
+  .loop-header { display: flex; align-items: center; gap: 8px; margin-bottom: 16px; }
+  .loop-badge { background: #1a1a2e; color: #fff; font-size: 10px; font-weight: 700; letter-spacing: 1.5px; padding: 3px 8px; border-radius: 20px; text-transform: uppercase; }
+  .loop-desc { font-size: 12px; color: #7a8a9a; }
+  .loop-steps { display: flex; align-items: center; gap: 0; }
+  .loop-step { flex: 1; display: flex; flex-direction: column; align-items: center; text-align: center; }
+  .loop-step-icon { width: 44px; height: 44px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 18px; margin-bottom: 6px; flex-shrink: 0; }
+  .loop-step-num { font-size: 10px; font-weight: 700; color: #adb5bd; margin-bottom: 2px; letter-spacing: 0.5px; }
+  .loop-step-name { font-size: 12px; font-weight: 700; color: #2c3e50; line-height: 1.3; }
+  .loop-step-sub { font-size: 10px; color: #7a8a9a; margin-top: 2px; }
+  .loop-connector { flex-shrink: 0; display: flex; align-items: center; padding: 0 4px; color: #dee2e6; font-size: 16px; margin-bottom: 28px; }
+  .loop-footer { margin-top: 12px; padding-top: 10px; border-top: 1px dashed #e8eaee; font-size: 11px; color: #adb5bd; text-align: right; font-style: italic; }
+
+  .c0 { background: #64748b; }
+  .c1 { background: #3b82f6; }
+  .c2 { background: #10b981; }
+  .c3 { background: #f59e0b; }
+  .c4 { background: #8b5cf6; }
+  .c5 { background: #ef4444; }
+
+  .intent-tags { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 8px; }
+  .intent-tag { background: #f1f5f9; border: 1px solid #e2e8f0; border-radius: 20px; padding: 4px 12px; font-size: 12px; font-weight: 600; color: #475569; display: flex; align-items: center; gap: 5px; }
+  .intent-tag .dot { width: 6px; height: 6px; border-radius: 50%; background: #64748b; }
+
+  .vs-table { width: 100%; border-collapse: collapse; margin-top: 4px; font-size: 12px; }
+  .vs-table th { background: #f1f5f9; padding: 8px 12px; font-weight: 700; text-align: left; border: 1px solid #e2e8f0; color: #475569; font-size: 11px; letter-spacing: 0.5px; }
+  .vs-table td { padding: 8px 12px; border: 1px solid #e2e8f0; color: #374151; vertical-align: top; line-height: 1.5; }
+  .vs-table tr:nth-child(even) td { background: #fafafa; }
+  .highlight { background: #f0fdf4 !important; }
+  .tag-green { display: inline-block; background: #dcfce7; color: #15803d; font-size: 10px; font-weight: 700; padding: 2px 6px; border-radius: 4px; margin-left: 4px; }
+  .tag-blue  { display: inline-block; background: #dbeafe; color: #1d4ed8; font-size: 10px; font-weight: 700; padding: 2px 6px; border-radius: 4px; margin-left: 4px; }
+</style>
+</head>
+<body>
+
+<div class="title-row">
+  <span class="title-tag">Architecture</span>
+  <h1>TV 展示方案 · Vue 版技术方案</h1>
+</div>
+
+<div class="timeline">
+
+  <!-- Trigger -->
+  <div class="phase">
+    <div class="phase-num c0">→</div>
+    <div class="phase-content">
+      <div class="phase-label">Trigger</div>
+      <div class="phase-title">触发场景</div>
+      <div class="intent-tags">
+        <span class="intent-tag"><span class="dot"></span>路由 /alone/tv-display</span>
+        <span class="intent-tag"><span class="dot"></span>layout/alone（全屏无侧边栏）</span>
+        <span class="intent-tag"><span class="dot"></span>复用 tv-editor Widget 组件</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Step 1：配置读取 -->
+  <div class="phase">
+    <div class="phase-num c1">1</div>
+    <div class="phase-content">
+      <div class="phase-label">Step 01</div>
+      <div class="phase-title">配置读取（mock.js ES Module）</div>
+      <div class="steps-row">
+        <div class="step-card">
+          <span class="step-icon">📦</span>
+          <div class="step-name">import mock.js</div>
+          <div class="step-detail">export default<br>TemplateData 对象<br>ES Module 格式</div>
+        </div>
+        <div class="arrow-between">›</div>
+        <div class="step-card" style="background:#f0fdf4;border-color:#86efac;">
+          <span class="step-icon">🔗</span>
+          <div class="step-name">格式统一</div>
+          <div class="step-detail" style="color:#15803d;">与编辑器<br>serialize() 输出<br>完全一致</div>
+        </div>
+        <div class="arrow-between">›</div>
+        <div class="step-card">
+          <span class="step-icon">📡</span>
+          <div class="step-name">接入真实接口</div>
+          <div class="step-detail">替换 mock 为<br>ajaxQueryTemplate<br>({ templateId })</div>
+        </div>
+        <div class="arrow-between">›</div>
+        <div class="step-card">
+          <span class="step-icon">⚡</span>
+          <div class="step-name">const config</div>
+          <div class="step-detail">直接使用，无需<br>reactive 包装<br>纯读取</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Step 2：缩放适配 -->
+  <div class="phase">
+    <div class="phase-num c2">2</div>
+    <div class="phase-content">
+      <div class="phase-label">Step 02</div>
+      <div class="phase-title">缩放适配 · transform: scale（不影响全局 font-size）</div>
+      <div class="steps-row">
+        <div class="step-card">
+          <span class="step-icon">📐</span>
+          <div class="step-name">onMounted</div>
+          <div class="step-detail">applyScale()<br>addEventListener<br>'resize'</div>
+        </div>
+        <div class="arrow-between">›</div>
+        <div class="step-card" style="background:#f0fdf4;border-color:#86efac;">
+          <span class="step-icon">✨</span>
+          <div class="step-name">核心公式</div>
+          <div class="step-detail" style="color:#15803d;font-weight:600;">browserRatio > canvasRatio<br>? vh / height<br>: vw / width</div>
+        </div>
+        <div class="arrow-between">›</div>
+        <div class="step-card">
+          <span class="step-icon">🎨</span>
+          <div class="step-name">canvasStyle</div>
+          <div class="step-detail">width: 750px<br>height: Npx<br>transform: scale(N)</div>
+        </div>
+        <div class="arrow-between">›</div>
+        <div class="step-card">
+          <span class="step-icon">🔒</span>
+          <div class="step-name">onBeforeUnmount</div>
+          <div class="step-detail">removeEventListener<br>防止内存泄漏</div>
+        </div>
+      </div>
+      <!-- 对比 HTML 版 -->
+      <table class="vs-table" style="margin-top:14px;max-width:700px;">
+        <tr>
+          <th>缩放方案</th>
+          <th>HTML 版</th>
+          <th>Vue 版 <span class="tag-green">本方案</span></th>
+        </tr>
+        <tr>
+          <td>实现方式</td>
+          <td>html { font-size = vw/750 } · 单位用 rem</td>
+          <td class="highlight">transform: scale(N) · 单位用 px</td>
+        </tr>
+        <tr>
+          <td>全局影响</td>
+          <td>改变全局根字号，独立 HTML 无影响</td>
+          <td class="highlight">仅影响 canvas 元素，不修改全局 font-size</td>
+        </tr>
+        <tr>
+          <td>Widget 单位</td>
+          <td>rem（随根字号缩放）</td>
+          <td class="highlight">px（scale 后等比缩放）</td>
+        </tr>
+      </table>
+    </div>
+  </div>
+
+  <!-- Step 3：组件渲染 -->
+  <div class="phase">
+    <div class="phase-num c3">3</div>
+    <div class="phase-content">
+      <div class="phase-label">Step 03</div>
+      <div class="phase-title">组件渲染（COMPONENT_REGISTRY → Widget 复用）</div>
+      <div class="loop-container">
+        <div class="loop-header">
+          <span class="loop-badge">Render</span>
+          <span style="background:#fef9c3;color:#854d0e;font-size:10px;font-weight:700;padding:3px 8px;border-radius:20px;border:1px solid #fde047;">复用 tv-editor Widget，零重写</span>
+          <span class="loop-desc">components.sort(zIndex) → v-for → getWidget(type) → &lt;component :is&gt;</span>
+        </div>
+        <div class="loop-steps">
+          <div class="loop-step">
+            <div class="loop-step-icon" style="background:#f1f5f9;">📋</div>
+            <div class="loop-step-num">CONFIG</div>
+            <div class="loop-step-name">读取 components</div>
+            <div class="loop-step-sub">sort by zIndex</div>
+          </div>
+          <div class="loop-connector">—›</div>
+          <div class="loop-step">
+            <div class="loop-step-icon" style="background:#dbeafe;">🔍</div>
+            <div class="loop-step-num">REGISTRY</div>
+            <div class="loop-step-name">查注册表</div>
+            <div class="loop-step-sub">COMPONENT_<br>REGISTRY[type]<br>.widget</div>
+          </div>
+          <div class="loop-connector">—›</div>
+          <div class="loop-step">
+            <div class="loop-step-icon" style="background:#dcfce7;">📦</div>
+            <div class="loop-step-num">STYLE</div>
+            <div class="loop-step-name">compStyle()</div>
+            <div class="loop-step-sub">position:absolute<br>left/top/w/h/z (px)</div>
+          </div>
+          <div class="loop-connector">—›</div>
+          <div class="loop-step">
+            <div class="loop-step-icon" style="background:#fef3c7;">⚡</div>
+            <div class="loop-step-num">RENDER</div>
+            <div class="loop-step-name">&lt;component :is&gt;</div>
+            <div class="loop-step-sub">:props="comp.props"<br>动态组件</div>
+          </div>
+          <div class="loop-connector">—›</div>
+          <div class="loop-step">
+            <div class="loop-step-icon" style="background:#ede9fe;">🎨</div>
+            <div class="loop-step-num">WIDGET</div>
+            <div class="loop-step-name">Widget 组件</div>
+            <div class="loop-step-sub">7 种 · 纯渲染<br>无 Emits</div>
+          </div>
+        </div>
+        <div class="loop-footer">Widget 内部自管实时数据（date tick / image 轮播 / waitCount / queue mock）· 与编辑器预览行为一致</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Step 4：生命周期与隔离 -->
+  <div class="phase">
+    <div class="phase-num c4">4</div>
+    <div class="phase-content">
+      <div class="phase-label">Step 04</div>
+      <div class="phase-title">生命周期管理 · 样式隔离</div>
+      <div class="steps-row">
+        <div class="step-card">
+          <span class="step-icon">🔛</span>
+          <div class="step-name">onMounted</div>
+          <div class="step-detail">applyScale()<br>resize 监听注册</div>
+        </div>
+        <div class="arrow-between">›</div>
+        <div class="step-card">
+          <span class="step-icon">🔁</span>
+          <div class="step-name">运行中</div>
+          <div class="step-detail">scale ref 响应式<br>canvasStyle computed<br>自动重渲染</div>
+        </div>
+        <div class="arrow-between">›</div>
+        <div class="step-card">
+          <span class="step-icon">🔕</span>
+          <div class="step-name">onBeforeUnmount</div>
+          <div class="step-detail">resize 监听移除<br>Widget setInterval<br>各自清理</div>
+        </div>
+        <div class="arrow-between">›</div>
+        <div style="display:flex;flex-direction:column;gap:8px;align-self:flex-start;">
+          <div class="branch-card branch-yes">
+            <div class="branch-label">✅ 样式隔离</div>
+            &lt;style scoped&gt; · position:fixed · layout/alone
+          </div>
+          <div class="branch-card branch-yes">
+            <div class="branch-label">✅ 全局无影响</div>
+            不修改 html.fontSize · 不注入全局 CSS
+          </div>
+          <div class="branch-card branch-yes">
+            <div class="branch-label">✅ 组件无侵入</div>
+            Widget 只读 · 不修改 tv-editor 任何文件
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
+</body>
+</html>
