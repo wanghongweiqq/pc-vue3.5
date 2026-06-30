@@ -1,0 +1,28 @@
+# ── 凭证 / 敏感信息 ──────────────────
+*cookies.json
+*token*
+*secret*
+
+# ── 运行时 / 日志 ─────────────────────
+daemon.log
+daemon/
+history.jsonl
+.last-cleanup
+.last-update-result.json
+
+# ── 插件市场缓存（不需要追踪）──────────
+plugins/marketplaces/
+
+# ── 会话 / 缓存 ───────────────────────
+sessions/
+session-env/
+cache/
+paste-cache/
+shell-snapshots/
+file-history/
+backups/
+tasks/
+telemetry/
+ide/
+laji/
+jobs/

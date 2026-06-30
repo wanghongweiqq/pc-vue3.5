@@ -1,0 +1,6 @@
+skill-manifest-version: 1
+skill-id: cf2efa53e73ded9bdbfe425593be23f5887ec1341f6fc71d562caffacd4cd83c
+
+files:
+  b9fafdd3d61e5db9ccc3134b43fdb4ee6554ffdd7be5b3e51966567f1af1a188  SKILL.md
+  b86877a80902a2678c2ee1cc610d7da6b43bf35b7668a7eed3cbf1f68ee6c166  references/spec-templates.md
