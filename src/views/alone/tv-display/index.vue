@@ -32,13 +32,13 @@ const config = MOCK_CONFIG
 // ── 缩放：transform: scale，不修改全局 font-size ──────────
 const scale = ref(1)
 
-function applyScale() {
+function applyScale () {
   const { width, height } = config.canvas
   const bRatio = window.innerWidth / window.innerHeight
   const cRatio = width / height
   scale.value = bRatio > cRatio
-    ? window.innerHeight / height   // 浏览器更宽 → 高度撑满
-    : window.innerWidth  / width    // 浏览器更高 → 宽度撑满
+    ? window.innerHeight / height // 浏览器更宽 → 高度撑满
+    : window.innerWidth / width // 浏览器更高 → 宽度撑满
 }
 
 onMounted(() => {
@@ -52,10 +52,10 @@ onBeforeUnmount(() => {
 
 // ── 样式计算 ──────────────────────────────────────────────
 const canvasStyle = computed(() => ({
-  width:           config.canvas.width  + 'px',
-  height:          config.canvas.height + 'px',
-  background:      config.canvas.background,
-  transform:       `scale(${scale.value})`,
+  width: config.canvas.width + 'px',
+  height: config.canvas.height + 'px',
+  background: config.canvas.background,
+  transform: `scale(${ scale.value })`,
   transformOrigin: 'center center',
 }))
 
@@ -64,18 +64,18 @@ const sortedComponents = computed(() =>
   [...config.components].sort((a, b) => a.zIndex - b.zIndex),
 )
 
-function compStyle(comp) {
+function compStyle (comp) {
   return {
     position: 'absolute',
-    left:     comp.x      + 'px',
-    top:      comp.y      + 'px',
-    width:    comp.width  + 'px',
-    height:   comp.height + 'px',
-    zIndex:   comp.zIndex,
+    left: comp.x + 'px',
+    top: comp.y + 'px',
+    width: comp.width + 'px',
+    height: comp.height + 'px',
+    zIndex: comp.zIndex,
   }
 }
 
-function getWidget(type) {
+function getWidget (type) {
   return COMPONENT_REGISTRY[type]?.widget ?? null
 }
 </script>
@@ -88,8 +88,8 @@ function getWidget(type) {
   display: flex;
   align-items: center;
   justify-content: center;
-  background: #000;
   overflow: hidden;
+  background: #000;
 }
 
 .tv-display__canvas {
