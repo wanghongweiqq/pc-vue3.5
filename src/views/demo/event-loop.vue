@@ -2,10 +2,10 @@
  * @Author: 王宏伟
  * @Email：wanghongwei@hualala.com
  * @Date: 2021-11-29 22:37:47
- * @LastEditTime: 2025-07-31 16:56:10
+ * @LastEditTime: 2026-07-01 14:49:56
  * @LastEditors: Please set LastEditors
  * @Description: 时间循环：Event Loop
- * @FilePath: /vue3.0/src/views/demo/event-loop.vue
+ * @FilePath: /pc-vue3.5/src/views/demo/event-loop.vue
 -->
 <template>
   <div class="pg-func">
@@ -26,8 +26,7 @@
         <h2>宏任务</h2>
         <p>macrotask 称为 Task，宏任务是由宿主（浏览器、Node）发起的，可以理解是每次执行栈执行的代码就是一个宏任务（包括每次从事件队列中获取一个事件回调并放到执行栈中执行）。</p>
         <h3>宏任务包含：</h3>
-        <pre>
-            script(整体代码)
+        <pre>{{ `script(整体代码)
             setTimeout
             setInterval
             I/O
@@ -35,19 +34,20 @@
             postMessage
             MessageChannel
             setImmediate(Node.js 环境)
-          </pre>
+
+` }}</pre>
         <p>PS：script(整体代码) 实际上如果同时存在两个 script 代码块，会首先在执行第一个 script 代码块中的同步代码，如果这个过程中创建了微任务并进入了微任务队列，第一个 script 同步代码执行完之后，会首先去清空微任务队列，再去开启第二个 script 代码块的执行。所以这里应该就可以理解 script（整体代码块）为什么会是宏任务。</p>
         <h2>微任务</h2>
         <p>microtask 称为 Jobs,，微任务由 JS 自身发起，可以理解是在当前 task 执行结束后立即执行的任务。也就是说，在当前task任务后，下一个task之前，在渲染之前。</p>
         <p>所以它的响应速度相比setTimeout（setTimeout是task）会更快，因为无需等渲染。也就是说，在某一个macrotask执行完后，就会将在它执行期间产生的所有microtask都执行完毕（在渲染前）。</p>
         <h3>微任务包含：</h3>
-        <pre>
-            Promise.then/catch/finally
+        <pre>{{ `Promise.then/catch/finally
             async/await
             Object.observe
             MutationObserver
             process.nextTick(Node.js 环境)
-          </pre>
+
+` }}</pre>
         <p> PS：async/await</p>
         <p>ECMAScript2017中添加了async functions和await。 </p>
         <p>async关键字是将一个同步函数变成一个异步函数，并将返回值变为promise。</p>

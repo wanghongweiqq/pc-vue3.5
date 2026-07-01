@@ -35,7 +35,7 @@
         </tr>
       </tbody>
     </table>
-    <pre class="code-block">
+    <pre>{{ `
 强缓存（不请求服务端）：
   Cache-Control: max-age=3600
   → 3600 秒内直接读本地，状态码显示 200（from cache）
@@ -43,7 +43,8 @@
 协商缓存（请求服务端验证）：
   请求头：If-None-Match: "abc123"
   服务端：资源未变 → 304 Not Modified（不返回 body）
-          资源已变 → 200 OK + 新资源</pre>
+          资源已变 → 200 OK + 新资源
+` }}</pre>
   </div>
 </template>
 <script setup>

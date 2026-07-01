@@ -10,8 +10,7 @@
   <div class="debounce-all-options-utils">
     <h4>options选项式api示例</h4>
     <p>利用data的初始话执行闭包工具类的函数，将timer私有化</p>
-    <pre>
-// 触发事件
+     <pre>{{ `// 触发事件
 @input="debounce1($event,'c','d')"
 @clear="debounce1.clear"
 
@@ -27,7 +26,7 @@ data () {
 doSearch1Callback (...argument) {
   console.log('输入框参数为：',...argument,this.name,this.xxx)
 },
-</pre>
+` }}</pre>
     <p>
       <el-input
         v-model="searchValue1"

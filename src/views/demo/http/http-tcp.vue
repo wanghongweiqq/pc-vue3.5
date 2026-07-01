@@ -4,7 +4,7 @@
 
     <h3>一、TCP 三次握手 / 四次挥手</h3>
     <p>HTTP 基于 TCP，每次通信前先建立 TCP 连接。</p>
-    <pre class="code-block">
+    <pre>{{ `
 三次握手（建立连接）：
   客户端 ——SYN——→ 服务端          第1次：我要连你
   客户端 ←—SYN+ACK—— 服务端      第2次：可以，我也要连你
@@ -14,7 +14,8 @@
   客户端 ——FIN——→ 服务端          第1次：我发完了，要断了
   客户端 ←——ACK—— 服务端          第2次：收到，但我还没发完
   客户端 ←——FIN—— 服务端          第3次：我也发完了
-  客户端 ——ACK——→ 服务端          第4次：好的，连接关闭</pre>
+  客户端 ——ACK——→ 服务端          第4次：好的，连接关闭
+` }}</pre>
     <p>为什么挥手比握手多一次？建立连接时 SYN+ACK 可以合并，断开时服务端的 ACK 和 FIN 需要分开发（中间可能还有数据要传）。</p>
 
     <h3>二、TCP vs UDP</h3>
@@ -111,10 +112,11 @@
 
     <h4>HTTP/3 的 UDP 不是裸 UDP</h4>
     <p>HTTP/3 底层是 <strong>QUIC</strong>，QUIC 在 UDP 之上自己实现了可靠传输、有序到达、加密，并非放弃可靠性，而是把可靠性机制从操作系统层搬到应用层，顺便解决了 TCP 的队头阻塞：</p>
-    <pre class="code-block">
+    <pre>{{ `
 HTTP/3  →  QUIC（可靠 + 有序 + 加密）  →  UDP
                  ↑
-           自己实现了丢包重传、有序传输，不是裸 UDP</pre>
+           自己实现了丢包重传、有序传输，不是裸 UDP
+` }}</pre>
 
     <h4>WebTransport —— 下一代 WebSocket</h4>
     <p>基于 QUIC 的双向实时通信标准，可理解为「WebSocket over QUIC」，2023 年 Chrome 已正式支持：</p>
@@ -216,14 +218,15 @@ HTTP/3  →  QUIC（可靠 + 有序 + 加密）  →  UDP
 
     <h4>什么是 RTT</h4>
     <p><strong>RTT（Round Trip Time，往返时延）</strong>指数据从发送方出发、到达接收方、再返回发送方所经历的总时间，是衡量网络延迟的核心指标。</p>
-    <pre class="code-block">
+    <pre>{{ `
 客户端 ——— 发出请求 ———→ 服务端
 客户端 ←—— 收到响应 ———  服务端
 
       └──────── 1 RTT ────────┘
 
 ping 显示 50ms，即 1 RTT ≈ 50ms
-每多一次 RTT，用户就多等 50ms</pre>
+每多一次 RTT，用户就多等 50ms
+` }}</pre>
     <p>握手、TLS 协商等都需要若干 RTT，RTT 越多连接越慢，这也是 QUIC 优化的核心目标。</p>
 
     <h4>TLS 握手</h4>
@@ -233,7 +236,7 @@ ping 显示 50ms，即 1 RTT ≈ 50ms
       <li><em>协商算法</em> —— 双方协商使用哪种加密套件</li>
       <li><em>交换密钥</em> —— 安全地生成后续通信用的对称加密密钥</li>
     </ul>
-    <pre class="code-block">
+    <pre>{{ `
 TLS 1.2 握手（2 RTT）：
   RTT1  客户端 → ClientHello（支持的加密套件、随机数）
         服务端 ← ServerHello（选定套件）+ Certificate + ServerHelloDone
@@ -245,11 +248,12 @@ TLS 1.3 握手（1 RTT）：
   RTT1  客户端 → ClientHello（支持套件 + 密钥共享参数）
         服务端 ← ServerHello + Certificate + Finished（合并发送）
         客户端 → Finished
-  ───────────────────────────────────── 开始加密通信（比 1.2 少一个 RTT）</pre>
+  ───────────────────────────────────── 开始加密通信（比 1.2 少一个 RTT）
+` }}</pre>
     <p>TLS 1.3 将证书验证和密钥交换合并，减少了一次往返，QUIC 则在此基础上将 TLS 握手与传输握手进一步合并，做到了首次连接 1 RTT、再次连接 0 RTT。</p>
 
     <h4>连接建立对比</h4>
-    <pre class="code-block">
+    <pre>{{ `
 TCP + TLS 1.3（首次连接，共 2 RTT）：
   RTT1: TCP 握手（SYN / SYN+ACK / ACK）
   RTT2: TLS 握手（ClientHello / ServerHello / Finished）
@@ -261,7 +265,8 @@ QUIC（首次连接，1 RTT）：
 
 QUIC（再次连接，0 RTT）：
   直接发数据（携带上次缓存的会话信息）
-  ─── 立即传数据</pre>
+  ─── 立即传数据
+` }}</pre>
   </div>
 </template>
 <script setup>

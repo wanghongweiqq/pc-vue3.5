@@ -401,7 +401,7 @@ export default {
    */
   copyDeep (data, params = {}) {
     const { regExpSpace } = regExp
-    const { isFilterStringSpace = false, isFilterObjectParams = false } = params
+    const { isFilterStringSpace = false, isFilterObjectParams = false,isDeleteOssParams = false } = params
     let newData = null
     const type = this.dataType(data)
 

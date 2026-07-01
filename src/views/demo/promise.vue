@@ -11,17 +11,16 @@
 
         <h2>异步操作的常见语法</h2>
         <p>1、事件监听</p>
-        <pre>
-document.getElementById('#start').addEventListener('click', start, false);
+         <pre>{{ `document.getElementById('#start').addEventListener('click', start, false);
 function start() {
   // 响应事件，进行相应的操作
 }
 // jquery on 监听
 $('#start').on('click', start)
-          </pre>
+
+` }}</pre>
         <p>2、回调</p>
-        <pre>
-// 比较常见的有ajax
+         <pre>{{ `// 比较常见的有ajax
 $.ajax('http://www.wyunfei.com/', {
  success (res) {
    // 这里可以监听res返回的数据做回调逻辑的处理
@@ -32,7 +31,8 @@ $.ajax('http://www.wyunfei.com/', {
 $(function() {
  // 页面结构加载完成，做回调逻辑处理
 })
-          </pre>
+
+` }}</pre>
         <h2>异步操作的常见问题</h2>
         <ul>
           <li>1、之前处理异步是通过纯粹的回调函数的形式进行处理</li>
@@ -40,8 +40,7 @@ $(function() {
           <li>3、问题可以解决，但是难以读懂，维护困难</li>
         </ul>
         <h2>promise详解</h2>
-        <pre>
-new Promise(function (resolve, reject) {
+         <pre>{{ `new Promise(function (resolve, reject) {
   // 一段耗时的异步操作
   resolve('成功') // 数据处理完成
   // reject('失败') // 数据处理出错
@@ -49,7 +48,8 @@ new Promise(function (resolve, reject) {
   (res) => {console.log(res)},  // 成功
   (err) => {console.log(err)} // 失败
 )
-          </pre>
+
+` }}</pre>
         <p>promise是一个对象，对象和函数的区别就是对象可以保存状态，函数不可以（闭包除外）</p>
         <p>并未剥夺函数return的能力，因此无需层层传递callback，进行回调获取数据</p>
         <p>代码风格，容易理解，便于维护</p>
@@ -71,8 +71,7 @@ new Promise(function (resolve, reject) {
         <p>1、因为.then()返回的还是Promise实例</p>
         <p>2、会等里面的then()执行完，再执行外面的</p>
 
-        <pre>
-new Promise((resolve)=>{
+         <pre>{{ `new Promise((resolve)=>{
   console.log('Step 1') //1
   setTimeout(()=>{
     resolve(100)
@@ -94,10 +93,10 @@ new Promise((resolve)=>{
   console.log('Step 2') //5
   console.log(val)  //6 val=130
 })
-          </pre>
+
+` }}</pre>
         <p>了解了其 执行顺序后，我们最好将其展开，用链式的方式，这样会有更好的可读性</p>
-        <pre>
-new Promise((resolve)=>{
+         <pre>{{ `new Promise((resolve)=>{
   console.log('Step 1') //1
   setTimeout(()=>{
     resolve(100)
@@ -119,7 +118,8 @@ new Promise((resolve)=>{
   console.log('Step 2') //5
   console.log(val)  //6 val=130
 })
-          </pre>
+
+` }}</pre>
 
         <h2>then、catch、finally</h2>
         <p>then 、 catch 、 finally 都会返回一个新的promise， 所以可以链式调用。</p>

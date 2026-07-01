@@ -19,8 +19,7 @@
         边框渐变动画，其实是背景在做渐变色旋转
       </div>
     </div>
-    <pre>
-/* 声明属性时要在最外层，不能有嵌套 */
+     <pre>{{ `/* 声明属性时要在最外层，不能有嵌套 */
 @property --rota {
   syntax: '&lt;angle&gt;';
   inherits: true;
@@ -38,7 +37,7 @@
     --rota: 360deg;
   }
 }
-</pre>
+` }}</pre>
   </div>
 </template>
 

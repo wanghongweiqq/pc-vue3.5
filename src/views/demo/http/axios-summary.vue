@@ -273,8 +273,7 @@
 
     <h3>二、axios.create — 创建实例</h3>
     <p>通过 <code>axios.create(config)</code> 创建一个独立实例，与全局 axios 互不干扰，适合统一管理项目请求配置。</p>
-    <pre>
-const instance = axios.create({
+     <pre>{{ `const instance = axios.create({
   baseURL: '/',
   timeout: 30000,
   method: 'post',          // 默认请求方法
@@ -283,12 +282,12 @@ const instance = axios.create({
     'Cache-Control': 'no-cache',
     'Pragma': 'no-cache',
   },
-})</pre>
+})
+` }}</pre>
 
     <h3>二、自定义字段挂载到 defaults</h3>
     <p>axios 在合并请求配置时，会将 <code>instance.defaults</code> 上的<em>所有字段</em>（包括自定义字段）合并进每次请求的 <code>config</code>，拦截器中可直接从 <code>config</code> 取用，无需手动兜底。</p>
-    <pre>
-const instance = axios.create({
+     <pre>{{ `const instance = axios.create({
   // ...标准配置...
   isShowLoading: true,         // 是否开启 loading
   isKeepLoading: false,        // 保持 loading（接口嵌套时使用）
@@ -298,15 +297,16 @@ const instance = axios.create({
 })
 
 // 拦截器中直接解构，无需 ?? instance.defaults.xxx
-const { isKeepLoading, isFilterStringSpace } = config</pre>
+const { isKeepLoading, isFilterStringSpace } = config
+` }}</pre>
 
     <h3>三、拦截器链与执行顺序</h3>
     <p>axios 将拦截器和 <code>dispatchRequest</code> 拼接成一条 Promise 链：</p>
-    <pre>
-Promise.resolve(config)
+     <pre>{{ `Promise.resolve(config)
   .then(请求拦截器.success,  请求拦截器.error)
   .then(dispatchRequest,     undefined)       ← 无 error handler，拒绝直接穿透
-  .then(响应拦截器.success,  响应拦截器.error)</pre>
+  .then(响应拦截器.success,  响应拦截器.error)
+` }}</pre>
     <p><strong>请求拦截器注册顺序：LIFO（后注册先执行）</strong>，适合做降级拦截 demo。</p>
     <p><strong>错误传递规则：</strong>请求拦截器抛出的错误会穿透 <code>dispatchRequest</code>，最终到达响应拦截器的 error 回调。因此错误处理统一放在响应拦截器，避免重复处理（弹两次 toast、loading 计算错误）。</p>
     <table class="table">
@@ -336,8 +336,7 @@ Promise.resolve(config)
 
     <h3>四、loading 并发计数</h3>
     <p>多个请求同时发出时，用计数器管理 loading，避免提前关闭或重复创建：</p>
-    <pre>
-let loadCount = 0
+     <pre>{{ `let loadCount = 0
 let loadRef = null
 
 // 开启：每个请求 +1，只创建一个 loading 实例
@@ -349,7 +348,8 @@ loadCount = Math.max(0, loadCount - 1)  // 防负数兜底
 if (loadCount <= 0 && !isKeepLoading) {
   loadRef?.close()
   loadRef = null
-}</pre>
+}
+` }}</pre>
     <p><code>isKeepLoading: true</code> 用于嵌套请求中的非最后一个，保持 loading 不提前关闭；<em>最后一个请求不设此项</em>，触发正常关闭。</p>
 
     <h3>五、adapter — 适配器</h3>
@@ -379,12 +379,10 @@ if (loadCount <= 0 && !isKeepLoading) {
       </tbody>
     </table>
     <p>支持<em>数组格式</em>，按优先级依次尝试，取第一个可用的（降级兜底）：</p>
-    <pre>
-adapter: ['fetch', 'xhr']   // 优先 fetch，不支持则降级 xhr
-</pre>
+     <pre>{{ `adapter: ['fetch', 'xhr']   // 优先 fetch，不支持则降级 xhr
+` }}</pre>
     <p>也可传入<em>自定义函数</em>，本项目 mock 就是通过注入自定义 adapter 实现的：</p>
-    <pre>
-// development 环境命中 mockMap，注入自定义 adapter，不发真实请求
+     <pre>{{ `// development 环境命中 mockMap，注入自定义 adapter，不发真实请求
 if (process.env.NODE_ENV === 'development' && mockMap[config.url] !== undefined) {
   config.adapter = () => Promise.resolve({
     data: mockMap[config.url],
@@ -394,7 +392,8 @@ if (process.env.NODE_ENV === 'development' && mockMap[config.url] !== undefined)
     config,
     request: {},
   })
-}</pre>
+}
+` }}</pre>
 
     <h3>六、防缓存策略</h3>
     <p>两种方式可以二选一，也可同时使用：</p>
@@ -420,23 +419,21 @@ if (process.env.NODE_ENV === 'development' && mockMap[config.url] !== undefined)
 
     <h3>七、withCredentials</h3>
     <p>控制跨域请求是否携带凭证（Cookie、Authorization 等）。</p>
-    <pre>
-withCredentials: true   // 跨域请求携带 Cookie
-</pre>
+     <pre>{{ `withCredentials: true   // 跨域请求携带 Cookie
+` }}</pre>
     <p>需要<em>前后端同时配置</em>，服务端必须返回：</p>
-    <pre>
-Access-Control-Allow-Origin: http://具体域名   ← 不能用 *
-Access-Control-Allow-Credentials: true</pre>
+     <pre>{{ `Access-Control-Allow-Origin: http://具体域名   ← 不能用 *
+Access-Control-Allow-Credentials: true
+` }}</pre>
 
     <h3>八、FormData 上传注意事项</h3>
     <p><strong>不要手动设置 <code>Content-Type: multipart/form-data</code></strong>。</p>
     <p><code>multipart/form-data</code> 必须包含 <code>boundary</code> 分隔符，浏览器在检测到请求体为 FormData 时会<em>自动生成并附加</em>。手动设置会覆盖掉 boundary，服务端无法解析，上传必然失败。</p>
-    <pre>
-// ❌ 错误写法
+     <pre>{{ `// ❌ 错误写法
 config.headers['Content-Type'] = 'multipart/form-data'
 
 // ✅ 什么都不做，让浏览器自动处理即可
-</pre>
+` }}</pre>
   </div>
 </template>
 <script setup>

@@ -325,7 +325,8 @@
       <pre
         v-if="fetchResult"
         class="fetch-result"
-      >{{ fetchResult }}</pre>
+      >{{ fetchResult }}
+` }}</pre>
     </div>
   </div>
 </template>

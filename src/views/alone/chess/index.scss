@@ -107,14 +107,13 @@
         margin-top: -10px;
         font-size: 50px;
         font-weight: bold;
-        color: #fff;
       }
 
-      .el-icon-bottom-left {
+      .tips-left {
         color: #000;
       }
 
-      .el-icon-bottom-right {
+      .tips-right {
         color: #fff;
       }
 
@@ -347,7 +346,7 @@
         }
 
         // >b[class^='el-icon'],
-        >b[class*='el-icon-'] {
+        >i[class*='el-icon'] {
           margin-top: -5px;
           // padding-top: 2px;
           font-size: 20px;
@@ -414,7 +413,7 @@
             @extend %chess-black;
           }
 
-          >b[class*='el-icon-'] {
+          [class*='el-icon'] {
             // color: #999;
           }
         }
@@ -427,7 +426,7 @@
             @extend %chess-white;
           }
 
-          >b[class*='el-icon-'] {
+          [class*='el-icon'] {
             color: #eee;
           }
         }

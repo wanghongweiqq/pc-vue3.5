@@ -3,15 +3,14 @@
  * @Email：wanghongwei@hualala.com
  * @Date: 2025-07-17 23:25:51
  * @Description: 防抖的使用
- * @FilePath: /vue3.0/src/views/demo/debounce-throttle/throttle.vue
+ * @FilePath: /pc-vue3.5/src/views/demo/debounce-throttle/throttle.vue
 -->
 
 <template>
   <div class="throttle">
     <h3>可以查看防抖的最优方法，其实是一样的</h3>
-    <pre>
-// 点击事件调用
-@click="onSubmit(`节流提交：${Date.now()}`)" //有无参数都可以用这种形式
+    <pre>{{ `// 点击事件调用
+@click="onSubmit(\`节流提交：${Date.now()}\`)" //有无参数都可以用这种形式
 @click="setThrottle(onSubmit2)" //无参数还可以用这种形式，直接用节流解构的方法
 @click="clearThrottle"
 
@@ -28,7 +27,7 @@ const onSubmit = (...args) => {
 const onSubmit2 = () => {
   console.log('按钮被点击了，不涉及到参数')
 }
-</pre>
+` }}</pre>
     <h4>useThrottle节流示例</h4>
     <p>
       <el-button
@@ -58,8 +57,7 @@ const onSubmit2 = () => {
     </p>
 
     <h4>utils节流示例</h4>
-    <pre>
-throttle (fn,delay = 2000) {
+    <pre>{{ `throttle (fn,delay = 2000) {
   console.log('throttle')
   let timer
   let isPending = false
@@ -81,13 +79,14 @@ throttle (fn,delay = 2000) {
 }
 
 // 点击事件调用
-@click="utilsSubmit(`节流提交：${Date.now()}`)"
+@click="utilsSubmit(\`节流提交：${Date.now()}\`)"
 // 取消按钮
 @click="utilsSubmit.clear"
 
 const utilsSubmit = utils.throttle((...args) => {
   console.log('按钮被点击了，参数为：',...args)
-},5000)</pre>
+},5000)
+` }}</pre>
     <p>
       <el-button
         size="small"

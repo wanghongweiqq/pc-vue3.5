@@ -19,8 +19,7 @@
         -1
       </el-button>
     </p>
-    <pre>
-// watch的完整形态，第一个是要监听的数据，第二个是一个方法，可以比较前后的数据，第三个是配置的对象
+     <pre>{{ `// watch的完整形态，第一个是要监听的数据，第二个是一个方法，可以比较前后的数据，第三个是配置的对象
 watch(
   count,
   (newVal,oldVal) => {
@@ -32,7 +31,8 @@ watch(
     immediate: true, // 默认false
     deep: true, // 默认：对象=true,数组=false
   }
-)</pre>
+)
+` }}</pre>
   </div>
 </template>
 

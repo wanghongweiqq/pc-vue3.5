@@ -3,7 +3,7 @@
  * @Email：wanghongwei@hualala.com
  * @Date: 2026-01-09 14:09:56
  * @Description: 时间翻转
- * @FilePath: /vue3.0/src/views/demo/css/time.vue
+ * @FilePath: /pc-vue3.5/src/views/demo/css/time.vue
 -->
 <template>
   <div class="bcp-time content">
@@ -101,7 +101,7 @@ watchEffect(() => {
     day.value = new Date().getDate()
   }
   if(day.value === 1) {
-    month.value = new Date().getMonth() + 1()
+    month.value = new Date().getMonth() + 1
   }
   if(month.value === 1) {
     year.value = new Date().getFullYear()

@@ -5,8 +5,7 @@
       <div class="content">
         <h2><strong>deep</strong>copy</h2>
         <h3>JSON.parse(JSON.stringify(xxx))的弊端</h3>
-        <pre>
-//弊端1：如果obj里面有时间对象，时间将只是字符串的形式，而不是对象的形式
+        <pre>{{ `//弊端1：如果obj里面有时间对象，时间将只是字符串的形式，而不是对象的形式
 const test1 = {
   a: [new Date(1536627600000), new Date(1540047600000)]
 };
@@ -19,7 +18,7 @@ let test2 = {
   b:new Error(1),
 };
 const copy2= JSON.parse(JSON.stringify(test2))
-console.log(copy2)  //{a:{},b:{}}
+console.log(copy2)  //\{a:{},b:{}\}
 
 //弊端3：如果obj里有函数function undefined symbol，则序列化的结果会把属性丢失
 const test3 = {
@@ -48,12 +47,12 @@ const test5 = {
   a: lisi,
 };
 const copy5= JSON.parse(JSON.stringify(test5))
-console.log(test5)  //{a:Person{name:"lisi"}}
-console.log(copy5)  //{a:{name:"lisi"}}
-          </pre>
+console.log(test5)  //\{a:Person{name:"lisi"}\}
+console.log(copy5)  //\{a:{name:"lisi"}\}
+
+` }}</pre>
         <h3>JSON.parse(JSON.stringify(xxx))的妙用</h3>
-        <pre>
-//妙用1：判断数组是否包含某对象
+        <pre>{{ `//妙用1：判断数组是否包含某对象
 let obj1 = [
   {name:'echo'},
   {name:'听风是风'},
@@ -86,10 +85,11 @@ console.log(getLocalStorage('demo'))  //[1,2,3]
 let array3 = [1,2,3];
 console.log(JSON.stringify(array3))  //'[1,2,3]'
 console.log(array3.toString())  //1,2,3
-          </pre>
+
+` }}</pre>
+          
         <h3>深拷贝的实现</h3>
-        <pre>
-  dataType (data) {
+        <pre>{{ `dataType (data) {
     if (data instanceof Element) {
       return 'element'
     }
@@ -125,7 +125,8 @@ console.log(array3.toString())  //1,2,3
       return data
     }
   }
-          </pre>
+
+` }}</pre>
       </div>
     </div>
   </div>

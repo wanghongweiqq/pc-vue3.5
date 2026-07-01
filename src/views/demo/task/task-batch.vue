@@ -3,7 +3,7 @@
  * @Email：wanghongwei@hualala.com
  * @Date: 2025-04-10 16:49:57
  * @Description: 任务安排，支持链式调用
- * @FilePath: /vue3.0/src/views/demo/task/task-batch.vue
+ * @FilePath: /pc-vue3.5/src/views/demo/task/task-batch.vue
 -->
 <template>
   <div class="bcp-task-arrange">
@@ -39,8 +39,7 @@
           修改数量
         </el-button>
       </p>
-      <pre>
-function taskBatch () {
+      <pre>{{ `function taskBatch () {
   console.log('this',this)
   let max = 2// 允许运行的最大任务数
   let doingQueue = [] // 在运行队列中的任务
@@ -122,7 +121,7 @@ function taskBatch () {
   }
 }
 export default taskBatch
-</pre>
+` }}</pre>
     </div>
   </div>
 </template>

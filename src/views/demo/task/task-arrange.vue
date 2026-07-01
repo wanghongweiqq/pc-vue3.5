@@ -3,7 +3,7 @@
  * @Email：wanghongwei@hualala.com
  * @Date: 2025-04-10 16:49:57
  * @Description: 任务安排，支持链式调用
- * @FilePath: /vue3.0/src/views/demo/task/task-arrange.vue
+ * @FilePath: /pc-vue3.5/src/views/demo/task/task-arrange.vue
 -->
 <template>
   <div class="pg-task">
@@ -35,13 +35,12 @@
         </el-button>
       </p>
 
-      <pre>
-function taskArrange (name) {
+      <pre>{{ `function taskArrange (name) {
   let tasks = []
   let isPaused = false
 
   const init = () => {
-    console.log(`${ name } 开始执行任务！`)
+    console.log(\`${ name } 开始执行任务！\`)
     return 'init'
   }
   tasks.push(init)
@@ -50,9 +49,9 @@ function taskArrange (name) {
     console.log('tasks',tasks)
     return() => {
       return new Promise((resolve) => {
-        console.log(`“${ name }” 开始，需耗时 ${ time } 秒`)
+        console.log(\`“${ name }” 开始，需耗时 ${ time } 秒\`)
         setTimeout(() => {
-          console.log(`“${ name }” 结束，共耗时 ${ time } 秒`)
+          console.log(\`“${ name }” 结束，共耗时 ${ time } 秒\`)
           const res = { name,time }
           resolve(res)
         },time * 1000)
@@ -76,7 +75,7 @@ function taskArrange (name) {
   }  
 
   function firstAction (name,time = 1) {
-    tasks.unshift(creatTask(`最先${ name }`,time))
+    tasks.unshift(creatTask(\`最先${ name }\`,time))
     return this
   }
 
@@ -114,7 +113,7 @@ function taskArrange (name) {
   }
 }
 export default taskArrange
-</pre>
+` }}</pre>
     </div>
   </div>
 </template>

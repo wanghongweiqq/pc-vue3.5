@@ -97,7 +97,7 @@
 
     <h3>Content-Type 详解</h3>
     <p><code>Content-Type</code> 同时出现在请求头和响应头，格式为 <code>类型/子类型; 参数</code>：</p>
-    <pre class="code-block">
+    <pre>{{ `
 // 请求头 Content-Type —— 告诉服务端请求体的格式
 Content-Type: application/json
 Content-Type: application/x-www-form-urlencoded
@@ -106,7 +106,8 @@ Content-Type: multipart/form-data; boundary=----WebKitFormBoundaryXXX
 // 响应头 Content-Type —— 告诉浏览器响应体的格式
 Content-Type: application/json; charset=utf-8
 Content-Type: text/html; charset=utf-8
-Content-Type: image/png</pre>
+Content-Type: image/png
+` }}</pre>
 
     <h3>Authorization 认证方式</h3>
     <table class="table">
@@ -135,7 +136,7 @@ Content-Type: image/png</pre>
     </table>
 
     <h3>本项目自定义请求头</h3>
-    <pre class="code-block">
+    <pre>{{ `
 // src/service/axios.js 中的自定义头
 headers: {
   'X-Requested-With': 'XMLHttpRequest',  // 标识 Ajax 请求
@@ -143,10 +144,11 @@ headers: {
 }
 
 // 拦截器中动态添加时间戳，防止缓存
-config.headers['X-jd-ts'] = new Date().getTime()</pre>
+config.headers['X-jd-ts'] = new Date().getTime()
+` }}</pre>
 
     <h3>CORS 跨域相关头</h3>
-    <pre class="code-block">
+    <pre>{{ `
 // 简单请求（GET/POST + 普通 Content-Type）
 // 浏览器自动添加 Origin，服务端响应 Access-Control-Allow-Origin 即可
 
@@ -155,6 +157,7 @@ config.headers['X-jd-ts'] = new Date().getTime()</pre>
 Access-Control-Allow-Origin: https://example.com
 Access-Control-Allow-Methods: GET, POST, PUT, DELETE
 Access-Control-Allow-Headers: Content-Type, Authorization, X-Requested-With
-Access-Control-Max-Age: 86400   // 预检结果缓存时间（秒）</pre>
+Access-Control-Max-Age: 86400   // 预检结果缓存时间（秒）
+` }}</pre>
   </div>
 </template>

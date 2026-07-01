@@ -172,15 +172,17 @@
     </table>
 
     <h3>401 vs 403 的区别</h3>
-    <pre class="code-block">
+    <pre>{{ `
 401 Unauthorized  →  你是谁我不知道（未登录 / token 失效）
                      → 前端应跳转登录页
 
 403 Forbidden     →  我知道你是谁，但你没有权限（已登录但无权操作）
-                     → 前端应提示"无权限"，不需要重新登录</pre>
+                     → 前端应提示"无权限"，不需要重新登录
+
+` }}</pre>
 
     <h3>前端常见处理策略</h3>
-    <pre class="code-block">
+    <pre>{{ `
 // axios 响应拦截器中统一处理
 instance.interceptors.response.use(
   response => response.data,
@@ -196,6 +198,8 @@ instance.interceptors.response.use(
     }
     return Promise.reject(error)
   }
-)</pre>
+)
+
+` }}</pre>
   </div>
 </template>

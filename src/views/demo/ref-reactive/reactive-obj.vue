@@ -32,12 +32,12 @@
       <li>属性值是<em>引用类型</em>（对象/数组）→ 自动递归套一层 <code>reactive()</code> 再返回，拿到的是<em>响应式代理</em></li>
       <li>属性值是<em>基本类型</em>（字符串/数字/布尔）→ 无法被 Proxy 代理，直接返回<em>原始值</em></li>
     </ul>
-    <pre>
-const obj = reactive({
+     <pre>{{ `const obj = reactive({
   name: 'Vue3',      // 基本类型 → obj.name 取到 'Vue3'（普通字符串）
   tags: ['Vue3'],    // 引用类型 → obj.tags 取到 Proxy(['Vue3'])（响应式数组）
   info: { v: 3 },   // 引用类型 → obj.info 取到 Proxy({ v: 3 })（响应式对象）
-})</pre>
+})
+` }}</pre>
 
     <h3>watch 监听说明</h3>
     <p>reactive 声明的数组/对象，只有在<em>不改变根数据的引用</em>的情况下才能被监听到，但此时新旧值相同（引用未变），无法做新旧差异比较（如果想做新旧比较，可以watch具体的属性，如() => obj.name）。改变引用时，watch 监听的还是最初的引用地址，那个地址的数据没有变化，所以不会触发。</p>
@@ -62,8 +62,7 @@ const obj = reactive({
 
     <h3>watch(() => obj.name) 的 deep 行为</h3>
     <p>getter 函数只追踪<em>返回值的变化</em>，<code>deep</code> 是否需要取决于 <code>obj.name</code> 是原始值还是对象：</p>
-    <pre>
-const obj = reactive({ name: { title: 'Vue3' } })
+     <pre>{{ `const obj = reactive({ name: { title: 'Vue3' } })
 
 // ① 直接 watch reactive 对象 → 默认 deep: true，可感知内部所有属性变化
 watch(obj, handler)
@@ -74,7 +73,8 @@ obj.name.title = 'React'    // ❌ 不触发（引用未变），要想触发，
 obj.name = { title: 'React' } // ✅ 触发（引用变了）
 
 // ③ getter 返回属性的值是原始值 → 直接感知，无需 deep（推荐，精准监听）
-watch(() => obj.name.title, handler) // ✅ 精准追踪到 title 的变化</pre>
+watch(() => obj.name.title, handler) // ✅ 精准追踪到 title 的变化
+` }}</pre>
     <p><em>建议：能精准到具体属性就不要开 deep: true</em>，deep 会递归遍历对象所有层级，数据复杂时有性能开销。</p>
 
     <h3>Vue 3 watch 源合法类型总结</h3>

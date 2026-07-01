@@ -11,9 +11,11 @@
 
     <h3>父子组件使用</h3>
     <p>1、子组件使用expose暴露方法：</p>
-    <pre>expose: ['domRefFunc'], //domRefFunc为子组件内部定义的methods里的一个方法</pre>
+     <pre>{{ `expose: ['domRefFunc'], //domRefFunc为子组件内部定义的methods里的一个方法
+` }}</pre>
     <p>2、父组件使用$refs调用子组件暴露的方法：</p>
-    <pre>this.$refs.parentRefOptions.domRefFunc() //parentRefOptions为父组件内绑定子组件身上的ref</pre>
+     <pre>{{ `this.$refs.parentRefOptions.domRefFunc() //parentRefOptions为父组件内绑定子组件身上的ref
+` }}</pre>
     <p>备注：虽然父组件可以通过$refs直接使用子组件暴露给父组件的方法，但console时父组件的$refs拿不到传给子组件的任何数据，也拿不到子组件自身定义的任何数据，哪怕是暴露到外边的方法，相当于子组件完全是一个黑盒</p>
     <p>
       <el-button

@@ -5,13 +5,12 @@
     <p>最新返回新数组的方法：toSorted / toReversed / toSpliced / with</p>
     <p>老方法有：filter / map / concat / 解构</p>
     <p>with(index, value) 替换数组中指定索引位置的元素，并返回一个包含此更改的新数组，index支持负数，一次只能替换一个值。</p>
-    <pre>
-const array1 = [2,5,41,11,8,3]
+     <pre>{{ `const array1 = [2,5,41,11,8,3]
 const array2 = array1.toSorted((a,b) => a - b)
 const array3 = array1.toReversed()
 const array4 = array1.toSpliced(1,1,100,'c') // 第三个参数及以后为剩余参数，表示添加项数
 const array5 = array1.with(0,'a')
-</pre>
+` }}</pre>
     <p>
       <el-button
         size="small"

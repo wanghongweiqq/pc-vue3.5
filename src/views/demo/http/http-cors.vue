@@ -1,12 +1,22 @@
+<!--
+ * @Author: 王宏伟
+ * @Email：wanghongwei@hualala.com
+ * @Date: 2026-06-29 08:18:00
+ * @Description: 页面/组件/功能的描述
+ * @FilePath: /pc-vue3.5/src/views/demo/http/http-cors.vue
+-->
 <template>
   <div class="content">
     <h2>跨域（CORS）</h2>
     <p>浏览器同源策略：协议 + 域名 + 端口三者一致才算同源，跨域请求会被浏览器拦截。</p>
-    <pre class="code-block">
+    <pre>{{ `
 同源：https://a.com → https://a.com/api       ✅
 跨域：https://a.com → https://b.com/api       ❌ 域名不同
 跨域：https://a.com → http://a.com/api        ❌ 协议不同
-跨域：https://a.com → https://a.com:8080/api  ❌ 端口不同</pre>
+跨域：https://a.com → https://a.com:8080/api  ❌ 端口不同
+
+` }}</pre>
+
     <table class="table">
       <tbody>
         <tr>

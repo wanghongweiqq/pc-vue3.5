@@ -4,14 +4,16 @@
     <p>Vue 2 的 Diff 采用<em>双端比较</em>策略，同时从新旧子节点列表的头尾两端向中间逼近，减少指针移动次数。</p>
 
     <h3>四个指针</h3>
-    <pre class="code-block">
-旧: [ A  B  C  D ]
+    <pre>{{ `
+旧: [ A   B   C   D ]
       ↑           ↑
    oldStart    oldEnd
 
-新: [ D  B  C  A ]
+新: [ D   B   C   A ]
       ↑           ↑
-   newStart    newEnd</pre>
+   newStart    newEnd
+
+` }}</pre>
 
     <h3>每轮比较的四种命中情况</h3>
     <table class="table">
@@ -71,7 +73,7 @@
     </table>
 
     <h3>示例一：四种命中情况</h3>
-    <pre class="code-block">
+    <pre>{{ `
 旧: [ A  B  C  D ]   新: [ D  B  C  A ]
      ↑           ↑        ↑           ↑
   oldStart    oldEnd   newStart    newEnd
@@ -86,13 +88,15 @@
 第3轮: oldStart(B) === newStart(B) → 命中①，patch 原地复用
 第4轮: oldStart(C) === newStart(C) → 命中①，patch 原地复用
 
-oldStart > oldEnd，循环结束，无剩余节点，完成</pre>
+oldStart > oldEnd，循环结束，无剩余节点，完成
+
+` }}</pre>
     <p><strong>为什么第4轮结束后 oldStart &gt; oldEnd？</strong></p>
     <p>进入第4轮时，新旧各只剩一个 C：<code>oldStart = oldEnd = C</code>，<code>newStart = newEnd = C</code>。</p>
     <p>命中① 的处理规则是：patch 原地复用后，<code>oldStart++</code> 和 <code>newStart++</code> 同时内移。C 处理完后两侧指针均越过各自的 End，<code>oldStart &gt; oldEnd</code> 成立，循环退出。新旧节点同时耗尽，无需任何收尾操作。</p>
 
     <h3>示例二：四种未命中，哈希表查找</h3>
-    <pre class="code-block">
+    <pre>{{ `
 旧: [ A  B  C  D ]   新: [ E  B  A  D ]
 
 第1轮: ①A≠E ②oldEnd(D) === newEnd(D) → 命中②，patch D，两尾指针内移
@@ -109,7 +113,9 @@ oldStart > oldEnd，循环结束，无剩余节点，完成</pre>
   在表中查找 newStart(E) → 找不到 → 新建 E，插入到旧头之前
   新建完成后 newStart++：newStart(1) > newEnd(0) → 循环结束
 
-旧节点 C 有剩余（oldStart 未越过 oldEnd）→ 卸载删除</pre>
+旧节点 C 有剩余（oldStart 未越过 oldEnd）→ 卸载删除
+
+` }}</pre>
     <p><strong>为什么第4轮结束后 newStart &gt; newEnd？</strong></p>
     <p>进入第4轮时，新节点只剩一个 E：<code>newStart = index 0（E）</code>，<code>newEnd = index 0（E）</code>，两者指向同一个节点。</p>
     <p>⑤ 未命中的处理规则是：针对 <code>newStart</code> 指向的节点新建或移动，完成后 <code>newStart++</code>，而 <code>newEnd</code> 始终不动。E 新建完成后 <code>newStart</code> 从 0 变为 1，<code>newEnd</code> 仍是 0，于是 <code>newStart(1) &gt; newEnd(0)</code>，循环退出。</p>

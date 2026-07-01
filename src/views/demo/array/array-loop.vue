@@ -2,8 +2,7 @@
   <div class="content">
     <h2>循环中动态改变数组</h2>
     <p>主要是比较：for循环、for of、forEach</p>
-    <pre>
-let arr = [1,2,3,4]
+     <pre>{{ `let arr = [1,2,3,4]
 // 数组用for of循环支持动态改变，i会一直按索引递增的形式遍历，不会说数组改变从第1个重新循环，i上限是新数组的长度，i对应的内容也是按最新的数据项
 for(let i = 0; i &lt; arr.length; i++) {
   console.log('arr',arr,arr.length)
@@ -30,7 +29,7 @@ arr.forEach((item,i) => {
 
 })
 console.log('最终arr',arr,arr.length)
-</pre>
+` }}</pre>
     <p>
       <el-button
         size="small"

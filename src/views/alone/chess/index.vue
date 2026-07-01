@@ -3,7 +3,7 @@
  * @Email：wanghongwei@hualala.com
  * @Date: 2025-06-12 17:20:01
  * @Description: 五子棋
- * @FilePath: /vue3.0/src/views/alone/chess/index.vue
+ * @FilePath: /pc-vue3.5/src/views/alone/chess/index.vue
 -->
 <template>
   <div class="pg-chess">
@@ -69,9 +69,14 @@
         class="timer"
         @click="handleBarSwitch(true)"
       >
-        <span :class="['role-tips', 'el-icon-bottom-left',{'current-role':currentRole==='black'}]" />
+        <el-icon :class="['role-tips','tips-left', {'current-role':currentRole==='black'}]">
+          <BottomLeft />
+        </el-icon>
+
         <span class="remaining-time">{{ remainingTime }}</span>
-        <span :class="['role-tips', 'el-icon-bottom-right',{'current-role':currentRole==='white'}]" />
+        <el-icon :class="['role-tips','tips-right', {'current-role':currentRole==='white'}]">
+          <BottomRight />
+        </el-icon>
       </div>
     </div>
     <div
@@ -152,14 +157,14 @@
       v-model="roleDialogVisible"
       title="角色设置"
       width="1000px"
-      custom-class="dialog-role-set"
+      class="dialog-role-set"
     >
       <div class="role-select">
         <div class="select-tips black">
           <ins />
-          <b class="el-icon-arrow-down" />
-          <b class="el-icon-arrow-down" />
-          <b class="el-icon-arrow-down" />
+          <el-icon><ArrowDown /></el-icon>
+          <el-icon><ArrowDown /></el-icon>
+          <el-icon><ArrowDown /></el-icon>
           <span :class="{'hide':settedBlackIndex!==null}">待 选</span>
         </div>
         <ul class="select-avatar">
@@ -177,9 +182,9 @@
         </ul>
         <div class="select-tips white">
           <ins />
-          <b class="el-icon-arrow-down" />
-          <b class="el-icon-arrow-down" />
-          <b class="el-icon-arrow-down" />
+          <el-icon><ArrowDown /></el-icon>
+          <el-icon><ArrowDown /></el-icon>
+          <el-icon><ArrowDown /></el-icon>
           <span :class="{'hide':settedWhiteIndex!==null}">待 选</span>
         </div>
       </div>

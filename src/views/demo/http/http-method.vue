@@ -53,16 +53,19 @@
 
     <h3>幂等性</h3>
     <p>同一请求发送 N 次，结果与发送 1 次相同，则称为<em>幂等</em>。</p>
-    <pre class="code-block">
+    <pre>{{ `
 // ✅ 幂等：多次执行结果一致
 PUT /articles/1  { title: 'A' }  →  title 始终是 A
 
 // ❌ 非幂等：每次执行都新增一条
-POST /articles   { title: 'A' }  →  执行 3 次 = 3 条数据</pre>
+POST /articles   { title: 'A' }  →  执行 3 次 = 3 条数据
+
+` }}</pre>
+
     <p>实际意义：网络超时需要重试时，幂等接口可以放心重发；非幂等接口重发可能产生重复数据。</p>
 
     <h3>PUT vs PATCH</h3>
-    <pre class="code-block">
+    <pre>{{ `
 // 原始数据
 { id: 1, title: '标题', content: '内容', author: '张三' }
 
@@ -74,7 +77,9 @@ body: { title: '新标题', content: '内容', author: '张三' }
 
 // PATCH —— 只传要修改的字段，其他字段不动
 PATCH /articles/1
-body: { title: '新标题' }</pre>
+body: { title: '新标题' }
+
+` }}</pre>
 
     <h3>params vs data（axios 视角）</h3>
     <p>axios 中，入参通过哪个属性传递，取决于 method：</p>
@@ -97,14 +102,16 @@ body: { title: '新标题' }</pre>
         </tr>
       </tbody>
     </table>
-    <pre class="code-block">
+    <pre>{{ `
 // GET：参数拼在 URL 后
 axios.get('/api/list', { params: { page: 1, size: 10 } })
 // → GET /api/list?page=1&size=10
 
 // POST：参数放请求体
 axios.post('/api/create', { title: '标题', content: '内容' })
-// → POST /api/create  Body: {"title":"标题","content":"内容"}</pre>
+// → POST /api/create  Body: {"title":"标题","content":"内容"}
+
+` }}</pre>
 
     <h3>实际项目中的现实</h3>
     <table class="table">

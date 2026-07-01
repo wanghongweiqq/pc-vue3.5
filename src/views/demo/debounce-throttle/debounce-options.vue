@@ -10,8 +10,7 @@
   <div class="content">
     <div class="debounce-options-api">
       <h3>下面使用的是options选项式api</h3>
-      <pre>
-// 防抖的核心方法，适用于Options API，不方便清除计时器，容易造成内存泄漏和性能问题，而且有点笨，需要第三个参数，这个参数要当前组件内唯一
+       <pre>{{ `// 防抖的核心方法，适用于Options API，不方便清除计时器，容易造成内存泄漏和性能问题，而且有点笨，需要第三个参数，这个参数要当前组件内唯一
 // 参数id：每个事件防抖时这个参数要唯一且不可变，不唯一的话会导致快速（delay时间内的）切换输入框操作时，清除了前面本该触发的同名计时器，当然这个发生的概率小，同一个元素的防抖事件如果id变了，前面的就无法被清除，达不到防抖的效果，每次触发都会完整执行方法内的全部内容
 debounceOptions (fn,delay = 1000,id = 'timer') {
   let that = this
@@ -31,18 +30,18 @@ debounceOptions (fn,delay = 1000,id = 'timer') {
     }
     return debounced
   }
-} </pre>
+}
+` }}</pre>
 
       <p>1、可防抖，参数为input的默认参数即value值</p>
-      <pre>
-// inputs事件调用
+       <pre>{{ `// inputs事件调用
 @input="debounceOptions(doSearch1)($event)"
 
 // 回调方法
 doSearch1 (...args) {
   console.log('输入框1参数为：',...args)
 },
-</pre>
+` }}</pre>
       <p>
         <el-input
           v-model="searchValue1"
@@ -53,8 +52,7 @@ doSearch1 (...args) {
       </p>
 
       <p>2、可防抖，参数为input的默认参数value和自定义参数，单个默认参数可以使用，多个使用arguments，其是一个数组</p>
-      <pre>
-// inputs事件调用
+       <pre>{{ `// inputs事件调用
 @input="debounce2($event,'a','b')"
 @clear="debounce2.clear"
 
@@ -69,7 +67,7 @@ data () {
 doSearch2 (...args) {
   console.log('输入框2参数为：',...args)
 },
-</pre>
+` }}</pre>
       <p>
         <el-input
           v-model="searchValue2"

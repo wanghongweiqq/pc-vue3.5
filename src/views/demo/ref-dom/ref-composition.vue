@@ -8,10 +8,10 @@
   <p>定义变量时ref的值最好使用null，测试使用其他数据也可以，如：inputRefNormal = ref(12)</p>
   <p>使用中总是怪怪的，一个属性值和一个变量名强行绑定了，vue3.5之前的版本中compositon 的组件可以使用该方法。</p>
   <h4>react中和该方法类似</h4>
-  <pre>
-const inputChildRef = useRef(null) // 使用useRef创建 Ref
+   <pre>{{ `const inputChildRef = useRef(null) // 使用useRef创建 Ref
 inputChildRef.current.focus() // 执行dom相关方法，注意这里是current，vue中为value
-&lt;input type='text' ref={inputChildRef}&gt; // 模板中引入ref</pre>
+&lt;input type='text' ref={inputChildRef}&gt; // 模板中引入ref
+` }}</pre>
   <p>
     <input
       ref="inputRefNormal"

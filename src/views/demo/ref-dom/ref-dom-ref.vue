@@ -84,13 +84,12 @@
       </tbody>
     </table>
 
-    <pre>
-const el = document.getElementById('dom-ref-count')
+     <pre>{{ `const el = document.getElementById('dom-ref-count')
 
 el.innerHTML    // → 'count：&lt;em style="visibility: hidden;"&gt;visibility-hidden文本&lt;/em&gt;&lt;span&gt;0&lt;/span&gt;&lt;em style="display: none;"&gt;display-none文本&lt;/em&gt;'
 el.textContent  // → 'count：visibility-hidden文本0display-none文本'
 el.innerText    // → 'count：0'
-</pre>
+` }}</pre>
   </div>
 </template>
 

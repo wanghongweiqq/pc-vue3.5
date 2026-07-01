@@ -1,3 +1,10 @@
+<!--
+ * @Author: 王宏伟
+ * @Email：wanghongwei@hualala.com
+ * @Date: 2026-06-29 08:18:00
+ * @Description: 页面/组件/功能的描述
+ * @FilePath: /pc-vue3.5/src/views/demo/http/http-base.vue
+-->
 <template>
   <div class="content">
     <h2>HTTP 基础</h2>
@@ -40,7 +47,7 @@
     </table>
 
     <h3>二、URL 结构</h3>
-    <pre class="code-block">
+    <pre>{{ `
 https://api.example.com:8080/user/list?page=1&size=10#section
 
   URL 组成
@@ -63,25 +70,31 @@ https://api.example.com:8080/user/list?page=1&size=10#section
   location.port      →  "8080"
   location.pathname  →  "/user/list"
   location.search    →  "?page=1&size=10"
-  location.hash      →  "#section"</pre>
+  location.hash      →  "#section"
+
+` }}</pre>
 
     <h3>三、请求报文结构</h3>
-    <pre class="code-block">
+    <pre>{{ `
 POST /api/login HTTP/1.1          ← 请求行（method + path + 协议版本）
 Host: api.example.com             ← 请求头（Headers）
 Content-Type: application/json
 Authorization: Bearer eyJhbGci...
                                   ← 空行（分隔头和体）
-{"username":"admin","password":"123"}  ← 请求体（Body）</pre>
+{"username":"admin","password":"123"}  ← 请求体（Body）
+
+` }}</pre>
 
     <h3>四、响应报文结构</h3>
-    <pre class="code-block">
+    <pre>{{ `
 HTTP/1.1 200 OK                   ← 状态行（协议版本 + 状态码 + 描述）
 Content-Type: application/json    ← 响应头（Headers）
 Cache-Control: no-cache
 Set-Cookie: sessionId=abc; HttpOnly
                                   ← 空行
-{"success":true,"data":{...}}     ← 响应体（Body）</pre>
+\{"success":true,"data":{...}\}     ← 响应体（Body）
+
+` }}</pre>
   </div>
 </template>
 <script setup>
