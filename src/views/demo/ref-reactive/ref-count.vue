@@ -31,8 +31,7 @@ watch(
     immediate: true, // 默认false
     deep: true, // 默认：对象=true,数组=false
   }
-)
-` }}</pre>
+)` }}</pre>
   </div>
 </template>
 

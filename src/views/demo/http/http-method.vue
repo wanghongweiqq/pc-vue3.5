@@ -59,7 +59,6 @@ PUT /articles/1  { title: 'A' }  →  title 始终是 A
 
 // ❌ 非幂等：每次执行都新增一条
 POST /articles   { title: 'A' }  →  执行 3 次 = 3 条数据
-
 ` }}</pre>
 
     <p>实际意义：网络超时需要重试时，幂等接口可以放心重发；非幂等接口重发可能产生重复数据。</p>
@@ -78,7 +77,6 @@ body: { title: '新标题', content: '内容', author: '张三' }
 // PATCH —— 只传要修改的字段，其他字段不动
 PATCH /articles/1
 body: { title: '新标题' }
-
 ` }}</pre>
 
     <h3>params vs data（axios 视角）</h3>
@@ -110,7 +108,6 @@ axios.get('/api/list', { params: { page: 1, size: 10 } })
 // POST：参数放请求体
 axios.post('/api/create', { title: '标题', content: '内容' })
 // → POST /api/create  Body: {"title":"标题","content":"内容"}
-
 ` }}</pre>
 
     <h3>实际项目中的现实</h3>

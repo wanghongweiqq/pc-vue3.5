@@ -33,14 +33,12 @@
             <p>1、子组件使用defineExpose暴露方法，该方法入参为一个对象，对象的key值为暴露给父组件的方法名，对象的value值子组件自身要执行的方法</p>
              <pre>{{ `defineExpose({
   focus: domRefFunc,
-})
-` }}</pre>
+})` }}</pre>
             <p>2、父组件使用ref定义的变量调用子组件暴露的方法</p>
              <pre>{{ `const parentRefComposition = ref(null) // parentRefComposition为父组件绑定在子组件身上的ref
 const parentRefFuncComposition = () => { // 父组件点击时调用的方法
   parentRefComposition.value.focus()
-}
-` }}</pre>
+}` }}</pre>
             <p>
               <el-button
                 size="small"
@@ -72,14 +70,12 @@ const parentRefFuncComposition = () => { // 父组件点击时调用的方法
             <p>1、子组件使用defineExpose暴露方法，该方法入参为一个对象，对象的key值为暴露给父组件的方法名，对象的value值子组件自身要执行的方法</p>
              <pre>{{ `defineExpose({
   focus, // 更简洁的写法，此时子组件直接将方法名命名为focus
-})
-` }}</pre>
+})` }}</pre>
             <p>2、父组件使用ref定义的变量调用子组件暴露的方法</p>
              <pre>{{ `const parentRefUseTemplateRef = useTemplateRef('parentRefUseTemplateRef')
 const parentRefFuncUseTemplateRef = () => {
   parentRefUseTemplateRef.value.focus()
-}
-` }}</pre>
+}` }}</pre>
             <p>
               <el-button
                 size="small"
@@ -108,8 +104,7 @@ const toggleAndFocus = async () => {
   showInput.value = true
   await nextTick() // 等待 DOM 更新
   inputRef.value?.focus() //inputRef为input的dom
-}
-` }}</pre>
+}` }}</pre>
             <p>3、<em>操作子组件</em>：ref也可以绑定在子组件上，用于调用子组件暴露的方法或访问其数据 。在 Vue 3 中，子组件需使用 defineExpose宏显式暴露其内部属性或方法，父组件才能通过 ref访问到 。</p>
             <p>4、<em>避免滥用</em>：Vue 是数据驱动的框架，应优先考虑通过改变数据（数据绑定）来更新视图。直接操作 DOM 应是最后的选择，仅在焦点管理、媒体播放、集成第三方库等特定场景下使用</p>
           </div>

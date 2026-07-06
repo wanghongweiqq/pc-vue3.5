@@ -112,8 +112,7 @@
     play,
   }
 }
-export default taskArrange
-` }}</pre>
+export default taskArrange` }}</pre>
     </div>
   </div>
 </template>

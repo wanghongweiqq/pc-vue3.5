@@ -120,8 +120,7 @@
     setNum
   }
 }
-export default taskBatch
-` }}</pre>
+export default taskBatch` }}</pre>
     </div>
   </div>
 </template>

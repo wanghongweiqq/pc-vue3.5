@@ -12,7 +12,6 @@
 新: [ D   B   C   A ]
       ↑           ↑
    newStart    newEnd
-
 ` }}</pre>
 
     <h3>每轮比较的四种命中情况</h3>
@@ -89,7 +88,6 @@
 第4轮: oldStart(C) === newStart(C) → 命中①，patch 原地复用
 
 oldStart > oldEnd，循环结束，无剩余节点，完成
-
 ` }}</pre>
     <p><strong>为什么第4轮结束后 oldStart &gt; oldEnd？</strong></p>
     <p>进入第4轮时，新旧各只剩一个 C：<code>oldStart = oldEnd = C</code>，<code>newStart = newEnd = C</code>。</p>
@@ -114,7 +112,6 @@ oldStart > oldEnd，循环结束，无剩余节点，完成
   新建完成后 newStart++：newStart(1) > newEnd(0) → 循环结束
 
 旧节点 C 有剩余（oldStart 未越过 oldEnd）→ 卸载删除
-
 ` }}</pre>
     <p><strong>为什么第4轮结束后 newStart &gt; newEnd？</strong></p>
     <p>进入第4轮时，新节点只剩一个 E：<code>newStart = index 0（E）</code>，<code>newEnd = index 0（E）</code>，两者指向同一个节点。</p>

@@ -23,8 +23,7 @@ function debounce (fn,delay = 2000) {
       fn(...args)
     }, delay)
   }
-}
-` }}</pre>
+}` }}</pre>
       <p>1、可防抖：参数为input的默认参数即value值</p>
        <pre>{{ `// inputs事件调用
 @input="doSearch1"
@@ -32,8 +31,7 @@ function debounce (fn,delay = 2000) {
 // 函数表达式的形式是ok的
 const doSearch1 = debounce( (...args) => {
   console.log('输入框1参数为：',...args)
-})
-` }}</pre>
+})` }}</pre>
       <p>
         <el-input
           v-model="searchValue1"
@@ -60,8 +58,7 @@ const doSearch1 = debounce( (...args) => {
 // 函数表达式的形式是ok的
 const doSearch2 = debounce( (...args) => {
   console.log('输入框2参数为：',...args)
-})
-` }}</pre>
+})` }}</pre>
       <p>
         <el-input
           v-model="searchValue2"
@@ -78,8 +75,7 @@ function doSearch3 (...args) {
   debounce(() => {
     console.log('输入框3参数为：',...args) // 可以直接从父方法中获得参数，当然也可以从debounce方法里绕一圈再传出来，两种方法都可以获取参数
   })()
-}
-` }}</pre>
+}` }}</pre>
       <p>
         <el-input
           v-model="searchValue3"
@@ -91,8 +87,7 @@ function doSearch3 (...args) {
       <p>4、不可防抖：像下面options选项式api使用的形式，直接使用debounce方法，也不能防抖，每次输入更改都会重新定义timer计时器。options选项式api能行是因为当前组件实例下计时器是唯一且不同的，使用了this.一个不同的id，相当于在this下绑定了一个唯一的全局变量</p>
        <pre>{{ `@input="debounce( (...args) => {
   console.log('输入框4参数为：',...args)
-})($event,'e')"
-` }}</pre>
+})($event,'e')"` }}</pre>
       <el-input
         v-model="searchValue4"
         placeholder="直接使用debounce方法，：达不到防抖的效果，会全部依次执行"

@@ -30,8 +30,7 @@ debounceOptions (fn,delay = 1000,id = 'timer') {
     }
     return debounced
   }
-}
-` }}</pre>
+}` }}</pre>
 
       <p>1、可防抖，参数为input的默认参数即value值</p>
        <pre>{{ `// inputs事件调用
@@ -40,8 +39,7 @@ debounceOptions (fn,delay = 1000,id = 'timer') {
 // 回调方法
 doSearch1 (...args) {
   console.log('输入框1参数为：',...args)
-},
-` }}</pre>
+},` }}</pre>
       <p>
         <el-input
           v-model="searchValue1"
@@ -66,8 +64,7 @@ data () {
 // 回调方法
 doSearch2 (...args) {
   console.log('输入框2参数为：',...args)
-},
-` }}</pre>
+},` }}</pre>
       <p>
         <el-input
           v-model="searchValue2"

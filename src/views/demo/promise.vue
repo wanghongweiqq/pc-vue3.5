@@ -17,7 +17,6 @@ function start() {
 }
 // jquery on 监听
 $('#start').on('click', start)
-
 ` }}</pre>
         <p>2、回调</p>
          <pre>{{ `// 比较常见的有ajax
@@ -31,7 +30,6 @@ $.ajax('http://www.wyunfei.com/', {
 $(function() {
  // 页面结构加载完成，做回调逻辑处理
 })
-
 ` }}</pre>
         <h2>异步操作的常见问题</h2>
         <ul>
@@ -48,7 +46,6 @@ $(function() {
   (res) => {console.log(res)},  // 成功
   (err) => {console.log(err)} // 失败
 )
-
 ` }}</pre>
         <p>promise是一个对象，对象和函数的区别就是对象可以保存状态，函数不可以（闭包除外）</p>
         <p>并未剥夺函数return的能力，因此无需层层传递callback，进行回调获取数据</p>
@@ -93,7 +90,6 @@ $(function() {
   console.log('Step 2') //5
   console.log(val)  //6 val=130
 })
-
 ` }}</pre>
         <p>了解了其 执行顺序后，我们最好将其展开，用链式的方式，这样会有更好的可读性</p>
          <pre>{{ `new Promise((resolve)=>{
@@ -118,7 +114,6 @@ $(function() {
   console.log('Step 2') //5
   console.log(val)  //6 val=130
 })
-
 ` }}</pre>
 
         <h2>then、catch、finally</h2>

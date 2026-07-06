@@ -36,8 +36,7 @@
   to {
     --rota: 360deg;
   }
-}
-` }}</pre>
+}` }}</pre>
   </div>
 </template>
 

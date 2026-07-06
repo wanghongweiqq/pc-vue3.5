@@ -28,8 +28,7 @@ arr.forEach((item,i) => {
   if(item === 1) { arr.splice(1,0,1) }
 
 })
-console.log('最终arr',arr,arr.length)
-` }}</pre>
+console.log('最终arr',arr,arr.length)` }}</pre>
     <p>
       <el-button
         size="small"

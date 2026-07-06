@@ -9,8 +9,7 @@
 const array2 = array1.toSorted((a,b) => a - b)
 const array3 = array1.toReversed()
 const array4 = array1.toSpliced(1,1,100,'c') // 第三个参数及以后为剩余参数，表示添加项数
-const array5 = array1.with(0,'a')
-` }}</pre>
+const array5 = array1.with(0,'a')` }}</pre>
     <p>
       <el-button
         size="small"

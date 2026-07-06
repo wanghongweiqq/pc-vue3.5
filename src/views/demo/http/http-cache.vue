@@ -43,8 +43,7 @@
 协商缓存（请求服务端验证）：
   请求头：If-None-Match: "abc123"
   服务端：资源未变 → 304 Not Modified（不返回 body）
-          资源已变 → 200 OK + 新资源
-` }}</pre>
+          资源已变 → 200 OK + 新资源` }}</pre>
   </div>
 </template>
 <script setup>

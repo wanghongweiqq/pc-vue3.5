@@ -11,7 +11,6 @@ y = 3
 y = { m: 3 }
 console.log(a)
 // 解构赋值时，默认值仅在 undefined时生效：解构默认值只在对应的属性值为 undefined时才会使用。如果属性值为 null、false或 0等其他假值，默认值不会被启用
-console.log(z) // 输出null
-` }}</pre>
+console.log(z) // 输出null` }}</pre>
   </div>
 </template>

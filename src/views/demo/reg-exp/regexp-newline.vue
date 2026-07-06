@@ -17,8 +17,7 @@
       {{ whiteSpaceString }}
     </p>
     <h4>2.2、使用标签：pre</h4>
-    <pre class="no-style">{{ whiteSpaceString }}
-` }}</pre>
+    <pre class="no-style">{{ whiteSpaceString }}` }}</pre>
 
     <h3>把br使用replace换成\n</h3>
     <p class="pre-wrap">

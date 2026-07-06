@@ -69,7 +69,6 @@ function useDebounceThrottle (params = {}) {
 }
 
 export default useDebounceThrottle
-
 ` }}</pre>
     <h4>composition组合式api示例</h4>
     <pre>{{ `// 方法调用示例
@@ -86,7 +85,6 @@ const doSearch1 = (...args) => {
     console.log('输入框1参数为：',...args)
   },delay.value)
 } 
-
 ` }}</pre>
     <p>同一组件第一次使用</p>
     <p>
@@ -133,8 +131,7 @@ debounce (fn,delay = 2000) {
     timer && clearTimeout(timer)
   }
   return debounced
-}
-` }}</pre>
+}` }}</pre>
     <h4>composition组合式api示例</h4>
     <p>其实就是下面的composition组合式api</p>
     <pre>{{ `// inputs事件调用，两种清除形式都可以
@@ -151,7 +148,6 @@ const doSearch3 = utils.debounce((...args) => {
 const clearDebounce3 = () => {
   doSearch3.clear()
 }
-
 ` }}</pre>
     <p>
       <el-input

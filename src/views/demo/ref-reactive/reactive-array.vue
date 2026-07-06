@@ -6,8 +6,7 @@
     <p>Vue 2 无法检测通过<em>索引赋值</em>和<em>修改 length</em> 对数组的变动，需要用 <code>Vue.set</code> 或 <code>splice</code> 绕过。Vue 3 基于 Proxy，这两种操作均可直接触发响应：</p>
      <pre>{{ `// Vue 3 reactive 数组，以下操作均可触发响应
 reactiveArray[0] = 'new value'   // ✅ 索引赋值
-reactiveArray.length = 0         // ✅ 修改 length 清空数组
-` }}</pre>
+reactiveArray.length = 0         // ✅ 修改 length 清空数组` }}</pre>
 
     <h3>操作方式与响应性</h3>
     <table class="table">
@@ -93,8 +92,7 @@ list = []            // ❌ 直接丢失响应式，因为 reactive 代理的是
 // ✅ 对象包裹写法 — 推荐
 const state = reactive({ list: [] })
 state.list.push(1, 2, 3)  // ✅
-state.list = [1, 2, 3]    // ✅ 替换整个数组也能响应（改的是 state.list，根引用 state 未变）
-` }}</pre>
+state.list = [1, 2, 3]    // ✅ 替换整个数组也能响应（改的是 state.list，根引用 state 未变）` }}</pre>
 
     <h3>reactive vs ref 数组选型</h3>
     <table class="table">

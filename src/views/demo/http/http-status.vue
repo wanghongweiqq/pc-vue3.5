@@ -178,7 +178,6 @@
 
 403 Forbidden     →  我知道你是谁，但你没有权限（已登录但无权操作）
                      → 前端应提示"无权限"，不需要重新登录
-
 ` }}</pre>
 
     <h3>前端常见处理策略</h3>
@@ -199,7 +198,6 @@ instance.interceptors.response.use(
     return Promise.reject(error)
   }
 )
-
 ` }}</pre>
   </div>
 </template>

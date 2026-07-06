@@ -45,7 +45,6 @@
                                                           请求3 ——→ 响应3
 
 请求2 必须等请求1 完成，无法并发
-
 ` }}</pre>
 
     <h3>HTTP/2 多路复用</h3>
@@ -57,7 +56,6 @@ Stream2: 请求2 ————→ 响应2
 Stream3: 请求3 ——→ 响应3
 
 三个请求同时飞，互不阻塞
-
 ` }}</pre>
 
     <h3>HTTP/3 QUIC 解决 TCP 队头阻塞</h3>
@@ -69,7 +67,6 @@ HTTP/2（TCP）：
 HTTP/3（QUIC/UDP）：
   Stream1 ───────────────────────────
   Stream2 ──── 丢包! 重传  → 仅 Stream2 等待，其他正常</code>
-
 ` }}</pre>
 
     <h3>使用哪个版本由什么决定</h3>
@@ -83,7 +80,6 @@ HTTP/3（QUIC/UDP）：
 
 双方确认用 HTTP/2，TLS 握手完成后直接开始 HTTP/2 通信
 服务端不支持 h2 → 回 http/1.1 → 自动降级
-
 ` }}</pre>
 
     <h4>HTTP/2 → HTTP/3：Alt-Svc 发现</h4>
@@ -94,7 +90,6 @@ HTTP/3（QUIC/UDP）：
   ↑ 意思：我在 443 端口支持 HTTP/3，有效期 86400 秒
 
 浏览器缓存该信息，后续请求直接尝试 QUIC/UDP 连接
-
 ` }}</pre>
 
     <p>因此<strong>第一次访问</strong>支持 HTTP/3 的网站仍走 TCP，从第二次起才可能升级。</p>
@@ -146,7 +141,6 @@ HTTP/3（QUIC/UDP）：
                 └── 不支持 → HTTP/1.1
                 响应头有 Alt-Svc？
                 └── 有 → 缓存，下次尝试 HTTP/3
-
 ` }}</pre>
   </div>
 </template>

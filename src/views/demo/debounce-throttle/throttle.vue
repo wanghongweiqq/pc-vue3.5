@@ -26,8 +26,7 @@ const onSubmit = (...args) => {
 }
 const onSubmit2 = () => {
   console.log('按钮被点击了，不涉及到参数')
-}
-` }}</pre>
+}` }}</pre>
     <h4>useThrottle节流示例</h4>
     <p>
       <el-button
@@ -85,8 +84,7 @@ const onSubmit2 = () => {
 
 const utilsSubmit = utils.throttle((...args) => {
   console.log('按钮被点击了，参数为：',...args)
-},5000)
-` }}</pre>
+},5000)` }}</pre>
     <p>
       <el-button
         size="small"

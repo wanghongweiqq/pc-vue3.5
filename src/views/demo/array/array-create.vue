@@ -7,8 +7,7 @@
     <p>Array静态方法fill，可以用来填充元素：new Array(3).fill(1)</p>
      <pre>{{ `let arr0 = new Array(3) //[空属性 × 3]
 let arr1 = new Array(1,2,3) //[1, 2, 3]
-let arr2 = new Array(3).fill(1) // [1, 1, 1]
-` }}</pre>
+let arr2 = new Array(3).fill(1) // [1, 1, 1]` }}</pre>
     <p>在JavaScript中，稀疏数组（Sparse Array）是指包含空位（empty slots）的数组，这些空位既不是undefined也不是null，而是未被赋值的索引位置。稀疏数组在使用map()和for循环时可能引发一些意料之外的行为</p>
     <h4>空位与undefined的区别</h4>
     <p>空位是未被初始化的索引（如new Array(3)生成[empty × 3]），['a', ,'c']数组的第2项也是空位。</p>
@@ -31,12 +30,10 @@ let arr2 = new Array(3).fill(1) // [1, 1, 1]
     <p>将类数组对象（如字符串、arguments）或可迭代对象（如 Set）转换为数组，支持映射函数处理元素</p>
      <pre>{{ `let arr0 = Array.from({ length: 3 },() => 2) // [2, 2, 2] 没有第二个参数时，值为undefined，不会像稀疏数组那样影响循环遍历
 let arr1 = Array.from('hello'); // ['h', 'e', 'l', 'l', 'o']
-let arr2 = Array.from([1, 2, 3], x => x * 2); // [2, 4, 6]
-` }}</pre>
+let arr2 = Array.from([1, 2, 3], x => x * 2); // [2, 4, 6]` }}</pre>
     <h3>Array.of( )（ES6引入）</h3>
     <p>所有参数均作为<em>数组元素</em>，解决new Array(n)的歧义</p>
-    <pre>{{ `let arr = Array.of(5); // [5]，而非长度为5的空数组
-` }}</pre>
+    <pre>{{ `let arr = Array.of(5); // [5]，而非长度为5的空数组` }}</pre>
     <h3>其他形式 </h3>
     <p>数组字面量，简洁且性能最佳，各元素已知的情况下最常用：let arr = [1, 2, 3]; </p>
     <p>扩展运算符：let arr2 = [...[1, 2], 3]; // [1, 2, 3] </p>

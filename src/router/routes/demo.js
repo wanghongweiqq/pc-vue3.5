@@ -237,14 +237,6 @@ export default {
       }
     },
     {
-      path: '/novue/render.html',
-      meta: {
-        title: 'render',
-        key: 'MENU_HAWK_DEMO',
-        notvue: true
-      }
-    },
-    {
       path: 'sort',
       name: 'sort',
       component: () => import('@/views/demo/sort.vue'),

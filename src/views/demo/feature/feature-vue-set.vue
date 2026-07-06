@@ -15,7 +15,6 @@
     this.$set(target, key, value)
     this.$set(this.user, 'age', 25);
     this.$set(this.list, 0, newValue)
-
 ` }}</pre>
     <p>替换方案</p>
      <pre>{{ `// object
@@ -29,7 +28,6 @@
     // 数组一般场景都是全部项重新赋值，很少有修改个别项的情况，修改个别项可以使用：splice、push 等原生方法
     this.list.splice(1, 0, newValue1, ....., newValueX)
     this.list.push(newValue1, ....., newValueX)
-
 ` }}</pre>
   </div>
 </template>

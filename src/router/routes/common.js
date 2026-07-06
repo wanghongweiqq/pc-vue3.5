@@ -1,6 +1,7 @@
 export default {
   path: '/',
   component: () => import('@/layout/index'),
+  redirect: '/demo/index',
   icon: 'FolderOpened',
   meta: {
     title: '公共页面'

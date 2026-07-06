@@ -49,7 +49,6 @@ const test5 = {
 const copy5= JSON.parse(JSON.stringify(test5))
 console.log(test5)  //\{a:Person{name:"lisi"}\}
 console.log(copy5)  //\{a:{name:"lisi"}\}
-
 ` }}</pre>
         <h3>JSON.parse(JSON.stringify(xxx))的妙用</h3>
         <pre>{{ `//妙用1：判断数组是否包含某对象
@@ -85,7 +84,6 @@ console.log(getLocalStorage('demo'))  //[1,2,3]
 let array3 = [1,2,3];
 console.log(JSON.stringify(array3))  //'[1,2,3]'
 console.log(array3.toString())  //1,2,3
-
 ` }}</pre>
           
         <h3>深拷贝的实现</h3>
@@ -125,7 +123,6 @@ console.log(array3.toString())  //1,2,3
       return data
     }
   }
-
 ` }}</pre>
       </div>
     </div>

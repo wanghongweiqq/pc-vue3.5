@@ -37,8 +37,7 @@ doSearch1 (...args) {
 clearSearch1 () {
   console.log('防抖已取消，不会再执行')
   clearDebounce()
-},
-` }}</pre>
+},` }}</pre>
     <p>
       <el-input
         v-model="searchValue1"

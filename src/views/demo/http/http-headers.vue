@@ -106,8 +106,7 @@ Content-Type: multipart/form-data; boundary=----WebKitFormBoundaryXXX
 // 响应头 Content-Type —— 告诉浏览器响应体的格式
 Content-Type: application/json; charset=utf-8
 Content-Type: text/html; charset=utf-8
-Content-Type: image/png
-` }}</pre>
+Content-Type: image/png` }}</pre>
 
     <h3>Authorization 认证方式</h3>
     <table class="table">
@@ -144,8 +143,7 @@ headers: {
 }
 
 // 拦截器中动态添加时间戳，防止缓存
-config.headers['X-jd-ts'] = new Date().getTime()
-` }}</pre>
+config.headers['X-jd-ts'] = new Date().getTime()` }}</pre>
 
     <h3>CORS 跨域相关头</h3>
     <pre>{{ `
@@ -157,7 +155,6 @@ config.headers['X-jd-ts'] = new Date().getTime()
 Access-Control-Allow-Origin: https://example.com
 Access-Control-Allow-Methods: GET, POST, PUT, DELETE
 Access-Control-Allow-Headers: Content-Type, Authorization, X-Requested-With
-Access-Control-Max-Age: 86400   // 预检结果缓存时间（秒）
-` }}</pre>
+Access-Control-Max-Age: 86400   // 预检结果缓存时间（秒）` }}</pre>
   </div>
 </template>

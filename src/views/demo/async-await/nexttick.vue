@@ -38,8 +38,7 @@
   this.demo1Msg = '2'
   await this.$nextTick()                           // 等 DOM 更新完成
   this.demo1Result = this.$refs.demo1Div.innerHTML // ✅ 拿到新值
-}
-` }}</pre>
+}` }}</pre>
     <div ref="demo1Div">
       {{ demo1Msg }}
     </div>
@@ -61,8 +60,7 @@
   this.$nextTick(() => {
     this.demo1bResult = this.$refs.demo1bDiv.innerHTML // ✅ 拿到新值
   })
-}
-` }}</pre>
+}` }}</pre>
     <div ref="demo1bDiv">
       {{ demo1bMsg }}
     </div>
@@ -110,8 +108,7 @@
      <pre>{{ `demo3Change () {
   this.demo3Msg = '2'
   this.demo3Result = this.demo3Msg  // ✅ 直接拿数据，不依赖 DOM
-}
-` }}</pre>
+}` }}</pre>
     <div>{{ demo3Msg }}</div>
     <p v-if="demo3Result !== null">
       读到的值：<strong>{{ demo3Result }}</strong>

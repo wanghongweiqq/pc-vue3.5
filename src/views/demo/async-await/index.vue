@@ -37,7 +37,6 @@
               console.log(\`res=${ res }\`) // res=step1-step2-step3
             })
           }
-
 ` }}</pre>
             <h2>如果await 后面并不是一个Promise的返回值，则会按照同步程序返回值处理,为undefined</h2>
             <pre>{{ `test2 () {
@@ -63,7 +62,6 @@
             }
             asyFun()
           }
-
 ` }}</pre>
             <h2>await的重要应用,将异步调用设置为同步执行，</h2>
             <pre>{{ `test3 () {
@@ -129,8 +127,7 @@
               })
             }
             asyFun3()
-          }
-` }}</pre>
+          }` }}</pre>
             <h3>虽然 promise.then 亦可实现，但可读性和复杂度方面没有前者优秀，具体如下，每一个步骤都需要之前每个步骤的结果</h3>
             <pre>{{ `test4 () {
             const timeStart = new Date().getTime()
@@ -185,8 +182,7 @@
               })
             }
             asyFun2()
-          }
-` }}</pre>
+          }` }}</pre>
           </div>
         </el-tab-pane>
 

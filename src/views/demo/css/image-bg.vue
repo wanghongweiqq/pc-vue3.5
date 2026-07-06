@@ -40,8 +40,7 @@
   object-fit: cover;       /* 保持比例填满容器，裁剪多余 ✅ 最常用 */
   object-fit: none;        /* 保持原始尺寸，不缩放 */
   object-fit: scale-down;  /* 取 none 和 contain 中更小的 */
-}
-` }}</pre>
+}` }}</pre>
 
     <!-- object-position -->
     <h3>二、object-position — 控制图片焦点位置</h3>
@@ -68,8 +67,7 @@
   object-position: top left;      /* 左上角 */
   object-position: 20% 80%;       /* 人脸在左下时使用 */
   object-position: 50px 100px;    /* 精确偏移 */
-}
-` }}</pre>
+}` }}</pre>
 
     <!-- aspect-ratio -->
     <h3>三、aspect-ratio — 强制宽高比（现代推荐）</h3>
@@ -110,8 +108,7 @@
   width: 100%;
   aspect-ratio: 16 / 9; /* 自动计算高度 */
   object-fit: cover;
-}
-` }}</pre>
+}` }}</pre>
 
     <!-- background-image -->
     <h3>四、background-image — 背景图基础</h3>
@@ -126,8 +123,7 @@
 }
 
 /* 简写 */
-background: url('img.jpg') center/cover no-repeat #f0f0f0;
-` }}</pre>
+background: url('img.jpg') center/cover no-repeat #f0f0f0;` }}</pre>
 
     <!-- background-size -->
     <h3>五、background-size — 背景图尺寸</h3>
@@ -154,8 +150,7 @@ background-size: contain;     /* 完整显示，可能留白 */
 background-size: 100% 100%;   /* 拉伸填满，会变形 */
 background-size: 200px 100px; /* 固定尺寸 */
 background-size: 50%;         /* 相对容器宽度 */
-background-size: auto;        /* 保持原始尺寸 */
-` }}</pre>
+background-size: auto;        /* 保持原始尺寸 */` }}</pre>
 
     <!-- background-position -->
     <h3>六、background-position — 背景图位置</h3>
@@ -170,8 +165,7 @@ background-position: 25% 75%;
 background-position: 20px 50px;
 
 /* 现代写法：指定某边偏移 */
-background-position: right 20px bottom 10px;
-` }}</pre>
+background-position: right 20px bottom 10px;` }}</pre>
 
     <!-- background-repeat -->
     <h3>七、background-repeat — 背景图重复</h3>
@@ -180,8 +174,7 @@ background-repeat: no-repeat; /* 不重复 ✅ 最常用 */
 background-repeat: repeat-x;  /* 仅水平重复 */
 background-repeat: repeat-y;  /* 仅垂直重复 */
 background-repeat: space;     /* 均匀分布，不裁剪 */
-background-repeat: round;     /* 缩放后铺满，不裁剪 */
-` }}</pre>
+background-repeat: round;     /* 缩放后铺满，不裁剪 */` }}</pre>
 
     <!-- background-attachment -->
     <h3>八、background-attachment — 视差效果</h3>
@@ -197,8 +190,7 @@ background-repeat: round;     /* 缩放后铺满，不裁剪 */
     </div>
      <pre>{{ `background-attachment: scroll; /* 默认，随页面滚动 */
 background-attachment: fixed;  /* 固定背景，视差效果 ✨ */
-background-attachment: local;  /* 随元素内容滚动 */
-` }}</pre>
+background-attachment: local;  /* 随元素内容滚动 */` }}</pre>
 
     <!-- 多背景叠加 -->
     <h3>九、多背景图叠加（CSS3）</h3>
@@ -212,8 +204,7 @@ background:
 /* 常见：颜色蒙层 + 底图 */
 background:
   linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.4)),
-  url('bg.jpg') center/cover no-repeat;
-` }}</pre>
+  url('bg.jpg') center/cover no-repeat;` }}</pre>
 
     <!-- img vs background 对比 -->
     <h3>十、img 与 background-image 选型指南</h3>
@@ -265,8 +256,7 @@ background:
   width: 100%;
   height: 100%;
   object-fit: cover;
-}
-` }}</pre>
+}` }}</pre>
 
     <!-- object vs background 属性对比 -->
     <h3>十二、object-* 与 background-* 相似属性对比</h3>
@@ -331,7 +321,6 @@ img {
   background-size: cover;
   background-position: center top;
 }
-
 ` }}</pre>
 
     <table class="compare-table">

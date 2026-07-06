@@ -15,9 +15,7 @@ function render() {
   return createVNode("div", null, [
     _hoisted_1,                                    // ← 直接复用，不参与 diff
     createVNode("span", null, ctx.dynamic)         // ← 只有这个参与 diff
-  ])
-
-` }}</pre>
+  ])` }}</pre>
 
     <h4>② PatchFlag 动态标记</h4>
     <p>编译器分析模板，给动态节点打上 PatchFlag（补丁标记 / 动态标记），运行时 diff 直接根据 flag 判断哪些属性可能变化，精准更新，跳过其余属性的比较。</p>
@@ -29,7 +27,6 @@ createVNode("div", { class: ctx.cls }, null, PatchFlags.CLASS)
 // 只有文本是动态的，打 TEXT 标记
 createVNode("p", null, ctx.text, PatchFlags.TEXT)
 // 运行时：只比较文本内容
-
 ` }}</pre>
     <table class="table">
       <tbody>
@@ -70,7 +67,6 @@ createVNode("p", null, ctx.text, PatchFlags.TEXT)
 </div>
 
 diff 时：只遍历 dynamicChildren = [span, i]，静态 p 直接跳过
-
 ` }}</pre>
 
     <h3>二、运行时 Diff — patchKeyedChildren 5 步</h3>
@@ -78,7 +74,6 @@ diff 时：只遍历 dynamicChildren = [span, i]，静态 p 直接跳过
     <pre>{{ `
 旧: a  b  c  d  e  f  g
 新: a  b  e  c  d  h  g
-
 ` }}</pre>
 
     <h4>Step 1 — 头部预处理</h4>
@@ -87,7 +82,6 @@ diff 时：只遍历 dynamicChildren = [span, i]，静态 p 直接跳过
 a = a ✓ patch
 b = b ✓ patch
 c ≠ e  停止，头部指针 i = 2
-
 ` }}</pre>
 
     <h4>Step 2 — 尾部预处理</h4>
@@ -99,7 +93,6 @@ f ≠ h  停止
 处理后剩余：
   旧: c  d  e  f
   新: e  c  d  h
-
 ` }}</pre>
 
     <h4>Step 3 — 旧节点耗尽，新节点有剩余 → 全部 mount</h4>
@@ -111,7 +104,6 @@ f ≠ h  停止
     <pre>{{ `
 新序列: e  c  d  h
 映射表: { e:0, c:1, d:2, h:3 }
-
 ` }}</pre>
 
     <p><strong>② 遍历旧节点，查表匹配</strong></p>
@@ -122,7 +114,6 @@ f ≠ h  停止
 旧 f → 找不到，unmount ✗
 
 记录可复用节点在新序列中的位置数组：[1, 2, 0]（对应 c d e）
-
 ` }}</pre>
 
     <p><strong>③ 求最长递增子序列（LIS）</strong></p>
@@ -137,7 +128,6 @@ LIS     = [1, 2]  → 对应节点 c d，它们相对顺序未变，不需要移
   e → 不在 LIS 中，insertBefore 移动
 
 最终：1 次 unmount（f）+ 1 次 mount（h）+ 1 次 move（e），共 3 次 DOM 操作
-
 ` }}</pre>
 
     <h3>三、Vue 2 vs Vue 3 对比</h3>
@@ -151,7 +141,7 @@ LIS     = [1, 2]  → 对应节点 c d，它们相对顺序未变，不需要移
         <tr>
           <td>列表 diff 算法</td>
           <td>双端对比（4 指针）</td>
-          <td>头尾预处理 + LIS</td>
+          <td>头尾预处理 + LIS(Longest Increasing Subsequence)</td>
         </tr>
         <tr>
           <td>静态节点</td>

@@ -41,8 +41,7 @@ Content-Type: application/json
 Body: {"title":"标题","count":10,"tags":["a","b"]}
 
 // 优点：支持嵌套对象/数组，结构清晰
-// 缺点：不能直接传文件
-` }}</pre>
+// 缺点：不能直接传文件` }}</pre>
 
     <h3>② application/x-www-form-urlencoded</h3>
     <p>数据以 <code>key=value</code> 形式编码，多个字段用 <code>&amp;</code> 连接，特殊字符需 URL 编码。</p>
@@ -59,8 +58,7 @@ Content-Type: application/x-www-form-urlencoded
 Body: username=admin&password=123
 
 // 优点：兼容性好，老接口常见
-// 缺点：不支持嵌套对象，数组传参格式不统一
-` }}</pre>
+// 缺点：不支持嵌套对象，数组传参格式不统一` }}</pre>
 
     <h3>③ multipart/form-data</h3>
     <p>将数据分成多块，每块有独立的 boundary 分隔符，是唯一能传二进制文件的格式。</p>
@@ -82,8 +80,7 @@ Content-Type: image/png
 ------WebKitFormBoundaryXXX
 Content-Disposition: form-data; name="name"
 头像
-------WebKitFormBoundaryXXX--
-` }}</pre>
+------WebKitFormBoundaryXXX--` }}</pre>
 
     <h3>三种格式对比</h3>
     <table class="table">
@@ -136,7 +133,6 @@ ajax({ url: '/api/create', method: 'post', data: { title: '标题' } })
 // URLEncoded 模式（isFormData: true）
 ajax({ url: '/api/login', method: 'post', data: { username: 'admin' }, isFormData: true })
 // → Content-Type: application/x-www-form-urlencoded
-// → Body: username=admin
-` }}</pre>
+// → Body: username=admin` }}</pre>
   </div>
 </template>

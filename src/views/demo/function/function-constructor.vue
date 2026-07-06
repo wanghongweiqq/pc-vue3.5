@@ -19,7 +19,6 @@ console.log('构造函数:')
 monkey.saySex()  //我的性别是母
 console.log(monkey instanceof Animal) // true 判断实例是否属于某个原型用instanceof
 console.log(monkey instanceof Object) // true
-
 ` }}</pre>
     <ul>
       <li>所有的引用类型（数组、对象、函数），都具有对象特性，即可自由扩展属性（null除外）</li>
@@ -53,7 +52,6 @@ let person1 = new Person('ooxx');
 person1.sayName();  //ooxx
 let person2 = new Person('ox');
 console.log(person1.sayName===person2.sayName)  //true
-
 ` }}</pre>
     <p>改进之后，sayName() 为全局方法，只需创建一次即可所有实例对象共享。但是问题又来了，在全局作用域中定义一个仅供特定对象使用的方法有点不太好，而且如果对象需要定义很多方法，那么就要定义很多个全局函数。可以通过 原型 来解决上面问题。</p>
   </div>

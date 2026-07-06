@@ -5,8 +5,7 @@
 
     <h3>核心原则</h3>
      <pre>{{ `this.list            // ← 响应式 Proxy 对象
-res.data.list        // ← 裸数组，来自外部数据源，没有 Proxy 包裹
-` }}</pre>
+res.data.list        // ← 裸数组，来自外部数据源，没有 Proxy 包裹` }}</pre>
     <p>对 <code>this.list</code> 操作 → 经过 Proxy → Vue 感知 → 触发渲染</p>
     <p>对 <code>res.data.list</code> 操作 → 绕过 Proxy → Vue 完全不知情 → 不渲染</p>
 
@@ -47,8 +46,7 @@ res.data.list        // ← 裸数组，来自外部数据源，没有 Proxy 包
 // mockMap 里的 list 是固定引用，每次接口返回同一个对象
 let list = res.data.list       // 指向 mockMap 原始数组
 list = list.sort(...)          // 原地排序，引用未变
-this.queryList = list          // 赋值同引用 → Vue 跳过渲染
-` }}</pre>
+this.queryList = list          // 赋值同引用 → Vue 跳过渲染` }}</pre>
     <p>问题关键：sort 发生在裸数组上（Proxy 之外），Vue 全程不知数据变了；引用又没变，赋值也被跳过。</p>
 
     <h3>修复方式</h3>
@@ -58,8 +56,7 @@ this.queryList = list          // 新引用 → Vue 检测到变化 → 触发�
 
 // ✅ 或直接操作响应式数组（经过 Proxy）
 this.queryList = list          // 先赋值拿到新引用
-this.queryList.sort(...)       // 再通过响应式对象排序
-` }}</pre>
+this.queryList.sort(...)       // 再通过响应式对象排序` }}</pre>
 
     <h3>与赋值时"内容变了是否渲染"的关系</h3>
     <p>即使引用相同的数组内容已发生变化，Vue 也<strong>不会渲染</strong>，因为：</p>

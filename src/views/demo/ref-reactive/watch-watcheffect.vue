@@ -42,8 +42,7 @@ stop() // 调用返回值即可停止
 watch(count, (newVal, oldVal, onCleanup) => {
   const timer = setTimeout(() => { ... }, 1000)
   onCleanup(() => clearTimeout(timer))
-})
-` }}</pre>
+})` }}</pre>
 
     <h3>二、watch 需要手动清理吗</h3>
     <p>大多数情况不需要，Vue 会自动帮你清理。但有例外。</p>
@@ -54,8 +53,7 @@ const count = ref(0)
 watch(count, (newVal) => {
   console.log(newVal)
 })
-// ✅ 无需手动 stop，组件销毁时自动清理
-` }}</pre>
+// ✅ 无需手动 stop，组件销毁时自动清理` }}</pre>
 
     <h4>需要手动清理：异步创建的 watch</h4>
      <pre>{{ `// ❌ 异步创建（在 setTimeout / Promise / 事件回调里）
@@ -74,16 +72,14 @@ setTimeout(() => {
 
 onUnmounted(() => {
   stop && stop()
-})
-` }}</pre>
+})` }}</pre>
 
     <h4>需要提前停止：条件性监听</h4>
      <pre>{{ `const stop = watch(count, (newVal) => {
   if (newVal >= 10) {
     stop()  // 达到条件后立即停止
   }
-})
-` }}</pre>
+})` }}</pre>
 
     <h4>清理时机总结</h4>
     <table class="table">
@@ -129,16 +125,14 @@ obj.value = { a: { b: 2 } } // ✅ 触发，整体替换
 
 // 需要监听内部变化时手动加 deep: true
 watch(obj, (newVal) => { console.log('触发') }, { deep: true })
-obj.value.a.b = 2          // ✅ 触发
-` }}</pre>
+obj.value.a.b = 2          // ✅ 触发` }}</pre>
 
     <h4>reactive 定义的对象 —— deep 强制 true，无法关闭</h4>
      <pre>{{ `const obj = reactive({ a: { b: 1 } })
 
 watch(obj, (newVal) => { console.log('触发') })
 
-obj.a.b = 2   // ✅ 自动触发，deep 强制 true，设 false 也无效
-` }}</pre>
+obj.a.b = 2   // ✅ 自动触发，deep 强制 true，设 false 也无效` }}</pre>
 
     <h4>对比</h4>
     <table class="table">
@@ -187,8 +181,7 @@ watchEffect((onCleanup) => {
 
 // 停止监听
 const stop = watchEffect(() => { ... })
-stop()
-` }}</pre>
+stop()` }}</pre>
 
     <h3>三、watch vs watchEffect</h3>
     <table class="table">
@@ -247,8 +240,7 @@ useEffect(() => {
   return () => {
     console.log('清理副作用')   // 组件卸载 或 依赖变化时执行
   }
-}, [count])   // 依赖数组：空数组=只在 mount 执行，不传=每次渲染都执行
-` }}</pre>
+}, [count])   // 依赖数组：空数组=只在 mount 执行，不传=每次渲染都执行` }}</pre>
 
     <table class="table">
       <tbody>

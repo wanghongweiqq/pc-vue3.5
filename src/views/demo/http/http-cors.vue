@@ -14,7 +14,6 @@
 跨域：https://a.com → https://b.com/api       ❌ 域名不同
 跨域：https://a.com → http://a.com/api        ❌ 协议不同
 跨域：https://a.com → https://a.com:8080/api  ❌ 端口不同
-
 ` }}</pre>
 
     <table class="table">

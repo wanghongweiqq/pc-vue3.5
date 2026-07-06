@@ -23,7 +23,6 @@ console.log('person2')
 console.log(person2)
 console.log( person2.name)// ['a','b',1]
 console.log(person1.sayName === person2.sayName)		//true
-
 ` }}</pre>
     <p>注意：若在实例中添加与原型相同的属性，则会屏蔽原型的属性。</p>
     <p>原型优点：使用原型对象的好处是可以让所有对象实例共享它所包含的属性和方法。</p>
@@ -45,7 +44,6 @@ console.log(person1.sayName === person2.sayName)		//true
 }
 let person1 = new Person('ooxx');
 person1.sayName();
-
 ` }}</pre>
   </div>
 </template>

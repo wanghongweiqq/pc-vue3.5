@@ -71,7 +71,6 @@ https://api.example.com:8080/user/list?page=1&size=10#section
   location.pathname  →  "/user/list"
   location.search    →  "?page=1&size=10"
   location.hash      →  "#section"
-
 ` }}</pre>
 
     <h3>三、请求报文结构</h3>
@@ -82,7 +81,6 @@ Content-Type: application/json
 Authorization: Bearer eyJhbGci...
                                   ← 空行（分隔头和体）
 {"username":"admin","password":"123"}  ← 请求体（Body）
-
 ` }}</pre>
 
     <h3>四、响应报文结构</h3>
@@ -93,7 +91,6 @@ Cache-Control: no-cache
 Set-Cookie: sessionId=abc; HttpOnly
                                   ← 空行
 \{"success":true,"data":{...}\}     ← 响应体（Body）
-
 ` }}</pre>
   </div>
 </template>

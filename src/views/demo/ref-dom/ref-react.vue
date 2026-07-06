@@ -25,7 +25,6 @@ const Child = (props, ref) => {
   }), [])
 }
 // forwardRef 使父组件的ref能够以第二个参数的形式传递过来
-export default forwardRef(Child)
-` }}</pre>
+export default forwardRef(Child)` }}</pre>
   </div>
 </template>

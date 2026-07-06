@@ -15,7 +15,7 @@
         <tr>
           <td>核心算法</td>
           <td>双端比较</td>
-          <td>快速 Diff + LIS</td>
+          <td>快速 Diff + LIS（Longest Increasing Subsequence）</td>
           <td>单向遍历</td>
         </tr>
         <tr>
@@ -79,7 +79,7 @@
         </tr>
         <tr>
           <td>Vue 3（LIS）</td>
-          <td>LIS = [A,B,C]，只移动 D</td>
+          <td>最长递增子序列 - LIS = [A,B,C]，只移动 D</td>
           <td>1 次</td>
         </tr>
         <tr>

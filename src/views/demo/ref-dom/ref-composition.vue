@@ -10,8 +10,7 @@
   <h4>react中和该方法类似</h4>
    <pre>{{ `const inputChildRef = useRef(null) // 使用useRef创建 Ref
 inputChildRef.current.focus() // 执行dom相关方法，注意这里是current，vue中为value
-&lt;input type='text' ref={inputChildRef}&gt; // 模板中引入ref
-` }}</pre>
+&lt;input type='text' ref={inputChildRef}&gt; // 模板中引入ref` }}</pre>
   <p>
     <input
       ref="inputRefNormal"
