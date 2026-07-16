@@ -542,7 +542,7 @@ export default {
     return throttled
   },
   delay (duration) {
-    // 旧版
+    // 旧版,while会不断同步执行阻塞主线程/冻结 UI
     // let start = Date.now()
     // while(Date.now() - start < duration) {}
 

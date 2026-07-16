@@ -2,9 +2,34 @@
   <div class="content">
     <h2>watch / watchEffect / useEffect 对比</h2>
 
+    <h3>什么是副作用（Side Effect）</h3>
+    <p>副作用是指函数或表达式<strong>除了返回值之外，对外部环境产生的影响</strong>。简单说：函数"顺手"做了别的事。</p>
+    <h4>常见的副作用</h4>
+    <ul>
+      <li>修改外部变量（如 <code>count++</code>）</li>
+      <li>DOM 操作（如 <code>document.title = 'xxx'</code>）</li>
+      <li>网络请求（如 <code>fetch()</code>）</li>
+      <li>定时器（如 <code>setTimeout</code>）</li>
+      <li>控制台输出（如 <code>console.log</code>）</li>
+      <li>本地存储（如 <code>localStorage.setItem</code>）</li>
+    </ul>
+    <h4>纯函数 vs 有副作用</h4>
+    <pre>{{ `// 纯函数：无副作用，相同输入永远得到相同输出
+function add(a, b) {
+  return a + b
+}
+
+// 有副作用：修改了外部变量
+let total = 0
+function addToTotal(n) {
+  total += n   // ← 副作用：修改了外部状态
+  return total
+}` }}</pre>
+    <p>Vue 的 <code>watch</code> / <code>watchEffect</code>、React 的 <code>useEffect</code> 都是用来<strong>管理副作用</strong>的 —— 在合适的时机执行副作用，并在不需要时清理它们（取消请求、清除定时器等）。</p>
+
     <h3>一、watch</h3>
     <p>显式声明监听源，只在源发生变化时执行，可获取新旧值。</p>
-     <pre>{{ `import { ref, watch } from 'vue'
+    <pre>{{ `import { ref, watch } from 'vue'
 
 const count = ref(0)
 
@@ -44,11 +69,62 @@ watch(count, (newVal, oldVal, onCleanup) => {
   onCleanup(() => clearTimeout(timer))
 })` }}</pre>
 
-    <h3>二、watch 需要手动清理吗</h3>
+    <h3>二、watch、watchEffect 的 flush 选项 —— 回调什么时候执行</h3>
+    <p><code>flush</code> 控制 watch 回调在 DOM 更新周期中的执行时机，有三个值：</p>
+    <table class="table">
+      <tbody>
+        <tr>
+          <th width="80">
+            值
+          </th>
+          <th>执行时机</th>
+          <th>能否拿到更新后的 DOM</th>
+          <th>适用场景</th>
+        </tr>
+        <tr>
+          <td><code>pre</code></td>
+          <td>默认值，DOM 更新<em>之前</em></td>
+          <td>❌ 拿不到</td>
+          <td>需要在渲染前修改状态、取消即将发出的请求</td>
+        </tr>
+        <tr>
+          <td><code>post</code></td>
+          <td>DOM 更新<em>之后</em></td>
+          <td>✅ 能拿到</td>
+          <td>需要操作更新后的 DOM（如获取尺寸、滚动位置）</td>
+        </tr>
+        <tr>
+          <td><code>sync</code></td>
+          <td>响应式数据变化时<em>立即同步</em>执行</td>
+          <td>❌ 拿不到（DOM 还没开始更新）</td>
+          <td>极少使用，需严格保证在 DOM 变更前同步响应</td>
+        </tr>
+      </tbody>
+    </table>
+    <pre>{{ `const count = ref(0)
+
+// 默认 flush: 'post'，DOM 更新后执行
+watch(count, () => {
+  console.log('DOM 已更新', document.querySelector('.count').textContent)
+})
+
+// flush: 'pre'，DOM 更新前执行
+watch(count, () => {
+  console.log('DOM 还没更新')
+}, { flush: 'pre' })
+
+// flush: 'sync'，立即同步执行
+watch(count, () => {
+  console.log('数据刚变，DOM 还没动')
+}, { flush: 'sync' })` }}</pre>
+    <p>执行顺序：<code>sync</code> → 组件渲染 → <code>pre</code> → DOM 更新 → <code>post</code></p>
+    <p>💡 <strong>绝大多数场景用默认的 <code>'post'</code></strong>，因为通常需要在回调中操作更新后的 DOM。只有明确需要在渲染前拦截时才用 <code>'pre'</code>。<code>'sync'</code> 性能开销大，慎用。</p>
+
+    <h3>三、watch 需要手动清理吗</h3>
     <p>大多数情况不需要，Vue 会自动帮你清理。但有例外。</p>
 
     <h4>自动清理：在 setup / 组件内同步创建</h4>
-     <pre>{{ `// script setup 或 setup() 内同步创建 → 组件卸载时自动停止
+    <pre>{{ `// script setup 或 setup() 内同步创建 → 组件卸载时自动停止
 const count = ref(0)
 watch(count, (newVal) => {
   console.log(newVal)
@@ -56,7 +132,7 @@ watch(count, (newVal) => {
 // ✅ 无需手动 stop，组件销毁时自动清理` }}</pre>
 
     <h4>需要手动清理：异步创建的 watch</h4>
-     <pre>{{ `// ❌ 异步创建（在 setTimeout / Promise / 事件回调里）
+    <pre>{{ `// ❌ 异步创建（在 setTimeout / Promise / 事件回调里）
 // Vue 无法追踪到这个 watcher，组件卸载后它仍然存在
 setTimeout(() => {
   watch(count, (newVal) => {
@@ -75,7 +151,7 @@ onUnmounted(() => {
 })` }}</pre>
 
     <h4>需要提前停止：条件性监听</h4>
-     <pre>{{ `const stop = watch(count, (newVal) => {
+    <pre>{{ `const stop = watch(count, (newVal) => {
   if (newVal >= 10) {
     stop()  // 达到条件后立即停止
   }
@@ -116,7 +192,7 @@ onUnmounted(() => {
     <p>用 <code>ref</code> 还是 <code>reactive</code> 定义对象，watch 的 deep 默认行为<em>完全不同</em>，是常见踩坑点。</p>
 
     <h4>ref 定义的对象 —— deep 默认 false</h4>
-     <pre>{{ `const obj = ref({ a: { b: 1 } })
+    <pre>{{ `const obj = ref({ a: { b: 1 } })
 
 watch(obj, (newVal) => { console.log('触发') })
 
@@ -128,7 +204,7 @@ watch(obj, (newVal) => { console.log('触发') }, { deep: true })
 obj.value.a.b = 2          // ✅ 触发` }}</pre>
 
     <h4>reactive 定义的对象 —— deep 强制 true，无法关闭</h4>
-     <pre>{{ `const obj = reactive({ a: { b: 1 } })
+    <pre>{{ `const obj = reactive({ a: { b: 1 } })
 
 watch(obj, (newVal) => { console.log('触发') })
 
@@ -163,7 +239,7 @@ obj.a.b = 2   // ✅ 自动触发，deep 强制 true，设 false 也无效` }}</
 
     <h3>三、watchEffect</h3>
     <p>自动追踪回调内用到的所有响应式依赖，立即执行一次，依赖变化时重新执行。</p>
-     <pre>{{ `import { ref, watchEffect } from 'vue'
+    <pre>{{ `import { ref, watchEffect } from 'vue'
 
 const count = ref(0)
 const name = ref('Vue')
@@ -230,7 +306,7 @@ stop()` }}</pre>
     </table>
 
     <h3>四、与 React useEffect 横向对比</h3>
-     <pre>{{ `// React useEffect
+    <pre>{{ `// React useEffect
 import { useEffect, useState } from 'react'
 
 const [count, setCount] = useState(0)

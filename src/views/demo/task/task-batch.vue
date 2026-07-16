@@ -6,40 +6,39 @@
  * @FilePath: /pc-vue3.5/src/views/demo/task/task-batch.vue
 -->
 <template>
-  <div class="bcp-task-arrange">
-    <div class="content">
-      <h2>批量处理任务，支持同时最多处理N个异步任务</h2>
-      <p>
-        <el-button
-          size="small"
-          type="primary"
-          @click="taskBatchAdd"
-        >
-          添加任务并不执行
-        </el-button>
-        <el-button
-          size="small"
-          type="primary"
-          @click="taskBatchStart"
-        >
-          执行
-        </el-button>
-        <el-button
-          size="small"
-          type="primary"
-          @click="taskBatchIns1.pause()"
-        >
-          暂停
-        </el-button>
-        <el-button
-          size="small"
-          type="primary"
-          @click="taskBatchIns1.setNum(4)"
-        >
-          修改数量
-        </el-button>
-      </p>
-      <pre>{{ `function taskBatch () {
+  <div class="content">
+    <h2>批量处理任务，支持同时最多处理N个异步任务</h2>
+    <p>
+      <el-button
+        size="small"
+        type="primary"
+        @click="taskBatchAdd"
+      >
+        添加任务并不执行
+      </el-button>
+      <el-button
+        size="small"
+        type="primary"
+        @click="taskBatchStart"
+      >
+        执行
+      </el-button>
+      <el-button
+        size="small"
+        type="primary"
+        @click="taskBatchIns1.pause()"
+      >
+        暂停
+      </el-button>
+      <el-button
+        size="small"
+        type="primary"
+        @click="taskBatchIns1.setNum(4)"
+      >
+        修改数量
+      </el-button>
+    </p>
+    <pre>{{ `function taskBatch () {
   console.log('this',this)
   let max = 2// 允许运行的最大任务数
   let doingQueue = [] // 在运行队列中的任务
@@ -121,7 +120,6 @@
   }
 }
 export default taskBatch` }}</pre>
-    </div>
   </div>
 </template>
 <!-- eslint-disable no-unused-vars -->

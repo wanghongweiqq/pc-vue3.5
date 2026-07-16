@@ -1,6 +1,0 @@
-skill-manifest-version: 1
-skill-id: 99ce267f9f96527bc3fe79b398f90df4e12607af064e070fcb41ff8c4c22e315
-
-files:
-  8e34f289a9de1ce0e7506362068c223a63ea1bbc065cb2a92a0e4ab2101f6667  SKILL.md
-  ee31aea8429ed51c3768f1333c39974be42e34fd7ed10beb3162214e0fdd08ba  references/agents-md-template.md

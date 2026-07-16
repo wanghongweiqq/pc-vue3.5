@@ -4,7 +4,7 @@
 
     <h3>Vue 3 vs Vue 2 的变化</h3>
     <p>Vue 2 无法检测通过<em>索引赋值</em>和<em>修改 length</em> 对数组的变动，需要用 <code>Vue.set</code> 或 <code>splice</code> 绕过。Vue 3 基于 Proxy，这两种操作均可直接触发响应：</p>
-     <pre>{{ `// Vue 3 reactive 数组，以下操作均可触发响应
+    <pre>{{ `// Vue 3 reactive 数组，以下操作均可触发响应
 reactiveArray[0] = 'new value'   // ✅ 索引赋值
 reactiveArray.length = 0         // ✅ 修改 length 清空数组` }}</pre>
 
@@ -76,7 +76,7 @@ reactiveArray.length = 0         // ✅ 修改 length 清空数组` }}</pre>
       <el-button
         size="small"
         type="primary"
-        @click="pushArrayReactive"
+        @click="replaceArrayReactive"
       >
         添加数组（改变引用，丢失响应）
       </el-button>
@@ -84,7 +84,7 @@ reactiveArray.length = 0         // ✅ 修改 length 清空数组` }}</pre>
 
     <h3>两种 reactive 数组写法对比</h3>
     <p>同样用 <code>reactive</code> 定义数组，<em>对象包裹</em>和<em>裸数组</em>在整体替换时行为完全不同：</p>
-     <pre>{{ `// ⚠️ 裸数组写法 — 不推荐
+    <pre>{{ `// ⚠️ 裸数组写法 — 不推荐
 const list = reactive([])
 list.push(1, 2, 3)  // ✅ 能用
 list = []            // ❌ 直接丢失响应式，因为 reactive 代理的是原对象引用
@@ -144,8 +144,8 @@ let reactiveArray = reactive(
 )
 const addArrayPropertyReactive = () => reactiveArray[0].version = '3.5'
 const subtractArrayPropertyReactive = () => delete reactiveArray[1].version
-const pushArrayReactive = () => {
-  console.log('pushArrayReactive')
+const replaceArrayReactive = () => {
+  console.log('replaceArrayReactive')
   // const a = [4,5]
   // reactiveArray = [...reactiveArray,...a]
   const a = [{ name: 'wanghognwei ' }]
@@ -161,6 +161,6 @@ watch(reactiveArray,(newVal,oldVal) => {
   console.log('newVal:', newVal)
   console.log('oldVal:', oldVal)
 },
-// { deep: true }
+{ deep: true }
 )
 </script>

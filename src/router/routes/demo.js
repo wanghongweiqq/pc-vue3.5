@@ -185,6 +185,19 @@ export default {
       },
     },
     {
+      path: 'keys',
+      name: 'keys',
+      component: () => import('@/views/demo/keys/'),
+      meta: {
+        title: 'keys',
+        key: 'MENU_HAWK_DEMO',
+        crumb: [
+          { name: 'Demo' },
+          { name: 'keys' },
+        ]
+      }
+    },
+    {
       path: 'promise',
       name: 'promise',
       component: () => import('@/views/demo/promise.vue'),
@@ -239,7 +252,7 @@ export default {
     {
       path: 'sort',
       name: 'sort',
-      component: () => import('@/views/demo/sort.vue'),
+      component: () => import('@/views/demo/sort/'),
       meta: {
         title: 'sort',
         key: 'MENU_HAWK_DEMO',
@@ -285,6 +298,19 @@ export default {
         crumb: [
           { name: 'Demo' },
           { name: 'vuex' },
+        ]
+      }
+    },
+    {
+      path: 'width',
+      name: 'width',
+      component: () => import('@/views/demo/width/'),
+      meta: {
+        title: 'width',
+        key: 'MENU_HAWK_DEMO',
+        crumb: [
+          { name: 'Demo' },
+          { name: 'width' },
         ]
       }
     },

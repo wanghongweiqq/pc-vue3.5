@@ -1,6 +1,20 @@
 <template>
   <div class="content">
-    <h2>reactive object : obj</h2>
+    <p>reactive( ) <em>只能接收引用类型</em>（包括普通对象、数组、Map、Set 等），<em>不能处理基本类型</em> （number、string、boolean 等）</p>
+    <h2>reactive 基本类型示例</h2>
+    <p>
+      <el-button
+        size="small"
+        type="primary"
+        @click="changePlainValue"
+      >
+        修改 plainValue
+      </el-button>
+    </p>
+    <p>plainValue：{{ plainValue }}</p>
+    <p>说明：<code>reactive()</code>传递原始值（如 <code>reactive(1)</code>）不会产生响应式效果。点击上方按钮修改 <code>plainValue</code>，页面不会更新——因为 <code>plainValue</code> 不是响应式的，不会触发重新渲染。有时候看到其在某个事件后被渲染了，有可能是这个事件更新了其他的响应式数据，导致它的值被顺带更新了。</p>
+
+    <h2>reactive 对象深度代理示例</h2>
     <p>{{ obj }}</p>
     <p>
       <el-button
@@ -32,7 +46,7 @@
       <li>属性值是<em>引用类型</em>（对象/数组）→ 自动递归套一层 <code>reactive()</code> 再返回，拿到的是<em>响应式代理</em></li>
       <li>属性值是<em>基本类型</em>（字符串/数字/布尔）→ 无法被 Proxy 代理，直接返回<em>原始值</em></li>
     </ul>
-     <pre>{{ `const obj = reactive({
+    <pre>{{ `const obj = reactive({
   name: 'Vue3',      // 基本类型 → obj.name 取到 'Vue3'（普通字符串）
   tags: ['Vue3'],    // 引用类型 → obj.tags 取到 Proxy(['Vue3'])（响应式数组）
   info: { v: 3 },   // 引用类型 → obj.info 取到 Proxy({ v: 3 })（响应式对象）
@@ -61,7 +75,7 @@
 
     <h3>watch(() => obj.name) 的 deep 行为</h3>
     <p>getter 函数只追踪<em>返回值的变化</em>，<code>deep</code> 是否需要取决于 <code>obj.name</code> 是原始值还是对象：</p>
-     <pre>{{ `const obj = reactive({ name: { title: 'Vue3' } })
+    <pre>{{ `const obj = reactive({ name: { title: 'Vue3' } })
 
 // ① 直接 watch reactive 对象 → 默认 deep: true，可感知内部所有属性变化
 watch(obj, handler)
@@ -113,14 +127,26 @@ watch(() => obj.name.title, handler) // ✅ 精准追踪到 title 的变化` }}<
 <script setup>
 import { reactive, watch } from 'vue'
 
+// reactive 基本类型示例
+// 报警告： [Vue warn] value cannot be made reactive: 1
+let plainValue = reactive(1)
+const changePlainValue = () => { plainValue = 22 }
+// watch () => plainValue 
+// 如果直接 watch plainValue 警告： [Vue warn]: Invalid watch source:  1 A watch source can only be a getter/effect function, a ref, a reactive object, or an array of these types. 
+// watch(() => plainValue,(newVal,oldVal) => {
+//   console.log('watch-reactive-plainValue')
+//   console.log('newVal:', newVal)
+//   console.log('oldVal:', oldVal)
+// })
+
+// reactive 对象深度代理示例
 // const obj = reactive({ name: 123 })
 const obj = reactive({ name: { title: 123 } })
 // const obj = reactive({ name: [123] })
 
-// const objEditProperty = () => obj.name = Date.now()
-const objEditProperty = () => obj.name.title = Date.now()
-// const objEditProperty = () => obj.name.push(Date.now())
-// const objEditProperty = () => obj.name[1] = Date.now()
+const objEditProperty = () => {
+  obj.name.title = Date.now()
+}
 const objAddProperty = () => obj.age = Date.now()
 const objSubtractProperty = () => delete obj.age // 等价于 obj.age = undefined
 watch(obj,(newVal,oldVal) => {

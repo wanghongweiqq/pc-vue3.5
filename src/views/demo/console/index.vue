@@ -1,4 +1,11 @@
 <!--
+ * @Author: 王宏伟
+ * @Email：wanghongwei@hualala.com
+ * @Date: 2026-06-29 08:18:00
+ * @Description: 页面/组件/功能的描述
+ * @FilePath: /pc-vue3.5/src/views/demo/console/index.vue
+-->
+<!--
  * @Description: console的日常使用
 -->
 <template>
@@ -78,7 +85,7 @@ const group = () => {
 }
 const time = async () => {
   console.time('myTimer')
-  await utils.delay(1000)
+  await utils.delay(300)
 
   let sum = 0
   for (let i = 0; i < 5; i++) {
@@ -91,6 +98,6 @@ const time = async () => {
 }
 
 onMounted(() => {
-  time()
+  // time()
 })
 </script>

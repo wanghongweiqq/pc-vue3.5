@@ -34,7 +34,7 @@
 
     <h4>写法 A：await $nextTick</h4>
     <p>将方法改为 async，await 等 DOM 刷新完再读，写法和同步一样：</p>
-     <pre>{{ `async demo1Change () {
+    <pre>{{ `async demo1Change () {
   this.demo1Msg = '2'
   await this.$nextTick()                           // 等 DOM 更新完成
   this.demo1Result = this.$refs.demo1Div.innerHTML // ✅ 拿到新值
@@ -55,7 +55,7 @@
 
     <h4>写法 B：$nextTick 回调</h4>
     <p>在回调函数里执行，DOM 更新后自动触发：</p>
-     <pre>{{ `demo1bChange () {
+    <pre>{{ `demo1bChange () {
   this.demo1bMsg = '2'
   this.$nextTick(() => {
     this.demo1bResult = this.$refs.demo1bDiv.innerHTML // ✅ 拿到新值
@@ -105,7 +105,7 @@
 
     <h3>方案三：直接用数据（最简单）</h3>
     <p>如果目的只是展示新值，完全不需要读 DOM：</p>
-     <pre>{{ `demo3Change () {
+    <pre>{{ `demo3Change () {
   this.demo3Msg = '2'
   this.demo3Result = this.demo3Msg  // ✅ 直接拿数据，不依赖 DOM
 }` }}</pre>
@@ -179,13 +179,13 @@ export default {
   methods: {
     async changeMsg () {
       this.msg = '2'
-      this.msg1 = this.$refs.msgDiv.innerHTML         // 同步读 DOM → 旧值
+      this.msg1 = this.$refs.msgDiv.innerHTML // 同步读 DOM → 旧值
       this.$nextTick(() => {
-        this.msg2 = this.$refs.msgDiv.innerHTML       // $nextTick 回调 → 新值
+        this.msg2 = this.$refs.msgDiv.innerHTML // $nextTick 回调 → 新值
       })
       await this.$nextTick()
-      this.msg3 = this.$refs.msgDiv.innerHTML         // await $nextTick → 新值
-      this.msg4 = this.msg                            // 直接用数据 → 新值
+      this.msg3 = this.$refs.msgDiv.innerHTML // await $nextTick → 新值
+      this.msg4 = this.msg // 直接用数据 → 新值
     },
     async demo1Change () {
       this.demo1Msg = '2'

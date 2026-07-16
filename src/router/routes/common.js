@@ -4,7 +4,7 @@ export default {
   redirect: '/demo/index',
   icon: 'FolderOpened',
   meta: {
-    title: '公共页面'
+    title: '首页-公共页面'
   },
   children: [
     {

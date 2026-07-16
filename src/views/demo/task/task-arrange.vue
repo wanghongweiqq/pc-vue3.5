@@ -6,36 +6,35 @@
  * @FilePath: /pc-vue3.5/src/views/demo/task/task-arrange.vue
 -->
 <template>
-  <div class="pg-task">
-    <div class="content">
-      <h2>任务安排：支持链式调用、延迟执行</h2>
-      <p>链式调用需要每次执行相应的方法后要返回this，this指向当前实例，就是闭包函数里返回的对象</p>
-      <p>链式调用的方法需要使用函数声明的形式，不要使用箭头函数，会使实例失去可链性，因为箭头函数的this是undefined，不是当前实例，不具有可链性</p>
-      <p>
-        <el-button
-          size="small"
-          type="primary"
-          @click="taskArrangeStart"
-        >
-          添加任务并执行
-        </el-button>
-        <el-button
-          size="small"
-          type="primary"
-          @click="taskArrangeIns1.pause()"
-        >
-          暂停
-        </el-button>
-        <el-button
-          size="small"
-          type="primary"
-          @click="taskArrangeGoOn"
-        >
-          继续执行
-        </el-button>
-      </p>
+  <div class="content">
+    <h2>任务安排：支持链式调用、延迟执行</h2>
+    <p>链式调用需要每次执行相应的方法后要返回this，this指向当前实例，就是闭包函数里返回的对象</p>
+    <p>链式调用的方法需要使用函数声明的形式，不要使用箭头函数，会使实例失去可链性，因为箭头函数的this是undefined，不是当前实例，不具有可链性</p>
+    <p>
+      <el-button
+        size="small"
+        type="primary"
+        @click="taskArrangeStart"
+      >
+        添加任务并执行
+      </el-button>
+      <el-button
+        size="small"
+        type="primary"
+        @click="taskArrangeIns1.pause()"
+      >
+        暂停
+      </el-button>
+      <el-button
+        size="small"
+        type="primary"
+        @click="taskArrangeGoOn"
+      >
+        继续执行
+      </el-button>
+    </p>
 
-      <pre>{{ `function taskArrange (name) {
+    <pre>{{ `function taskArrange (name) {
   let tasks = []
   let isPaused = false
 
@@ -113,7 +112,6 @@
   }
 }
 export default taskArrange` }}</pre>
-    </div>
   </div>
 </template>
 <!-- eslint-disable no-unused-vars -->
