@@ -179,7 +179,7 @@ background-repeat: round;     /* 缩放后铺满，不裁剪 */` }}</pre>
     <!-- background-attachment -->
     <h3>八、background-attachment — 视差效果</h3>
     <div class="demo-attachment">
-      <p>↓ 滚动下方区域查看 fixed 视差效果</p>
+      <p>↓ 滚动下方区域查看 fixed 视差效果。</p>
       <div class="demo-attachment-scroll">
         <div class="attachment-fixed" />
         <div class="attachment-placeholder">

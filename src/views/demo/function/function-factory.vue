@@ -1,7 +1,7 @@
 <template>
   <div class="content">
     <h2>工厂函数</h2>
-    <p>工厂函数。顾名思义，就好比一个工厂一样，可以批量制造某种类型的东西。其实说白了就是封装了个方法减少重复工作</p>
+    <p>工厂函数。顾名思义，就好比一个工厂一样，可以批量制造某种类型的东西。其实说白了就是封装了个方法减少重复工作。</p>
     <pre>{{ `function animal (name,sex) {
   let obj = new Object()  //引用原始对象，也可以let obj = {}
   obj.name = name

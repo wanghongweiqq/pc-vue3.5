@@ -9,31 +9,66 @@
       <div class="config-panel__pos">
         <div class="config-panel__pos-item">
           <span class="config-panel__pos-label">X</span>
-          <el-input :model-value="String(selected.x)" size="small" type="number" @input="val => updatePos('x', +val)" />
+          <el-input
+            :model-value="String(selected.x)"
+            size="small"
+            type="number"
+            @input="val => updatePos('x', +val)"
+          />
         </div>
         <div class="config-panel__pos-item">
           <span class="config-panel__pos-label">Y</span>
-          <el-input :model-value="String(selected.y)" size="small" type="number" @input="val => updatePos('y', +val)" />
+          <el-input
+            :model-value="String(selected.y)"
+            size="small"
+            type="number"
+            @input="val => updatePos('y', +val)"
+          />
         </div>
         <div class="config-panel__pos-item">
           <span class="config-panel__pos-label">宽</span>
-          <el-input :model-value="String(selected.width)" size="small" type="number" @input="val => updatePos('width', +val)" />
+          <el-input
+            :model-value="String(selected.width)"
+            size="small"
+            type="number"
+            @input="val => updatePos('width', +val)"
+          />
         </div>
         <div class="config-panel__pos-item">
           <span class="config-panel__pos-label">高</span>
-          <el-input :model-value="String(selected.height)" size="small" type="number" @input="val => updatePos('height', +val)" />
+          <el-input
+            :model-value="String(selected.height)"
+            size="small"
+            type="number"
+            @input="val => updatePos('height', +val)"
+          />
         </div>
       </div>
       <!-- 层级调整 -->
       <div class="config-panel__layer">
         <span class="config-panel__layer-label">层级</span>
-        <el-button size="small" @click="bringForward(selected.id)">↑ 上移一层</el-button>
-        <el-button size="small" @click="sendBackward(selected.id)">↓ 下移一层</el-button>
+        <el-button
+          size="small"
+          @click="bringForward(selected.id)"
+        >
+          ↑ 上移一层
+        </el-button>
+        <el-button
+          size="small"
+          @click="sendBackward(selected.id)"
+        >
+          ↓ 下移一层
+        </el-button>
       </div>
       <div class="config-panel__divider" />
       <!-- 组件专属配置面板 -->
       <!-- :key 绑定选中组件 id，切换组件时强制重新挂载，避免拾色器/开关等内部状态残留 -->
-      <component :is="configComponent" :key="selected && selected.id" :config="selected.props" @update="onPropsUpdate" />
+      <component
+        :is="configComponent"
+        :key="selected && selected.id"
+        :config="selected.props"
+        @update="onPropsUpdate"
+      />
     </template>
 
     <!-- 未选中：显示画板全局配置 -->
@@ -51,11 +86,11 @@ const selected = computed(() => selectedComponent.value)
 const registryItem = computed(() => (selected.value ? COMPONENT_REGISTRY[selected.value.type] : null))
 const configComponent = computed(() => (registryItem.value ? registryItem.value.config : null))
 
-function updatePos(key, val) {
+function updatePos (key, val) {
   if (selected.value) updateComponent(selected.value.id, { [key]: val })
 }
 
-function onPropsUpdate(patch) {
+function onPropsUpdate (patch) {
   if (selected.value) updateComponentProps(selected.value.id, patch)
 }
 </script>
@@ -68,31 +103,31 @@ function onPropsUpdate(patch) {
   max-width: 280px;
   height: 100%;
   padding: 16px 12px;
-  border-left: 1px solid #e8e8e8;
   overflow-y: auto;
   background: #fff;
+  border-left: 1px solid #e8e8e8;
 }
 
 .config-panel__title {
   margin-bottom: 12px;
-  font-weight: 700;
   font-size: 14px;
+  font-weight: 700;
   color: #333;
 }
 
 .config-panel__pos {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  margin-bottom: 12px;
   gap: 6px;
+  margin-bottom: 12px;
 }
 
 .config-panel__pos-item {
   display: flex;
+  gap: 4px;
   align-items: center;
   min-width: 0;
   overflow: hidden;
-  gap: 4px;
 }
 
 .config-panel__pos-item :deep(.el-input) {
@@ -104,8 +139,8 @@ function onPropsUpdate(patch) {
   flex-shrink: 0;
   width: 2em;
   font-size: 12px;
-  text-align: center;
   color: #999;
+  text-align: center;
 }
 
 .config-panel__divider {
@@ -116,8 +151,8 @@ function onPropsUpdate(patch) {
 
 .config-panel__layer {
   display: flex;
-  align-items: center;
   gap: 4px;
+  align-items: center;
   margin-bottom: 8px;
 }
 
@@ -125,7 +160,7 @@ function onPropsUpdate(patch) {
   flex-shrink: 0;
   width: 2em;
   font-size: 12px;
-  white-space: nowrap;
   color: #666;
+  white-space: nowrap;
 }
 </style>

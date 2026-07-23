@@ -1,10 +1,10 @@
 <template>
   <h2>vue 3.5 useTemplateRef 推荐</h2>
-  <p>在vue 3.5版本中提供的新方法，更符合语义，建议使用</p>
+  <p>在vue 3.5版本中提供的新方法，更符合语义，建议使用。</p>
   <h3>自身组件使用</h3>
-  <p>1、模版template中给input定义属性ref：ref="inputRefUseTemplateRef"</p>
-  <p>2、js中使用先定义一个随意的变量，其值为useTemplateRef方法的结果，useTemplateRef的入参为模版中ref的值：const inputRef = useTemplateRef('inputRefUseTemplateRef')</p>
-  <p>3、最后用该变量名执行相关的dom方法：inputRef.value.focus()</p>
+  <p>1、模版template中给input定义属性ref：ref="inputRefUseTemplateRef"。</p>
+  <p>2、js中使用先定义一个随意的变量，其值为useTemplateRef方法的结果，useTemplateRef的入参为模版中ref的值：const inputRef = useTemplateRef('inputRefUseTemplateRef')。</p>
+  <p>3、最后用该变量名执行相关的dom方法：inputRef.value.focus()。</p>
   <input
     ref="inputRefUseTemplateRef"
     type="text"

@@ -57,19 +57,18 @@
           <td>
             <p>将数字进行不同进制(radix)之间的转化，默认进制是10，返回字符串格式。</p>
             <p>num直接使用十进制数字时必须加小括号()，如(97).toString(16)，变量或者其他进制时可以不强制加小括号。</p>
-            <p>0b : 二进制，0o :八进制，0x : 十六进制，十进制正常书写，第一位是数字0，第二位是字母(一般小写，大写也可以)</p>
+            <p>0b : 二进制，0o :八进制，0x : 十六进制，十进制正常书写，第一位是数字0，第二位是字母(一般小写，大写也可以)。</p>
           </td>
         </tr>
         <tr>
           <td>toString的其他对象用法</td>
           <td>
-            <p>Array：arr.toString()=arr.join()，返回字符串，以英文逗号隔开</p>
-            <p>Boolean：bool.toString()，返回'false'或'true'</p>
+            <p>Array：arr.toString()=arr.join()，返回字符串，以英文逗号隔开。</p>
+            <p>Boolean：bool.toString()，返回'false'或'true'。</p>
             <p>
-              Date：date.toString()，返回Date对象转换后的字符串，date.toLocaleString()，返回地方日期格式规范的字符串，如：2023/8/1 16:30:09
-            </p>
-            <p>Function：fun.toString()，返回Function关键字、参数列表、函数体部分</p>
-            <p>RegExp：pattern.toString()，返回正则表达式的字符串值</p>
+              Date：date.toString()，返回Date对象转换后的字符串，date.toLocaleString()，返回地方日期格式规范的字符串，如：2023/8/1 16:30:09。</p>
+            <p>Function：fun.toString()，返回Function关键字、参数列表、函数体部分。</p>
+            <p>RegExp：pattern.toString()，返回正则表达式的字符串值。</p>
           </td>
         </tr>
       </tbody>

@@ -10,9 +10,9 @@
   <div class="debounce-all-api">
     <h2>一、vue3.0版本中composition组合式api和options选项式api通用版本</h2>
     <h3>1、最优版本：useDebounceThrottle，vue的两种api形式都支持，有清除定时器的方法，还有等待/挂起状态：IsPendingDebounceThrottle是响应式的</h3>
-    <p>为了方便同一组件内多次调用，设计为数据解构的形式（而不是对象，对象还要结构的时候使用别名 name：other name）</p>
-    <p>当然也可以考虑将使用的地方再次封装为组件，这样就不用担心重复计时器的问题，但这样有些死板</p>
-    <p>在组合式composition-api中支持卸载组件时自动清除计时器，在选项式options-api中需要手动在组件卸载时清除</p>
+    <p>为了方便同一组件内多次调用，设计为数据解构的形式（而不是对象，对象还要结构的时候使用别名 name：other name）。</p>
+    <p>当然也可以考虑将使用的地方再次封装为组件，这样就不用担心重复计时器的问题，但这样有些死板。</p>
+    <p>在组合式composition-api中支持卸载组件时自动清除计时器，在选项式options-api中需要手动在组件卸载时清除。</p>
     <pre>{{ `// debounce防抖和throttle节流的核心方法      
 import { ref, onUnmounted } from 'vue'
 
@@ -86,7 +86,7 @@ const doSearch1 = (...args) => {
   },delay.value)
 } 
 ` }}</pre>
-    <p>同一组件第一次使用</p>
+    <p>同一组件第一次使用。</p>
     <p>
       <el-input
         v-model="searchValue1"
@@ -101,7 +101,7 @@ const doSearch1 = (...args) => {
       </el-input>
     </p>
 
-    <p>同一组件第二次使用</p>
+    <p>同一组件第二次使用。</p>
     <p>
       <el-input
         v-model="searchValue2"
@@ -133,7 +133,7 @@ debounce (fn,delay = 2000) {
   return debounced
 }` }}</pre>
     <h4>composition组合式api示例</h4>
-    <p>其实就是下面的composition组合式api</p>
+    <p>其实就是下面的composition组合式api。</p>
     <pre>{{ `// inputs事件调用，两种清除形式都可以
 @input="doSearch3($event,'x')"
 @clear="clearDebounce3"
@@ -160,7 +160,7 @@ const clearDebounce3 = () => {
     <!-- @input="doSearch3" -->
     </p>
     <DebounceOptionsUtils />
-    <p>其实下面的方法可以不用看了，最好用上面两种形式，vue3用最优方法1，vue3以下用方法2</p>
+    <p>其实下面的方法可以不用看了，最好用上面两种形式，vue3用最优方法1，vue3以下用方法2。</p>
   </div>
 </template>
 <!-- eslint-disable no-unused-vars -->

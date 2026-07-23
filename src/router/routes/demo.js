@@ -250,6 +250,19 @@ export default {
       }
     },
     {
+      path: 'setup',
+      name: 'setup',
+      component: () => import('@/views/demo/setup/'),
+      meta: {
+        title: 'setup',
+        key: 'MENU_HAWK_DEMO',
+        crumb: [
+          { name: 'Demo' },
+          { name: 'setup' },
+        ]
+      }
+    },
+    {
       path: 'sort',
       name: 'sort',
       component: () => import('@/views/demo/sort/'),

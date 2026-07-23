@@ -1,9 +1,9 @@
 <template>
   <div class="bcp-flex content">
     <h2>CSS Flex 弹性布局</h2>
-    <p>默认值：flex-grow:0 有剩余空间也不扩展；flex-shink:1 空间不足时被压缩； flex-basis:auto  初始大小为auto</p>
-    <p>flex:1 为flex-grow:1; flex-shink:1; flex-basis:0%的缩写</p>
-    <p>flex-basis/width 都可以设置初始宽度，但flex-basis的权重更高</p>
+    <p>默认值：flex-grow:0 有剩余空间也不扩展；flex-shink:1 空间不足时被压缩； flex-basis:auto  初始大小为auto。</p>
+    <p>flex:1 为flex-grow:1; flex-shink:1; flex-basis:0%的缩写。</p>
+    <p>flex-basis/width 都可以设置初始宽度，但flex-basis的权重更高。</p>
 
     <h3>flex-grow:1与flex:1的不同</h3>
     <p>它们最本质的区别在于 flex-basis 的默认值不同：</p>
@@ -15,7 +15,7 @@
     <p>当你希望多个子元素在保持自身内容宽度的基础上，再按比例分配剩余的空白空间时，使用 flex-grow: 1（并确保其他收缩和基准属性符合你的需求）。</p>
 
     <h3>下面为相关示例</h3>
-    <p>下面用来获取相关字符串宽度，总宽度400，中间被flex-grow:1撑开，量取：flex-grow-1=72； flex-1=35</p>
+    <p>下面用来获取相关字符串宽度，总宽度400，中间被flex-grow:1撑开，量取：flex-grow-1=72； flex-1=35。</p>
     <div class="flex-test-1">
       <div>
         flex-grow-1
@@ -40,10 +40,10 @@
         flex1
       </div>
     </div>
-    <p>1、剩余空间 = 总宽度400 - 中间默认auto宽度72 = 328</p>
-    <p>2、每份空间 = 剩余空间328 / 3 = 109</p>
-    <p>3、flex1宽度 = 0 + 109= 109</p>
-    <p>4、flex-grow-1宽度 = 72 + 109= 181</p>
+    <p>1、剩余空间 = 总宽度400 - 中间默认auto宽度72 = 328。</p>
+    <p>2、每份空间 = 剩余空间328 / 3 = 109。</p>
+    <p>3、flex1宽度 = 0 + 109= 109。</p>
+    <p>4、flex-grow-1宽度 = 72 + 109= 181。</p>
 
     <h4>示例2、两边都为flex-grow，所以：</h4>
     <div class="flex-test-1">
@@ -57,10 +57,10 @@
         flex-grow-1
       </span>
     </div>
-    <p>1、剩余空间 = 总宽度400 - 两边默认auto宽度72 *2 = 256</p>
-    <p>2、每份空间 = 剩余空间256 / 3 = 85</p>
-    <p>3、flex1宽度 = 0 + 85= 85</p>
-    <p>4、flex-grow-1宽度 = 72 + 85= 157</p>
+    <p>1、剩余空间 = 总宽度400 - 两边默认auto宽度72 *2 = 256。</p>
+    <p>2、每份空间 = 剩余空间256 / 3 = 85。</p>
+    <p>3、flex1宽度 = 0 + 85= 85。</p>
+    <p>4、flex-grow-1宽度 = 72 + 85= 157。</p>
 
     <h3>align-items: stretch(默认值) | flex-start | flex-end | center | baseline ; 属性定义项目在交叉轴上如何对齐。</h3>
     <h4>align-items: stretch; 默认值。项目被拉伸以填满容器的高度。</h4>
@@ -92,8 +92,7 @@
 
     <h3>导航标题的水平居中</h3>
     <p>
-      还是需要获取左右的宽度，再来进行居中样式的设置，才能保证这里的内容在居中的同时还能最大限度的利用宽度并且在超出宽度时出现省略号
-    </p>
+      还是需要获取左右的宽度，再来进行居中样式的设置，才能保证这里的内容在居中的同时还能最大限度的利用宽度并且在超出宽度时出现省略号。</p>
     <p>
       标题居中可以结合css属性text-indent，左侧有宽度，右侧没有时，可以直接取值”<em> - 左侧的宽度</em>“，px和em都可以。这种写法有一点不好，就是超长省略号时标题自身左边不是从第一个字开始，差之前设置的text-indent的距离，这点有些不好，比如下面的示例少了两个字“还是”。
     </p>

@@ -11,7 +11,7 @@
     :style="styleWrap"
     :class="{animating:isAnimating,animated:isAnimated}"
   >
-    <!-- <p>这里不能用“当前+下一个时间”的组合，会导致非秒的时间段显示错误，都多加了1</p> -->
+    <!-- <p>这里不能用“当前+下一个时间”的组合，会导致非秒的时间段显示错误，都多加了1。</p> -->
     <span>{{ valuePrev }}</span>
     <span>{{ valuePrev }}</span>
     <span>{{ valueCurrent }}</span>

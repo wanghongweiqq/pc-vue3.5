@@ -1,46 +1,44 @@
 <template>
   <div class="pg-reg-exp">
-    <div class="ly-box">
-      <cp-crumbs />
-      <el-tabs v-model="activeTab">
-        <el-tab-pane
-          label="正则表达式"
-          name="intro"
-        >
-          <RegexpIntro />
-        </el-tab-pane>
-        <el-tab-pane
-          label="捕获组"
-          name="capture"
-        >
-          <RegexpCapture />
-        </el-tab-pane>
-        <el-tab-pane
-          label="replace"
-          name="replace"
-        >
-          <RegexpReplace />
-        </el-tab-pane>
-        <el-tab-pane
-          label="换行操作"
-          name="newline"
-        >
-          <RegexpNewline />
-        </el-tab-pane>
-        <el-tab-pane
-          label="反斜杠匹配"
-          name="slash"
-        >
-          <RegexpSlash />
-        </el-tab-pane>
-        <el-tab-pane
-          label="Unicode"
-          name="unicode"
-        >
-          <RegexpUnicode />
-        </el-tab-pane>
-      </el-tabs>
-    </div>
+    <cp-crumbs />
+    <el-tabs v-model="activeTab">
+      <el-tab-pane
+        label="正则表达式"
+        name="intro"
+      >
+        <RegexpIntro />
+      </el-tab-pane>
+      <el-tab-pane
+        label="捕获组"
+        name="capture"
+      >
+        <RegexpCapture />
+      </el-tab-pane>
+      <el-tab-pane
+        label="replace"
+        name="replace"
+      >
+        <RegexpReplace />
+      </el-tab-pane>
+      <el-tab-pane
+        label="换行操作"
+        name="newline"
+      >
+        <RegexpNewline />
+      </el-tab-pane>
+      <el-tab-pane
+        label="反斜杠匹配"
+        name="slash"
+      >
+        <RegexpSlash />
+      </el-tab-pane>
+      <el-tab-pane
+        label="Unicode"
+        name="unicode"
+      >
+        <RegexpUnicode />
+      </el-tab-pane>
+    </el-tabs>
   </div>
 </template>
 <script setup>

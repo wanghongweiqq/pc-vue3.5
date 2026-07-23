@@ -2,8 +2,8 @@
   <div class="content">
     <h2>数组常用方法</h2>
     <h3>返回新数组的方法，并不改变原数组</h3>
-    <p>最新返回新数组的方法：toSorted / toReversed / toSpliced / with</p>
-    <p>老方法有：filter / map / concat / 解构</p>
+    <p>最新返回新数组的方法：toSorted / toReversed / toSpliced / with。</p>
+    <p>老方法有：filter / map / concat / 解构。</p>
     <p>with(index, value) 替换数组中指定索引位置的元素，并返回一个包含此更改的新数组，index支持负数，一次只能替换一个值。</p>
      <pre>{{ `const array1 = [2,5,41,11,8,3]
 const array2 = array1.toSorted((a,b) => a - b)
@@ -20,8 +20,8 @@ const array5 = array1.with(0,'a')` }}</pre>
       </el-button>
     </p>
     <h3>改变原数组的方法</h3>
-    <p>push、pop、unshift、shift、<em>sort、reverse、splice</em></p>
-    <p>注意这些方法的返回值，一般添加方法返回的都是修改后的原数组长度，删除方法都是返回的删除的数组项。pop、shift返回的是删除的数组项（只会是一个），而splice返回的是一个含有删除项的数组（里面可能还有多个数组项，由数组长度和前两个参数决定）</p>
+    <p>push、pop、unshift、shift、<em>sort、reverse、splice</em>.</p>
+    <p>注意这些方法的返回值，一般添加方法返回的都是修改后的原数组长度，删除方法都是返回的删除的数组项。pop、shift返回的是删除的数组项（只会是一个），而splice返回的是一个含有删除项的数组（里面可能还有多个数组项，由数组长度和前两个参数决定）。</p>
   </div>
 </template>
 <script setup>

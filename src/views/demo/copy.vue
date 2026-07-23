@@ -1,13 +1,12 @@
 <template>
   <div class="pg-vuex">
-    <div class="ly-box">
-      <cp-crumbs />
-      <div class="content">
-        <h2><strong>deep</strong>copy</h2>
-        <h3>JSON.parse(JSON.stringify(xxx))的弊端</h3>
-        <pre>{{ `//弊端1：如果obj里面有时间对象，时间将只是字符串的形式，而不是对象的形式
+    <cp-crumbs />
+    <div class="content">
+      <h2><strong>deep</strong>copy</h2>
+      <h3>JSON.parse(JSON.stringify(xxx))的弊端</h3>
+      <pre>{{ `//弊端1：如果obj里面有时间对象，时间将只是字符串的形式，而不是对象的形式
 const test1 = {
-  a: [new Date(1536627600000), new Date(1540047600000)]
+  : [new Date(1536627600000), new Date(1540047600000)]
 };
 const copy1= JSON.parse(JSON.stringify(test1))
 console.log(copy1)  //{a:["2018-09-11T01:00:00.000Z", "2018-10-20T15:00:00.000Z"]}
@@ -50,8 +49,8 @@ const copy5= JSON.parse(JSON.stringify(test5))
 console.log(test5)  //\{a:Person{name:"lisi"}\}
 console.log(copy5)  //\{a:{name:"lisi"}\}
 ` }}</pre>
-        <h3>JSON.parse(JSON.stringify(xxx))的妙用</h3>
-        <pre>{{ `//妙用1：判断数组是否包含某对象
+      <h3>JSON.parse(JSON.stringify(xxx))的妙用</h3>
+      <pre>{{ `//妙用1：判断数组是否包含某对象
 let obj1 = [
   {name:'echo'},
   {name:'听风是风'},
@@ -74,7 +73,7 @@ function setLocalStorage(key,val){
 }
 //取
 function getLocalStorage(key){
-  return JSON.parse(window.localStorage.getItem(key));
+return JSON.parse(window.localStorage.getItem(key));
 };
 //测试
 setLocalStorage('demo',[1,2,3]);
@@ -86,45 +85,44 @@ console.log(JSON.stringify(array3))  //'[1,2,3]'
 console.log(array3.toString())  //1,2,3
 ` }}</pre>
           
-        <h3>深拷贝的实现</h3>
-        <pre>{{ `dataType (data) {
-    if (data instanceof Element) {
-      return 'element'
-    }
-    if (typeof data === 'symbol') {
-      return 'symbol'
-    }
-    const map = {
-      '[object String]': 'string',
-      '[object Number]': 'number',
-      '[object Boolean]': 'boolean',
-      '[object Object]': 'object',
-      '[object Array]': 'array',
-      '[object Function]': 'function',
-      '[object Date]': 'date',
-      '[object RegExp]': 'regExp',
-      '[object Undefined]': 'undefined',
-      '[object Null]': 'null',
-    }
-    return map[Object.prototype.toString.call(data)]
-  },
-  // 数据深拷贝，支持Symbal
-  deepCopy (data) {
-    let newData = null
-    const type = this.dataType(data)
-    if(type === 'array' || type === 'object') {
-      newData = type === 'array' ? [] : {}
-      let proto = [...Object.keys(data), ...Object.getOwnPropertySymbols(data)]
-      proto.map((key) => {
-        newData[key] = this.deepCopy(data[key])
-      })
-      return newData
-    }else{
-      return data
-    }
+      <h3>深拷贝的实现</h3>
+      <pre>{{ `dataType (data) {
+  if (data instanceof Element) {
+    return 'element'
   }
+  if (typeof data === 'symbol') {
+    return 'symbol'
+  }
+  const map = {
+    '[object String]': 'string',
+    '[object Number]': 'number',
+    '[object Boolean]': 'boolean',
+    '[object Object]': 'object',
+    '[object Array]': 'array',
+    '[object Function]': 'function',
+    '[object Date]': 'date',
+    '[object RegExp]': 'regExp',
+    '[object Undefined]': 'undefined',
+    '[object Null]': 'null',
+  }
+  return map[Object.prototype.toString.call(data)]
+},
+// 数据深拷贝，支持Symbal
+deepCopy (data) {
+  let newData = null
+  const type = this.dataType(data)
+  if(type === 'array' || type === 'object') {
+    newData = type === 'array' ? [] : {}
+    let proto = [...Object.keys(data), ...Object.getOwnPropertySymbols(data)]
+    proto.map((key) => {
+      newData[key] = this.deepCopy(data[key])
+    })
+    return newData
+  }else{
+    return data
+  }
+}
 ` }}</pre>
-      </div>
     </div>
   </div>
 </template>

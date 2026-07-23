@@ -32,7 +32,7 @@ debounceOptions (fn,delay = 1000,id = 'timer') {
   }
 }` }}</pre>
 
-      <p>1、可防抖，参数为input的默认参数即value值</p>
+      <p>1、可防抖，参数为input的默认参数即value值。</p>
        <pre>{{ `// inputs事件调用
 @input="debounceOptions(doSearch1)($event)"
 
@@ -49,7 +49,7 @@ doSearch1 (...args) {
         />
       </p>
 
-      <p>2、可防抖，参数为input的默认参数value和自定义参数，单个默认参数可以使用，多个使用arguments，其是一个数组</p>
+      <p>2、可防抖，参数为input的默认参数value和自定义参数，单个默认参数可以使用，多个使用arguments，其是一个数组。</p>
        <pre>{{ `// inputs事件调用
 @input="debounce2($event,'a','b')"
 @clear="debounce2.clear"
@@ -75,7 +75,7 @@ doSearch2 (...args) {
         />
       </p>
     
-      <p>3、可防抖，函数声明的形式，在内部再调用debounce方法</p>
+      <p>3、可防抖，函数声明的形式，在内部再调用debounce方法。</p>
       <p>
         <el-input
           v-model="searchValue3"

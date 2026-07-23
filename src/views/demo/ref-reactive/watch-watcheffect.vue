@@ -29,6 +29,19 @@ function addToTotal(n) {
 
     <h3>一、watch</h3>
     <p>显式声明监听源，只在源发生变化时执行，可获取新旧值。</p>
+    <pre>{{ `// watch的完整形态，第一个是要监听的数据，第二个是一个方法，可以比较前后的数据，第三个是配置的对象
+watch(
+  count,
+  (newVal,oldVal) => {
+    console.log('watch-count')
+    console.log('newVal:', newVal)
+    console.log('oldVal:', oldVal)
+  },
+  {
+    immediate: true, // 默认false
+    deep: true, // 默认：对象=true,数组=false
+  }
+)` }}</pre>
     <pre>{{ `import { ref, watch } from 'vue'
 
 const count = ref(0)
@@ -95,7 +108,7 @@ watch(count, (newVal, oldVal, onCleanup) => {
         </tr>
         <tr>
           <td><code>sync</code></td>
-          <td>响应式数据变化时<em>立即同步</em>执行</td>
+          <td>响应式数据变化时<em>立即同步</em>执。性能开销大，慎用</td>
           <td>❌ 拿不到（DOM 还没开始更新）</td>
           <td>极少使用，需严格保证在 DOM 变更前同步响应</td>
         </tr>
@@ -117,8 +130,7 @@ watch(count, () => {
 watch(count, () => {
   console.log('数据刚变，DOM 还没动')
 }, { flush: 'sync' })` }}</pre>
-    <p>执行顺序：<code>sync</code> → 组件渲染 → <code>pre</code> → DOM 更新 → <code>post</code></p>
-    <p>💡 <strong>绝大多数场景用默认的 <code>'post'</code></strong>，因为通常需要在回调中操作更新后的 DOM。只有明确需要在渲染前拦截时才用 <code>'pre'</code>。<code>'sync'</code> 性能开销大，慎用。</p>
+    <p>执行顺序：<code>sync</code> → 组件渲染 → <code>pre</code> → DOM 更新 → <code>post</code>。</p>
 
     <h3>三、watch 需要手动清理吗</h3>
     <p>大多数情况不需要，Vue 会自动帮你清理。但有例外。</p>

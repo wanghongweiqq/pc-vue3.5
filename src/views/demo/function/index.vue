@@ -1,28 +1,26 @@
 <template>
   <div class="pg-func">
-    <div class="ly-box">
-      <CpCrumbs />
-      <el-tabs v-model="activeTab">
-        <el-tab-pane
-          label="工厂函数"
-          name="factory"
-        >
-          <FunctionFactory />
-        </el-tab-pane>
-        <el-tab-pane
-          label="构造函数"
-          name="constructor"
-        >
-          <FunctionConstructor />
-        </el-tab-pane>
-        <el-tab-pane
-          label="原型"
-          name="prototype"
-        >
-          <FunctionPrototype />
-        </el-tab-pane>
-      </el-tabs>
-    </div>
+    <CpCrumbs />
+    <el-tabs v-model="activeTab">
+      <el-tab-pane
+        label="工厂函数"
+        name="factory"
+      >
+        <FunctionFactory />
+      </el-tab-pane>
+      <el-tab-pane
+        label="构造函数"
+        name="constructor"
+      >
+        <FunctionConstructor />
+      </el-tab-pane>
+      <el-tab-pane
+        label="原型"
+        name="prototype"
+      >
+        <FunctionPrototype />
+      </el-tab-pane>
+    </el-tabs>
   </div>
 </template>
 <script>

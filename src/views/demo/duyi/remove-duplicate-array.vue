@@ -11,7 +11,7 @@
     <h2>数组去重</h2>
     <h3>原数据</h3>
 
-    <p>原数据，属性值为undefined的数据不会在html中展示出来，如其中最后一个e后面是有f属性的 f: undefined</p>
+    <p>原数据，属性值为undefined的数据不会在html中展示出来，如其中最后一个e后面是有f属性的 f: undefined。</p>
     <p>{{ arrayOriginal }}</p>
     <h3>去重后的数据</h3>
     <p>1、<em>没有过滤undefined</em>，将undefined作为一个普通的值，这时{ e: 1 } 和 { e: 1, f: undefined }认为是不重复的。</p>

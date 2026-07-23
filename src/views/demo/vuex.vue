@@ -1,55 +1,53 @@
 <template>
   <div class="pg-vuex">
-    <div class="ly-box">
-      <cp-crumbs :title-list="titleList" />
-      <div class="content">
-        <p>名称user.name ：{{ user.name }}</p>
-        <p>名称nameObj：{{ nameObj }}</p>
-        <el-button
-          size="small"
-          type="primary"
-          @click="switchNameA('李四')"
-        >
-          异步切换actions
-        </el-button>
-        <el-button
-          size="small"
-          type="primary"
-          @click="switchNameM('王五')"
-        >
-          切换mutations
-        </el-button>
-      </div>
-      <div class="content marginTop20">
-        <p>数量：{{ $store.state.num.count }}</p>
-        <p>判断是否大于{{ num }}：{{ countBoolean(num)?`大于${num}啦`:`没有大于${num}` }}</p>
-        <el-button
-          size="small"
-          type="primary"
-          @click="add"
-        >
-          +{{ num }}
-        </el-button>
-        <el-button
-          size="small"
-          type="primary"
-          @click="subtract"
-        >
-          -{{ num }}
-        </el-button>
-      </div>
-      <div class="content marginTop20">
-        <p>命名空间space：{{ space.space }}</p>
-        <p>命名空间spaceObj：{{ spaceObj }}</p>
-        <p>命名空间spaceObjB：{{ spaceObjB }}</p>
-        <el-button
-          size="small"
-          type="primary"
-          @click="spaceNameM('命名空间')"
-        >
-          切换mutations
-        </el-button>
-      </div>
+    <cp-crumbs :title-list="titleList" />
+    <div class="content">
+      <p>名称user.name ：{{ user.name }}</p>
+      <p>名称nameObj：{{ nameObj }}</p>
+      <el-button
+        size="small"
+        type="primary"
+        @click="switchNameA('李四')"
+      >
+        异步切换actions
+      </el-button>
+      <el-button
+        size="small"
+        type="primary"
+        @click="switchNameM('王五')"
+      >
+        切换mutations
+      </el-button>
+    </div>
+    <div class="content marginTop20">
+      <p>数量：{{ $store.state.num.count }}</p>
+      <p>判断是否大于{{ num }}：{{ countBoolean(num)?`大于${num}啦`:`没有大于${num}` }}</p>
+      <el-button
+        size="small"
+        type="primary"
+        @click="add"
+      >
+        +{{ num }}
+      </el-button>
+      <el-button
+        size="small"
+        type="primary"
+        @click="subtract"
+      >
+        -{{ num }}
+      </el-button>
+    </div>
+    <div class="content marginTop20">
+      <p>命名空间space：{{ space.space }}</p>
+      <p>命名空间spaceObj：{{ spaceObj }}</p>
+      <p>命名空间spaceObjB：{{ spaceObjB }}</p>
+      <el-button
+        size="small"
+        type="primary"
+        @click="spaceNameM('命名空间')"
+      >
+        切换mutations
+      </el-button>
     </div>
   </div>
 </template>

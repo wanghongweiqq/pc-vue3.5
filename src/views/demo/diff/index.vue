@@ -1,40 +1,38 @@
 <template>
   <div class="pg-diff">
-    <div class="ly-box">
-      <CpCrumbs />
-      <el-tabs v-model="activeTab">
-        <el-tab-pane
-          label="什么是 Diff"
-          name="intro"
-        >
-          <DiffIntro />
-        </el-tab-pane>
-        <el-tab-pane
-          label="Vue 2"
-          name="vue2"
-        >
-          <DiffVue2 />
-        </el-tab-pane>
-        <el-tab-pane
-          label="Vue 3"
-          name="vue3"
-        >
-          <DiffVue3 />
-        </el-tab-pane>
-        <el-tab-pane
-          label="React"
-          name="react"
-        >
-          <DiffReact />
-        </el-tab-pane>
-        <el-tab-pane
-          label="三者对比"
-          name="compare"
-        >
-          <DiffCompare />
-        </el-tab-pane>
-      </el-tabs>
-    </div>
+    <CpCrumbs />
+    <el-tabs v-model="activeTab">
+      <el-tab-pane
+        label="什么是 Diff"
+        name="intro"
+      >
+        <DiffIntro />
+      </el-tab-pane>
+      <el-tab-pane
+        label="Vue 2"
+        name="vue2"
+      >
+        <DiffVue2 />
+      </el-tab-pane>
+      <el-tab-pane
+        label="Vue 3"
+        name="vue3"
+      >
+        <DiffVue3 />
+      </el-tab-pane>
+      <el-tab-pane
+        label="React"
+        name="react"
+      >
+        <DiffReact />
+      </el-tab-pane>
+      <el-tab-pane
+        label="三者对比"
+        name="compare"
+      >
+        <DiffCompare />
+      </el-tab-pane>
+    </el-tabs>
   </div>
 </template>
 <script setup>

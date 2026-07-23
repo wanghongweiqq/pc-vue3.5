@@ -4,11 +4,11 @@
     <div class="content">
       <h2>DOM 宽度获取方式对比</h2>
       <p>
-        <strong>记忆口诀：</strong>client 看可见内容，offset 看占地，scroll 看全部，rect 管变形
+        <strong>记忆口诀：</strong>client 看可见内容，offset 看占地，scroll 看全部，rect 管变形。
       </p>
 
       <h3>一、示例&区分</h3>
-      <p>默认盒模型：box-sizing:content-box，宽度都不包含外边距（margin）</p>
+      <p>默认盒模型：box-sizing:content-box，宽度都不包含外边距（margin）。</p>
       <div
         ref="demoBox"
         class="demo-box"
@@ -16,8 +16,8 @@
         :class="{'transformed': hasTransform}"
       >
         父元素：width=500; padding-right=10; border=10; margin-right=10
-        <p>子元素1：width未设置</p>
-        <p>子元素2：width=800</p>
+        <p>子元素1：width未设置。</p>
+        <p>子元素2：width=800。</p>
       </div>
       <p>
         <el-button
@@ -42,7 +42,7 @@
             <td>可视区大小</td>
             <td>
               <p><em>{{ measurements.clientWidth }}px</em></p>
-              <p>width + padding - 滚动条宽度(如果有的话) = 可见内容区的宽度(width - 滚动条宽度) + padding</p>
+              <p>width + padding - 滚动条宽度(如果有的话) = 可见内容区的宽度(width - 滚动条宽度) + padding。</p>
             </td>
             <td>可视区域大小<br>响应式计算</td>
           </tr>
@@ -51,36 +51,37 @@
             <td>占位区大小</td>
             <td>
               <p><em>{{ measurements.offsetWidth }}px</em></p>
-              <p>width + padding + border = 内容区的宽度 + padding + 滚动条宽度(如果有的话) + border</p>
+              <p>width + padding + border = 内容区的宽度 + padding + 滚动条宽度(如果有的话) + border。</p>
             </td>
             <td>布局计算<br>获取元素“真实占地”</td>
           </tr>
           <tr>
             <th>scrollWidth</th>
             <td>
-              <p>真实区/实际内容区大小</p>
-              <p>包括当前不可见、被滚动隐藏的部分</p>
+              <p>真实区/实际内容区大小。</p>
+              <p>包括当前不可见、被滚动隐藏的部分。</p>
             </td>
             <td>
               <p><em>{{ measurements.scrollWidth }}px</em></p>
-              <p><strong>1、有子元素宽度超出父元素</strong></p>
-              <p>1.1、overflow : hidden(溢出内容被裁剪，不可见) / auto  = 最长子元素的宽度 + padding</p>
-              <p>1.2、overflow : visible(默认值-default) = 最长子元素的宽度</p>
-              <p><strong>2、无子元素宽度超出父元素</strong></p>
+              <p><strong>1、有子元素宽度超出父元素</strong>。</p>
+              <p>1.1、overflow : hidden(溢出内容被裁剪，不可见) / auto  = 最长子元素的宽度 + padding。</p>
+              <p>1.2、overflow : visible(默认值-default) = 最长子元素的宽度。</p>
+              <p><strong>2、无子元素宽度超出父元素</strong>。</p>
               <p>=clientWidth</p>
             </td>
             <td>
-              <p>判断是否溢出：scrollWidth > clientWidth</p>
-              <p>判断是否滚动到底部：scrollHeight - scrollTop &lt;= clientHeight</p>
+              <p>判断是否溢出：scrollWidth > clientWidth。</p>
+              <p>判断是否滚动到底部：scrollHeight - scrollTop &lt;= clientHeight。</p>
             </td>
           </tr>
           <tr>
             <th>getBoundingClientRect().width</th>
             <td>
-              <p>含 transform 缩放的精确宽度</p>
+              <p>含 transform 缩放的精确宽度。</p>
             </td>
             <td>
-              <p><em>{{ measurements.rectWidth }}px</em></p>       
+              <p><em>{{ measurements.rectWidth }}px</em></p>
+              <p>获取 包围盒 <small>与</small> 浏览器视口 <small>的</small> 矩形信息。</p>     
             </td>
             <td>精准布局、动画</td>
           </tr>
@@ -112,8 +113,8 @@
    ↓
 ⑥ 用户可见</pre>
       <h4>注意事项</h4>
-      <p>在组件内watch等监听不需要手动清除，如果回调内有副作用，需要手动设置 onCleanup 回调（vue自己自动触发），用于在组件销毁时清除监听、重复触发时只执行一次监听，避免内存泄漏问题。onCleanup的执行时机（vue已经封装好了，不用手动触发）：1、在watch监听的数据变化时调用，先执行清理onCleanup再执行watch回调，2、在组件销毁时调用</p>
-      <p>尽量使用 ref 来获取元素，而不是 document.querySelector 等方法，因为 document.querySelector 会每次调用时都重新查询 DOM，导致性能问题，而且不存在时（如组件被销毁了，或元素被移除了）会报错，而 ref 则不会报错，只是返回 null</p>
+      <p>在组件内watch等监听不需要手动清除，如果回调内有副作用，需要手动设置 onCleanup 回调（vue自己自动触发），用于在组件销毁时清除监听、重复触发时只执行一次监听，避免内存泄漏问题。onCleanup的执行时机（vue已经封装好了，不用手动触发）：1、在watch监听的数据变化时调用，先执行清理onCleanup再执行watch回调，2、在组件销毁时调用。</p>
+      <p>尽量使用 ref 来获取元素，而不是 document.querySelector 等方法，因为 document.querySelector 会每次调用时都重新查询 DOM，导致性能问题，而且不存在时（如组件被销毁了，或元素被移除了）会报错，而 ref 则不会报错，只是返回 null。</p>
    
       <h3>Vue nextTick 调用形式：</h3>
       <pre>1、回调的形式: 

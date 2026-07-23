@@ -61,7 +61,7 @@ createVNode("p", null, ctx.text, PatchFlags.TEXT)
     <p>组件 / v-if / v-for 等会创建 Block，Block 内部维护一个 <code>dynamicChildren</code> 数组，只收集有 PatchFlag 的动态节点。diff 时直接遍历 <code>dynamicChildren</code>，静态节点完全跳过。</p>
     <pre>{{ `
 <div>             ← Block 根节点
-  <p>静态内容</p>          ← 不进 dynamicChildren
+  <p>静态内容。</p>          ← 不进 dynamicChildren
   <span>\{{a}\}</span>    ← 进 dynamicChildren（TEXT）
   <i :class="b" />     ← 进 dynamicChildren（CLASS）
 </div>
@@ -100,13 +100,13 @@ f ≠ h  停止
     <p>步骤 3 / 4 处理简单情况，本例两端都有剩余，进入步骤 5。</p>
 
     <h4>Step 5 — 乱序处理（核心：建表 + LIS）</h4>
-    <p><strong>① 建立新节点 key → index 映射表</strong></p>
+    <p><strong>① 建立新节点 key → index 映射表</strong>。</p>
     <pre>{{ `
 新序列: e  c  d  h
 映射表: { e:0, c:1, d:2, h:3 }
 ` }}</pre>
 
-    <p><strong>② 遍历旧节点，查表匹配</strong></p>
+    <p><strong>② 遍历旧节点，查表匹配</strong>。</p>
     <pre>{{ `
 旧 c → 找到，新中索引 1，patch ✓
 旧 d → 找到，新中索引 2，patch ✓
@@ -116,7 +116,7 @@ f ≠ h  停止
 记录可复用节点在新序列中的位置数组：[1, 2, 0]（对应 c d e）
 ` }}</pre>
 
-    <p><strong>③ 求最长递增子序列（LIS）</strong></p>
+    <p><strong>③ 求最长递增子序列（LIS）</strong>。</p>
     <pre>{{ `
 位置数组: [1, 2, 0]
 LIS     = [1, 2]  → 对应节点 c d，它们相对顺序未变，不需要移动

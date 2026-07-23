@@ -111,7 +111,7 @@ table {
 }
 
 a {
-  color: $themeColor;
+  color: $color-primary;
   text-decoration: none;
   cursor: pointer;
 }
@@ -165,7 +165,7 @@ pre {
 }
 
 .text-primary {
-  color: $themeColor;
+  color: $color-primary;
 }
 
 .text-default {
@@ -177,11 +177,11 @@ pre {
 }
 
 .text-success {
-  color: $themeColorSuccess;
+  color: $color-success;
 }
 
 .text-warning {
-  color: $themeColorWarning;
+  color: $color-warning;
 }
 
 .text-danger {
@@ -193,8 +193,8 @@ pre {
 }
 %border-common {
   padding: 2px 6px;
-  color: $themeColor;
-  border: 1px solid $themeColor;
+  color: $color-primary;
+  border: 1px solid $color-primary;
   border-radius: 3px;
 }
 
@@ -219,15 +219,15 @@ pre {
 .border-success {
   @extend %border-common;
 
-  color: $themeColorSuccess;
-  border-color: $themeColorSuccess;
+  color: $color-success;
+  border-color: $color-success;
 }
 
 .border-warning {
   @extend %border-common;
 
-  color: $themeColorWarning;
-  border-color: $themeColorWarning;
+  color: $color-warning;
+  border-color: $color-warning;
 }
 
 .border-danger {
@@ -264,16 +264,7 @@ pre {
 }
 
 //布局样式
-.ly-box {
-  display: flex;
-  flex-grow: 1;
-  flex-direction: column;
-  padding-right: 10px;
-  padding-bottom: 10px;
-  overflow: auto;
-}
-
-.ly-center {
+.ly-center { // 403/404 页面居中
   align-items: center;
   justify-content: center;
   margin: 20px;
@@ -349,20 +340,16 @@ pre {
     margin-top: 20px;
   }
 
-  pre {
+  pre,.box {
     padding: 10px;
     margin-top: 5px;
     background-color: #eee;
-
-    // > code{
-    //   position:relative;
-    //   top:-10px
-    // }
   }
 
   h2,
   h3,
-  h4 {
+  h4,
+  h5 {
     padding: 5px 0;
     margin-top: 5px;
   }
@@ -374,17 +361,21 @@ pre {
 
   h2 {
     font-size: $font-size-normal + 6;
-    color: $themeColorWarning;
+    color: $color-danger;
   }
 
   h3 {
     font-size: $font-size-normal + 4;
-    color: $themeColor;
+    color: $color-warning;
   }
 
   h4 {
     font-size: $font-size-normal + 2;
-    color: $themeColorSuccess;
+    color: $color-success;
+  }
+
+  h5 {
+    font-size: $font-size-normal + 1;
   }
 
   p,

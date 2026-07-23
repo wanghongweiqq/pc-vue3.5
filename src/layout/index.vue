@@ -1,3 +1,10 @@
+<!--
+ * @Author: 王宏伟
+ * @Email：wanghongwei@hualala.com
+ * @Date: 2026-06-29 08:18:00
+ * @Description: 页面/组件/功能的描述
+ * @FilePath: /pc-vue3.5/src/layout/index.vue
+-->
 <template>
   <div class="ly-wraper">
     <ly-aside />
@@ -55,7 +62,7 @@ body { height: 100%; }
       display: flex;
       flex-grow: 1;
       flex-direction: column;
-      padding-left: 15px;
+      padding: 0 15px 15px;
       overflow: auto;
       background: #eef3f6;
     }

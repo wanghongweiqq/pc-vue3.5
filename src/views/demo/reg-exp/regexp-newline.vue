@@ -9,7 +9,7 @@
     <h4>1.2、v-html，特殊：\n会被自动清除掉</h4>
     <!-- eslint-disable-next-line vue/no-v-html --><!-- 内容已由 safeWhiteSpaceHtml 白名单过滤，仅允许 <br>，非用户输入 -->
     <p v-html="safeWhiteSpaceHtml" />
-    <p>v-html容易导致XSS攻击，只有在可信内容上使用它，永远不要用在用户提交的内容上</p>
+    <p>v-html容易导致XSS攻击，只有在可信内容上使用它，永远不要用在用户提交的内容上。</p>
 
     <h3>2、\n换行</h3>
     <h4>2.1、设置样式：white-space: pre-wrap</h4>

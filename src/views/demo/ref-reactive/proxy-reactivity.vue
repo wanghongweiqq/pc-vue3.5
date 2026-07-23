@@ -4,16 +4,19 @@
     <p>Vue 3 的响应式基于 <code>Proxy</code>，只有<em>经过 Proxy 的操作</em>才能被 Vue 感知并触发渲染。</p>
 
     <h3>核心原则</h3>
-     <pre>{{ `this.list            // ← 响应式 Proxy 对象
-res.data.list        // ← 裸数组，来自外部数据源，没有 Proxy 包裹` }}</pre>
-    <p>对 <code>this.list</code> 操作 → 经过 Proxy → Vue 感知 → 触发渲染</p>
-    <p>对 <code>res.data.list</code> 操作 → 绕过 Proxy → Vue 完全不知情 → 不渲染</p>
+    <pre>{{ `this.list            // ← 响应式 Proxy 对象
+res.data.list        // ← 裸数组，来自外部数据源，没有 Proxy 包裹` }}
+</pre>
+    <p>对 <code>this.list</code> 操作 → 经过 Proxy → Vue 感知 → 触发渲染。</p>
+    <p>对 <code>res.data.list</code> 操作 → 绕过 Proxy → Vue 完全不知情 → 不渲染。</p>
 
     <h3>操作方式与响应性</h3>
     <table class="table">
       <tbody>
         <tr>
-          <th width="80">是否响应</th>
+          <th width="80">
+            是否响应
+          </th>
           <th>操作方式</th>
           <th>说明</th>
         </tr>
@@ -42,7 +45,7 @@ res.data.list        // ← 裸数组，来自外部数据源，没有 Proxy 包
 
     <h3>真实踩坑案例</h3>
     <p>mock 接口每次返回同一个数组引用，原地 sort 后赋值，视图没有变化：</p>
-     <pre>{{ `// ❌ 不生效
+    <pre>{{ `// ❌ 不生效
 // mockMap 里的 list 是固定引用，每次接口返回同一个对象
 let list = res.data.list       // 指向 mockMap 原始数组
 list = list.sort(...)          // 原地排序，引用未变
@@ -50,7 +53,7 @@ this.queryList = list          // 赋值同引用 → Vue 跳过渲染` }}</pre>
     <p>问题关键：sort 发生在裸数组上（Proxy 之外），Vue 全程不知数据变了；引用又没变，赋值也被跳过。</p>
 
     <h3>修复方式</h3>
-     <pre>{{ `// ✅ 展开创建新数组，断开与原始引用的关系
+    <pre>{{ `// ✅ 展开创建新数组，断开与原始引用的关系
 list = [...list].sort(...)
 this.queryList = list          // 新引用 → Vue 检测到变化 → 触发渲染
 
