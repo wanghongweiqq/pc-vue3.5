@@ -6,12 +6,12 @@
     <p>副作用是指函数或表达式<strong>除了返回值之外，对外部环境产生的影响</strong>。简单说：函数"顺手"做了别的事。</p>
     <h4>常见的副作用</h4>
     <ul>
-      <li>修改外部变量（如 <code>count++</code>）</li>
-      <li>DOM 操作（如 <code>document.title = 'xxx'</code>）</li>
-      <li>网络请求（如 <code>fetch()</code>）</li>
-      <li>定时器（如 <code>setTimeout</code>）</li>
-      <li>控制台输出（如 <code>console.log</code>）</li>
-      <li>本地存储（如 <code>localStorage.setItem</code>）</li>
+      <li>修改外部变量（如 count++）</li>
+      <li>DOM 操作（如 document.title = 'xxx'）</li>
+      <li>网络请求（如 fetch()）</li>
+      <li>定时器（如 setTimeout）</li>
+      <li>控制台输出（如 console.log）</li>
+      <li>本地存储（如 localStorage.setItem）</li>
     </ul>
     <h4>纯函数 vs 有副作用</h4>
     <pre>{{ `// 纯函数：无副作用，相同输入永远得到相同输出
@@ -25,23 +25,117 @@ function addToTotal(n) {
   total += n   // ← 副作用：修改了外部状态
   return total
 }` }}</pre>
-    <p>Vue 的 <code>watch</code> / <code>watchEffect</code>、React 的 <code>useEffect</code> 都是用来<strong>管理副作用</strong>的 —— 在合适的时机执行副作用，并在不需要时清理它们（取消请求、清除定时器等）。</p>
+    <p>Vue 的 watch / watchEffect、React 的 useEffect 都是用来<strong>管理副作用</strong>的 —— 在合适的时机执行副作用，并在不需要时清理它们（取消请求、清除定时器等）。</p>
 
-    <h3>一、watch</h3>
-    <p>显式声明监听源，只在源发生变化时执行，可获取新旧值。</p>
-    <pre>{{ `// watch的完整形态，第一个是要监听的数据，第二个是一个方法，可以比较前后的数据，第三个是配置的对象
-watch(
-  count,
-  (newVal,oldVal) => {
-    console.log('watch-count')
-    console.log('newVal:', newVal)
-    console.log('oldVal:', oldVal)
+    <h3>watch</h3>
+    <p>watch ( source, callback, options? )，三个参数分别是：监听谁 → 变了干嘛 → 怎么监听。</p>
+    <pre>{{ `
+const stop = watch( // 如果不需要手动清理监听，可以不用设置stop
+  // 1-source，监听源：响应式数据、getter函数、props 属性、以上类型的数组等
+  count, 
+
+  // 2-callback，回调函数：(newValue, oldValue, onCleanup?) => void
+  (newVal,oldVal,onCleanup) => { 
+    console.log('watch-count', newVal, oldVal)
+    if( 满足需要清理监听的条件 ){ stop() } // 手动清理监听
+    const timer = setTimeout(() => { ... }, 1000) // 定义一个定时器
+    onCleanup(() => clearTimeout(timer)) // 副作用清理函数：下一次 watch 回调执行之前，或者 watch 停止监听时（包括组件卸载）
   },
-  {
-    immediate: true, // 默认false
-    deep: true, // 默认：对象=true,数组=false
+
+  // 3-options，配置对象
+  { 
+    immediate: true, // immediate-是否立即执行一次，默认，false
+    deep: true, // deep-是否深度监听，默认：对象=true，数组=false
+    flush: 'post', // flush-是否在组件更新后执行，默认：pre。 可选值：'pre'（组件更新前执行）、'post'（组件更新后执行）、sync（同步执行）
   }
-)` }}</pre>
+)
+` }}</pre>
+
+    <h4>✅ 监听源 合法类型总结</h4>
+    <table class="table">
+      <tbody>
+        <tr>
+          <th>类型</th>
+          <th>示例</th>
+        </tr>
+        <tr>
+          <td>ref</td>
+          <td>const count = ref(0)</td>
+        </tr>
+        <tr>
+          <td>reactive 对象</td>
+          <td>const state = reactive({ a: 1 })</td>
+        </tr>
+        <tr>
+          <td>getter 函数</td>
+          <td>() => state.a，必须是返回响应式数据中的一个属性，如果只返回一个普通值，不能作为监听源，虽然不会报警告，但监听触发不到</td>
+        </tr>
+        <tr>
+          <td>props 属性</td>
+          <td> const props = defineProps({ user: any })，父组件传过来的属性-user一般也是赋值的响应式数据。最好不要用非响应式数据，因为这样父组件首先需要借助其他响应式数据触发render渲染，其次父组件需要改变user的引用才能触发在子组件的监听和渲染</td>
+        </tr>
+        <tr>
+          <td>以上类型的数组</td>
+          <td>[foo, bar, () => x]</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <h4>❌ 监听源 非法类型总结</h4>
+    <table class="table">
+      <tbody>
+        <tr>
+          <th>类型</th>
+          <th>示例</th>
+        </tr>
+        <tr>
+          <td>普通变量</td>
+          <td>let x = 1</td>
+        </tr>
+        <tr>
+          <td>解构出来的响应式属性</td>
+          <td>const { name } = user，name已变为普通值，失去响应性</td>
+        </tr>
+        <tr>
+          <td>非响应式对象</td>
+          <td>普通 const reactiveObject = { a: 1 }</td>
+        </tr>
+        <tr>
+          <td>undefined / null</td>
+          <td>单独的undefined / null不可以，但如果是getter函数，返回的某个属性，其值为undefined / null，是可以的</td>
+        </tr>
+        <tr>
+          <td>getter 函数的返回值本身不是响应式数据</td>
+          <td> ( ) => 1</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <h4>副作用清理函数-onCleanup 执行时机</h4>
+    <p>下一次 watch 回调执行之前，或者 watch 停止监听时（包括组件卸载）, 副作用清理函数里如果拿数据总是上一次的值。</p>
+    <p>onCleanup = 在下一次来之前，收拾上一次的烂摊子</p>
+    <pre>
+第一次 watch 触发 x=1
+    ↓
+执行 callback 主体
+    ↓
+<em>注册 onCleanup 里的函数（此时还没执行！）x=1</em>
+    ↓
+[数据又变了] x=2
+    ↓
+<em>执行上一次注册的 onCleanup 函数 x=1</em>
+    ↓
+执行新的 callback
+    ↓
+<em>注册新的 onCleanup x=2</em>
+    ↓
+[组件卸载 / stop()]
+    ↓
+<em>执行最后一次注册的 onCleanup函数 x=2</em>  
+
+</pre>
+
+    <h4>watch 常用写法</h4>
     <pre>{{ `import { ref, watch } from 'vue'
 
 const count = ref(0)
@@ -82,8 +176,62 @@ watch(count, (newVal, oldVal, onCleanup) => {
   onCleanup(() => clearTimeout(timer))
 })` }}</pre>
 
-    <h3>二、watch、watchEffect 的 flush 选项 —— 回调什么时候执行</h3>
-    <p><code>flush</code> 控制 watch 回调在 DOM 更新周期中的执行时机，有三个值：</p>
+    <h4>watch 监听源的使用场景</h4> 
+    <table class="table">
+      <thead>
+        <tr>
+          <th width="100">
+            属性值类型
+          </th>
+          <th>直接监听</th>
+          <th>getter函数</th>
+        </tr>
+      </thead>
+        
+      <tbody>
+        <tr>
+          <td>
+            <el-tooltip
+              placement="bottom-start"
+              content="根属性的名称，也就是定义响应式数据的变量名，一般使用const定义。特别说明ref声明的数据不要带.value，"
+            >
+              <div class="vertical-center">
+                <span>根属性</span>
+                <el-icon size="18">
+                  <InfoFilled />
+                </el-icon>
+              </div>
+            </el-tooltip>
+          </td>
+          <td>✅ 正常 </td>
+          <td>❌ 无法监听</td>
+        </tr>
+        <tr>
+          <td>子属性</td>
+          <td>
+            ❌ 异常
+            <p>子属性使用链式结构都不能正常监听，根据数据类型的不同又分为以下情况：</p>
+            <p>1、基本类型，完全无法触发监听，报警告。父级数据的监听可以捕获到它的改变</p>
+            <p>[Vue warn]: Invalid watch source: 'vue'  <br>A watch source can only be a getter/effect function, a ref, a reactive object, or an array of these types.</p>
+
+            <p>2、引用类型，<code>{{ `x:{y:……}` }}</code>，部分场景触发监听。</p>
+            <p>不改变其引用的修改能触发监听，其内部属性通过链式被修改，如：<code>{{ `x.y=……` }}</code>）。</p>
+            <p>改变其引用的修改，监听不到，如：<code>{{ `reactive.x={y:……}` }}</code>。</p>
+          </td>
+          <td>✅ 正常监听，默认感知引用替换，感知不到内部属性变化。设置为deep=true时，即可感知内部属性变化。</td>
+        </tr>
+        <tr>
+          <td>deep默认值</td>
+          <td colspan="2">
+            <p>proxy代理的响应式数据（包括reactive声明的对象及其子属性、ref的子属性），直接监听默认都是<em>deep=true</em>，其他情况：getter函数（用来获取子属性）、refImpl类创建的ref对象（根数据）默认都是<em>deep=false</em>。</p>  
+            <p><em>建议：能精准到具体属性就不要开 deep: true</em>，deep=true 会递归遍历对象所有层级，数据复杂时有性能开销。</p>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+
+    <h3>watch、watchEffect 的 flush 选项 —— 回调什么时候执行</h3>
+    <p>flush 控制 watch 回调在 DOM 更新周期中的执行时机，有三个值：</p>
     <table class="table">
       <tbody>
         <tr>
@@ -95,19 +243,19 @@ watch(count, (newVal, oldVal, onCleanup) => {
           <th>适用场景</th>
         </tr>
         <tr>
-          <td><code>pre</code></td>
+          <td>pre</td>
           <td>默认值，DOM 更新<em>之前</em></td>
           <td>❌ 拿不到</td>
           <td>需要在渲染前修改状态、取消即将发出的请求</td>
         </tr>
         <tr>
-          <td><code>post</code></td>
+          <td>post</td>
           <td>DOM 更新<em>之后</em></td>
           <td>✅ 能拿到</td>
           <td>需要操作更新后的 DOM（如获取尺寸、滚动位置）</td>
         </tr>
         <tr>
-          <td><code>sync</code></td>
+          <td>sync</td>
           <td>响应式数据变化时<em>立即同步</em>执。性能开销大，慎用</td>
           <td>❌ 拿不到（DOM 还没开始更新）</td>
           <td>极少使用，需严格保证在 DOM 变更前同步响应</td>
@@ -130,9 +278,9 @@ watch(count, () => {
 watch(count, () => {
   console.log('数据刚变，DOM 还没动')
 }, { flush: 'sync' })` }}</pre>
-    <p>执行顺序：<code>sync</code> → 组件渲染 → <code>pre</code> → DOM 更新 → <code>post</code>。</p>
+    <p>执行顺序：sync → 组件渲染 → pre → DOM 更新 → post。</p>
 
-    <h3>三、watch 需要手动清理吗</h3>
+    <h3>watch 需要手动清理吗</h3>
     <p>大多数情况不需要，Vue 会自动帮你清理。但有例外。</p>
 
     <h4>自动清理：在 setup / 组件内同步创建</h4>
@@ -181,7 +329,7 @@ onUnmounted(() => {
           <td>❌ 自动清理</td>
         </tr>
         <tr>
-          <td>Options API <code>watch: {}</code> 选项</td>
+          <td>Options API watch: {} 选项</td>
           <td>❌ 自动清理</td>
         </tr>
         <tr>
@@ -198,10 +346,10 @@ onUnmounted(() => {
         </tr>
       </tbody>
     </table>
-    <p>经验：同步写在 <code>setup</code> 里的 watch 不用操心，<strong>异步创建的一定要记得 stop</strong>。</p>
+    <p>经验：同步写在 setup 里的 watch 不用操心，<strong>异步创建的一定要记得 stop</strong>。</p>
 
-    <h3>三、ref 对象 vs reactive 对象的 deep 差异</h3>
-    <p>用 <code>ref</code> 还是 <code>reactive</code> 定义对象，watch 的 deep 默认行为<em>完全不同</em>，是常见踩坑点。</p>
+    <h3>ref 对象 vs reactive 对象的 deep 差异</h3>
+    <p>用 ref 还是 reactive 定义对象，watch 的 deep 默认行为<em>完全不同</em>，是常见踩坑点。</p>
 
     <h4>ref 定义的对象 —— deep 默认 false</h4>
     <pre>{{ `const obj = ref({ a: { b: 1 } })
@@ -227,23 +375,23 @@ obj.a.b = 2   // ✅ 自动触发，deep 强制 true，设 false 也无效` }}</
       <tbody>
         <tr>
           <th />
-          <th><code>ref({})</code></th>
-          <th><code>reactive({})</code></th>
+          <th>ref({})</th>
+          <th>reactive({})</th>
         </tr>
         <tr>
           <td>watch deep 默认值</td>
-          <td><code>false</code></td>
-          <td>强制 <code>true</code>，无法关闭</td>
+          <td>false</td>
+          <td>强制 true，无法关闭</td>
         </tr>
         <tr>
           <td>不加 deep 的触发条件</td>
-          <td>整体替换 <code>.value</code></td>
+          <td>整体替换 .value</td>
           <td>任意层级属性变化</td>
         </tr>
         <tr>
           <td>推荐监听方式</td>
-          <td><code>watch(() => obj.value.a.b, cb)</code> 精准到属性</td>
-          <td><code>watch(() => obj.a.b, cb)</code> 精准到属性</td>
+          <td>watch(() => obj.value.a.b, cb) 精准到属性</td>
+          <td>watch(() => obj.a.b, cb) 精准到属性</td>
         </tr>
       </tbody>
     </table>
@@ -271,7 +419,7 @@ watchEffect((onCleanup) => {
 const stop = watchEffect(() => { ... })
 stop()` }}</pre>
 
-    <h3>三、watch vs watchEffect</h3>
+    <h3>watch vs watchEffect</h3>
     <table class="table">
       <tbody>
         <tr>
@@ -286,12 +434,12 @@ stop()` }}</pre>
         </tr>
         <tr>
           <td>立即执行</td>
-          <td>否（需 <code>immediate: true</code>）</td>
+          <td>否（需 immediate: true）</td>
           <td>✅ 始终立即执行</td>
         </tr>
         <tr>
           <td>获取旧值</td>
-          <td>✅ <code>(newVal, oldVal)</code></td>
+          <td>✅ (newVal, oldVal)</td>
           <td>❌ 无旧值</td>
         </tr>
         <tr>
@@ -301,8 +449,8 @@ stop()` }}</pre>
         </tr>
         <tr>
           <td>清理副作用</td>
-          <td>✅ <code>onCleanup</code></td>
-          <td>✅ <code>onCleanup</code></td>
+          <td>✅ onCleanup</td>
+          <td>✅ onCleanup</td>
         </tr>
         <tr>
           <td>停止监听</td>
@@ -317,7 +465,7 @@ stop()` }}</pre>
       </tbody>
     </table>
 
-    <h3>四、与 React useEffect 横向对比</h3>
+    <h3>与 React useEffect 横向对比</h3>
     <pre>{{ `// React useEffect
 import { useEffect, useState } from 'react'
 
@@ -360,7 +508,7 @@ useEffect(() => {
           <td>依赖为空时</td>
           <td>—</td>
           <td>—</td>
-          <td><code>[]</code> 只在 mount 执行一次</td>
+          <td>[] 只在 mount 执行一次</td>
         </tr>
         <tr>
           <td>获取旧值</td>

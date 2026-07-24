@@ -74,7 +74,7 @@ const objectJieGou2 = () => {
 // ✅ 对refObject解构出value -> 将value.name重新赋值, 保持响应式
 const objectJieGou3 = () => {
   let { value } = refObject
-  value.name = { firstname: 'rn' }
+  value.name = { firstname: Date.now() }
 }
 </pre>
 
@@ -123,17 +123,27 @@ const objectJieGou2 = () => {
 
 const objectJieGou3 = () => {
   let { value } = refObject
-  value.name = { firstname: 'rn' }
-  console.log('对refObject解构出value -> 将value.name重新赋值：',refObject,value)
+  value.name = { firstname: Date.now() }
+  // value.name.firstname = Date.now()
+  // refObject.value = { name: { firstname: Date.now() } }
+  console.log('对refObject解构出value -> 将value.name重新赋值：',refObject,refObject.value)
 }
 
-watch(refObject,(newVal,oldVal) => {
+watch( refObject,(newVal,oldVal) => {
   console.log('watch-refObject',newVal,oldVal)
+},
+{ deep: true }
+)
+
+// refObject.value = { name: { firstname: Date.now() } }，这样修改时将监听不到
+watch(() => refObject.value,(newVal,oldVal) => {
+  console.log('watch-refObject.value',newVal,oldVal,newVal === oldVal)
 },
 // { deep: true }
 )
-watch(refObject.value,(newVal,oldVal) => {
-  console.log('watch-refObject.value',newVal,oldVal)
+
+watch(refObject.value.name,(newVal,oldVal) => {
+  console.log('watch-refObject.value.name',newVal,oldVal,newVal === oldVal)
 },
 // { deep: true }
 )

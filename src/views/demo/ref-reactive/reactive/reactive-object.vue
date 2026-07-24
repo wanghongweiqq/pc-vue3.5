@@ -83,84 +83,7 @@ const editMark = () => {
     <p>reactive 声明的数组/对象，只有在<em>不改变根数据的引用</em>的情况下才能被监听到，但此时新旧值相同（引用未变），无法做新旧差异比较（如果想做新旧比较，可以watch具体的属性，如() => reactiveObject.name）。改变引用时，watch 监听的还是最初的引用地址，那个地址的数据没有变化，所以不会触发。</p>
     <p>reactive 声明的对象，不管对象的属性的值是什么类型，都能被监听到，因为默认配置deep=true。</p>
     <p>ref 声明的数组，不改变引用地址的修改，监听不到，若要监听，需要配置deep:true，默认deep=false。</p>
-    <p>reactive 声明的基本数据类型会丢失响应式，值虽然改变了，但 watch 监听不到，需要其他响应式数据触发渲染时才会一并更新。</p>
-    <h4>watch reactive 对象的某个属性（对象自身也适用）时，结果取决于属性值的类型：</h4> 
-    <table class="table">
-      <thead>
-        <tr>
-          <th width="70">
-            属性值类型
-          </th>
-          <th>直接监听</th>
-          <th>getter函数 默认deep=false，只感知引用替换</th>
-        </tr>
-      </thead>
-        
-      <tbody>
-        <tr>
-          <td>基本类型</td>
-          <td>
-            <p>❌ 无法正常监听，报警告，但改动的数据可以render-渲染，父级数据的监听可以捕获到它的改变</p>
-            <p>[Vue warn]: Invalid watch source: 'vue'  <br>A watch source can only be a getter/effect function, a ref, a reactive object, or an array of these types.</p>
-          </td>
-          <td>✅ 可以正常监听，可以理解为基本类型的数据改变就是引用替换</td>
-        </tr>
-        <tr>
-          <td>引用类型</td>
-          <td>✅ 正常监听，默认deep=true</td>
-          <td>✅ 正常监听，默认感知引用替换，感知不到内部属性变化。设置为deep=true时，即可感知内部属性变化。</td>
-        </tr>
-      </tbody>
-    </table>
-
-    <h4>watch( ( ) => reactiveObject.name ) 的 deep 行为</h4>
-    <p>getter 函数只追踪<em>返回值引用的变化</em>，<code>deep</code> 是否需要取决于 <code>reactiveObject.name</code> 是原始值还是对象：</p>
-    <pre>{{ `
-// ① 直接 watch reactive 对象 → 默认 deep: true，可感知内部所有属性变化，如果改为getter函数，只能感知引用变化，感知内部属性变化需要再设置deep=true
-watch(reactiveObject, handler)
-
-// ② getter 返回属性的值是对象 → 默认 deep: false，只感知引用替换，感知不到内部属性变化
-watch(() => reactiveObject.mark, handler)
-reactiveObject.mark.x = Date.now()    // ❌ 不触发（引用未变），要想触发，deep需设置为true
-reactiveObject.mark = { x: Date.now() } // ✅ 触发（引用变了）
-
-// ③ getter 返回属性的值是原始值 → 直接感知，无需 deep（推荐，精准监听）
-watch(() => reactiveObject.name, handler) // ✅ 精准追踪到 name 的变化` }}</pre>
-    <p><em>建议：能精准到具体属性就不要开 deep: true</em>，deep 会递归遍历对象所有层级，数据复杂时有性能开销。</p>
-
-    <h3>Vue 3 watch 源合法类型总结</h3>
-    <table class="table">
-      <tbody>
-        <tr>
-          <th>类型</th>
-          <th>示例</th>
-        </tr>
-        <tr>
-          <td>ref</td>
-          <td><code>const count = ref(0)</code></td>
-        </tr>
-        <tr>
-          <td>reactive 对象</td>
-          <td><code>const state = reactive({ a: 1 })</code></td>
-        </tr>
-        <tr>
-          <td>getter 函数</td>
-          <td><code>() => state.a</code></td>
-        </tr>
-        <tr>
-          <td>以上类型的数组</td>
-          <td><code>[foo, bar, () => x]</code></td>
-        </tr>
-      </tbody>
-    </table>
-    <h4>❌ 不能作为 watch 源的：</h4>
-    <ul>
-      <li>普通变量（如 <code>let x = 1</code>）</li>
-      <li>解构出来的响应式属性（<code>const { a } = state</code> — <code>a</code> 已变为普通值，失去响应性）</li>
-      <li>非响应式对象（普通 <code>const reactiveObject = { a: 1 }</code>）</li>
-      <li><code>undefined</code> / <code>null</code></li>
-      <li>getter 函数的返回值本身不是响应式数据（如 <code>() => 1 + 1</code>）</li>
-    </ul>
+    <p>reactive 声明的基本数据类型会丢失响应式，值虽然改变了，但 watch 监听不到，也不会立刻渲染，需要其他响应式数据触发渲染时才会一并更新。</p>
   </div>
 </template>
 <script setup>
@@ -193,14 +116,20 @@ const editMark = () => {
   let { mark } = reactiveObject
   mark.x = Date.now() // 保持响应式，更改的是响应式数据
   // mark = { x: Date.now() } // 丢失响应式：变量mark指向一个新的内存地址
+  // reactiveObject.mark = { x: Date.now() }
 }
 
-watch(reactiveObject,(newVal,oldVal) => {
-  console.group('%c watch-reactive-reactiveObject','color: purple',)
-  console.log('newVal:', newVal)
-  console.log('oldVal:', oldVal)
-  console.groupEnd()
-})
+watch(
+  reactiveObject,
+  // () => reactiveObject,
+  (newVal,oldVal) => {
+    console.group('%c watch-reactive-reactiveObject','color: purple',)
+    console.log('newVal:', newVal)
+    console.log('oldVal:', oldVal)
+    console.groupEnd()
+  }
+  // ,{ deep: true } // 监听reactive的数据时，deep默认值为true，此时引用变化和内部属性变化都能监听到，deep为false时，只能监听到引用变化
+)
 
 // 当name是一个基本数据类型时，报警告，是引用类型的值是没有问题
 // [Vue warn]: Invalid watch source: 'vue'  A watch source can only be a getter/effect function, a ref, a reactive object, or an array of these types.
@@ -210,6 +139,13 @@ watch(reactiveObject,(newVal,oldVal) => {
 //   console.log('oldVal:', oldVal)
 // })
 
+// 当name是一个基本数据类型时，可以使用getter 函数
+watch(() => reactiveObject.name,(newVal,oldVal) => {
+  console.group('%c watch-reactive-() => reactiveObject.name','color: purple',)
+  console.log('newVal:', newVal)
+  console.log('oldVal:', oldVal)
+  console.groupEnd()
+})
 // 监听初始化时未声明的属性：timestamp，值为undefined，直接监听报警告，getter监听没问题
 watch(
   () => reactiveObject.timestamp,
@@ -222,23 +158,16 @@ watch(
   ,{ deep: true }
 )
 
-// 当name是一个基本数据类型时，可以使用getter 函数
-watch(() => reactiveObject.name,(newVal,oldVal) => {
-  console.group('%c watch-reactive-() => reactiveObject.name','color: purple',)
-  console.log('newVal:', newVal)
-  console.log('oldVal:', oldVal)
-  console.groupEnd()
-})
-
-// 监听一个子属性是引用类型，需要设置deep为true
+// 监听一个子属性是引用类型，需要设置deep为true，需继续研究， reactiveObject.mark监听不到
 watch(
-  reactiveObject.mark,
+  reactiveObject.mark, // 可以监听到
+  // reactiveObject.mark,
   (newVal,oldVal) => {
     console.group('%c watch-reactive-() => reactiveObject.mark','color: purple',)
     console.log('newVal:', newVal)
     console.log('oldVal:', oldVal)
     console.groupEnd()
   },
-  // { deep: true }
+  { deep: true }
 )
 </script>

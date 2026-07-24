@@ -23,7 +23,7 @@
           type="danger"
           @click="countAddJieGou"
         >
-          对count解构 -> 子集value -> + 1
+          对count解构出value -> 对value赋值 + 1
         </el-button>
         <el-button
           type="danger"
@@ -39,7 +39,6 @@
         </el-button>
       </p>
     </div>
-
     <h3>代码</h3>
     <pre>
 // 创建响应式数据
@@ -72,7 +71,7 @@ const countSubtract = () => count.value--
 
 <script setup>
 import { ref, watch } from 'vue'
-let count = ref(0)
+const count = ref(0)
 
 const countAdd = () => {
   count.value++

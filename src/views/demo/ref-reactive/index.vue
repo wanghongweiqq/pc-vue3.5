@@ -30,14 +30,14 @@
       </el-tab-pane>
       <el-tab-pane
         label="proxy 与响应式边界"
-        name="proxyReactivity"
+        name="proxy"
       >
         <ProxyReactivity />
       </el-tab-pane>
 
       <el-tab-pane
         label="watch / watchEffect"
-        name="watchWatchEffect"
+        name="watch"
       >
         <WatchWatchEffect />
       </el-tab-pane>
