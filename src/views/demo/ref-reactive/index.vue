@@ -28,6 +28,7 @@
       >
         <Reactive />
       </el-tab-pane>
+
       <el-tab-pane
         label="proxy 与响应式边界"
         name="proxy"
@@ -36,10 +37,17 @@
       </el-tab-pane>
 
       <el-tab-pane
-        label="watch / watchEffect"
+        label="watch"
         name="watch"
       >
-        <WatchWatchEffect />
+        <Watch />
+      </el-tab-pane>
+
+      <el-tab-pane
+        label="watchEffect"
+        name="watch-effect"
+      >
+        <WatchEffect />
       </el-tab-pane>
     </el-tabs>
   </div>
@@ -51,7 +59,9 @@ import Intro from './intro'
 import Ref from './ref'
 import Reactive from './reactive'
 import ProxyReactivity from './proxy-reactivity'
-import WatchWatchEffect from './watch-watcheffect'
+import Watch from './watch'
+import WatchEffect from './watch-effect'
+
 const route = useRoute()
 const activeTab = ref(route.query.tab || 'intro')
 </script>

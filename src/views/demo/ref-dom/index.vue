@@ -30,11 +30,11 @@
           <RefComposition ref="parentRefComposition" />
           <h3>父子组件使用</h3>
           <p>1、子组件使用defineExpose暴露方法，该方法入参为一个对象，对象的key值为暴露给父组件的方法名，对象的value值子组件自身要执行的方法。</p>
-           <pre>{{ `defineExpose({
+          <pre>{{ `defineExpose({
 focus: domRefFunc,
 })` }}</pre>
           <p>2、父组件使用ref定义的变量调用子组件暴露的方法。</p>
-           <pre>{{ `const parentRefComposition = ref(null) // parentRefComposition为父组件绑定在子组件身上的ref
+          <pre>{{ `const parentRefComposition = ref(null) // parentRefComposition为父组件绑定在子组件身上的ref
 const parentRefFuncComposition = () => { // 父组件点击时调用的方法
 parentRefComposition.value.focus()
 }` }}</pre>
@@ -67,11 +67,11 @@ parentRefComposition.value.focus()
           <RefUseTemplateRef ref="parentRefUseTemplateRef" />
           <h3>父子组件使用</h3>
           <p>1、子组件使用defineExpose暴露方法，该方法入参为一个对象，对象的key值为暴露给父组件的方法名，对象的value值子组件自身要执行的方法。</p>
-           <pre>{{ `defineExpose({
+          <pre>{{ `defineExpose({
 focus, // 更简洁的写法，此时子组件直接将方法名命名为focus
 })` }}</pre>
           <p>2、父组件使用ref定义的变量调用子组件暴露的方法。</p>
-           <pre>{{ `const parentRefUseTemplateRef = useTemplateRef('parentRefUseTemplateRef')
+          <pre>{{ `const parentRefUseTemplateRef = useTemplateRef('parentRefUseTemplateRef')
 const parentRefFuncUseTemplateRef = () => {
 parentRefUseTemplateRef.value.focus()
 }` }}</pre>
@@ -96,7 +96,7 @@ parentRefUseTemplateRef.value.focus()
           <h2>关键注意事项</h2>
           <p>1、<em>访问时机至关重要</em>：必须在组件挂载完成之后才能通过 ref访问到 DOM 元素。在 setup函数或 beforeCreate、created生命周期中直接访问会得到 null，因为此时 DOM 还未渲染 。务必在 onMounted(Vue 3) 或 mounted(Vue 2) 及其之后的生命周期或事件（如按钮点击）中操作。</p>
           <p>2、<em>响应式更新与 $nextTick</em>：如果 DOM 元素是通过 v-if或 v-for动态渲染的，可能需要在数据更新后，使用 Vue.nextTick（或 this.$nextTick）来确保访问的是更新后的 DOM ，具体可见示例：<a href="/demo/setup#dom-ref">DOM ref</a>。</p>
-           <pre>{{ `// Vue 3 示例
+          <pre>{{ `// Vue 3 示例
 import { nextTick } from 'vue'
 const showInput = ref(false)
 const toggleAndFocus = async () => {

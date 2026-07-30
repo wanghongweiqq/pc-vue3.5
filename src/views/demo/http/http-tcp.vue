@@ -152,7 +152,9 @@ HTTP/3  →  QUIC（可靠 + 有序 + 加密）  →  UDP
     <table class="table">
       <tbody>
         <tr>
-          <th width="100">项目</th>
+          <th width="100">
+            项目
+          </th>
           <th>说明</th>
         </tr>
         <tr>
@@ -219,8 +221,7 @@ HTTP/3  →  QUIC（可靠 + 有序 + 加密）  →  UDP
     <pre>{{ `
 客户端 ——— 发出请求 ———→ 服务端
 客户端 ←—— 收到响应 ———  服务端
-
-      └──────── 1 RTT ────────┘
+ └──────── 1 RTT ────────┘
 
 ping 显示 50ms，即 1 RTT ≈ 50ms
 每多一次 RTT，用户就多等 50ms` }}</pre>

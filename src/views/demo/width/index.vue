@@ -75,7 +75,7 @@
             </td>
           </tr>
           <tr>
-            <th>getBoundingClientRect().width</th>
+            <th>getBoundingClientRect( ).width</th>
             <td>
               <p>含 transform 缩放的精确宽度。</p>
             </td>
@@ -87,10 +87,29 @@
           </tr>
         </tbody>
       </table>
+
+      <H4>getBoundingClientRect 方法的返回值</H4>
+      <table class="table">
+        <thead>
+          <tr><th>属性</th><th>值</th><th>说明</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>x</td><td>100</td><td>x为更现代的写法，= left，left为兼容老代码</td></tr>
+          <tr><td>y</td><td>120</td><td>y为更现代的写法，= top，top为兼容老代码</td></tr>
+          <tr><td>width</td><td>200</td><td>元素宽度</td></tr>
+          <tr><td>height</td><td>80</td><td>元素高度</td></tr>
+          <tr><td>top</td><td>120</td><td>上边距视口顶部</td></tr>
+          <tr><td>left</td><td>100</td><td>左边距视口左边缘</td></tr>
+          <tr><td>bottom</td><td>200</td><td>下边距视口顶部</td></tr>
+          <tr><td>right</td><td>300</td><td>右边距视口左边缘</td></tr>
+        </tbody>
+      </table>
+
       <h3>二、flush(watch、watchEffect)、useEffect、uesLseLayoutEffect 时序图</h3>
       <pre>// Vue -> wacth / watchEffect -> flush - 可选配置项:执行时机。执行顺序：sync → 组件渲染 → pre → DOM 更新 → post
 // flush:'sync'会绕过 Vue 的异步批处理机制，导致每次状态变更都立即执行回调，可能引发重复渲染、级联更新和主线程阻塞，因此在业务代码中应慎用。
 // React -> useLayoutEffect / useEffect
+
 ① 响应式数据变化：(Vue:ref/reactive) (React:setState/useState)
    ↓
 ② Vue/React 调度器介入
