@@ -250,6 +250,19 @@ export default {
       }
     },
     {
+      path: 'render',
+      name: 'render',
+      component: () => import('@/views/demo/render/'),
+      meta: {
+        title: 'render',
+        key: 'MENU_HAWK_DEMO',
+        crumb: [
+          { name: 'Demo' },
+          { name: 'render' },
+        ]
+      }
+    },
+    {
       path: 'setup',
       name: 'setup',
       component: () => import('@/views/demo/setup/'),

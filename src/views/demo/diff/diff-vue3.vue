@@ -5,8 +5,8 @@
 
     <h3>一、编译期优化（Vue 3 独有）</h3>
 
-    <h4>① 静态提升（Static Hoisting）</h4>
-    <p>纯静态节点（无任何绑定）在编译时提升到渲染函数外部，每次渲染直接复用同一个 VNode 对象，不重新创建，也不参与 diff。</p>
+    <h4>① Static Hoist（静态提升）</h4>
+    <p><em>减少 VNode 重复创建（内存优化，编译期）</em>。纯静态节点（无任何绑定）在编译时提升到渲染函数外部，每次渲染直接复用同一个 VNode 对象，不重新创建，也不参与 diff。</p>
     <pre>{{ `
 // 静态节点提升到渲染函数外
 const _hoisted_1 = createVNode("p", null, "我是静态内容")
@@ -17,8 +17,8 @@ function render() {
     createVNode("span", null, ctx.dynamic)         // ← 只有这个参与 diff
   ])` }}</pre>
 
-    <h4>② PatchFlag 动态标记</h4>
-    <p>编译器分析模板，给动态节点打上 PatchFlag（补丁标记 / 动态标记），运行时 diff 直接根据 flag 判断哪些属性可能变化，精准更新，跳过其余属性的比较。</p>
+    <h4>② Patch Flag（补丁标记）</h4>
+    <p><em>标记单个 VNode 哪些部分会变化（diff 更新粒度）</em>。编译器分析模板，给动态节点打上 PatchFlag（补丁标记 / 动态标记），运行时 diff 直接根据 flag 判断哪些属性可能变化，精准更新，跳过其余属性的比较。</p>
     <pre>{{ `
 // 只有 class 是动态的，打 CLASS 标记
 createVNode("div", { class: ctx.cls }, null, PatchFlags.CLASS)
@@ -57,8 +57,8 @@ createVNode("p", null, ctx.text, PatchFlags.TEXT)
       </tbody>
     </table>
 
-    <h4>③ Block Tree（动态子节点收集）</h4>
-    <p>组件 / v-if / v-for 等会创建 Block，Block 内部维护一个 <code>dynamicChildren</code> 数组，只收集有 PatchFlag 的动态节点。diff 时直接遍历 <code>dynamicChildren</code>，静态节点完全跳过。</p>
+    <h4>③ Block Tree（块树优化，内含 Dynamic Children—动态子节点收集 ）</h4>
+    <p><em>扁平化收集动态节点，diff只遍历动态节点，跳过静态节点</em>。根 / 组件 / v-if / v-for /存在动态后代 的节点才会成为Block，Block内部维护一个 <code>dynamicChildren</code> 数组，只收集有 PatchFlag 的动态节点。diff 时直接遍历 <code>dynamicChildren</code>，静态节点完全跳过。</p>
     <pre>{{ `
 <div>             ← Block 根节点
   <p>静态内容。</p>          ← 不进 dynamicChildren
@@ -69,7 +69,33 @@ createVNode("p", null, ctx.text, PatchFlags.TEXT)
 diff 时：只遍历 dynamicChildren = [span, i]，静态 p 直接跳过
 ` }}</pre>
 
-    <h3>二、运行时 Diff — patchKeyedChildren 5 步</h3>
+    <h4>Static Hoist / Patch Flag / Block Tree 三者对比</h4>
+    <table class="table">
+      <tbody>
+        <tr>
+          <th>优化点</th>
+          <th>作用层面</th>
+          <th>做了什么</th> 
+        </tr>
+        <tr>
+          <td>Static Hoist</td>
+          <td>编译期，VNode 创建</td>
+          <td>把完全静态 VNode 提到 render 外面，只创建一次，减少对象创建</td>
+        </tr>
+        <tr>
+          <td>Patch Flag</td>
+          <td>VNode 标记</td>
+          <td>标记节点哪些属性会变动，diff 只更新对应部分</td>
+        </tr>
+        <tr>
+          <td>Block Tree</td>
+          <td>diff 遍历</td>
+          <td>扁平化收集动态节点，diff 只遍历动态节点，跳过静态节点</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <h3>二、运行时 Diff — patchKeyedChildren 5 步 — 头尾预处理 + LIS（最长递增子序列）</h3>
     <p>带 key 的列表是 diff 最复杂的场景，Vue 3 按顺序执行以下 5 步：</p>
     <pre>{{ `
 旧: a  b  c  d  e  f  g

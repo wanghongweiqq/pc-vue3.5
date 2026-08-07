@@ -11,6 +11,7 @@
     <p>HTTP（HyperText Transfer Protocol，超文本传输协议）是 Web 的基础通信协议，定义了客户端与服务端之间<em>如何请求和传输数据</em>。基于 TCP/IP，属于应用层协议。</p>
 
     <h3>一、HTTP vs HTTPS</h3>
+    <p>HTTPS = HTTP + TLS（Transport Layer Security，传输层安全协议）</p>
     <table class="table">
       <tbody>
         <tr>
@@ -21,7 +22,7 @@
         <tr>
           <td>传输方式</td>
           <td>明文</td>
-          <td>TLS/SSL 加密</td>
+          <td>TLS / SSL（Transport Layer Security，传输层安全协议，已废弃，现使用 TLS） 加密</td>
         </tr>
         <tr>
           <td>默认端口</td>

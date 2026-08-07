@@ -38,6 +38,6 @@ import Params from './params'
 import Stop from './stop'
 
 const route = useRoute()
-const activeTab = ref(route.query.subTab || 'effect')
+const activeTab = ref(route.query.subTab || 'params')
 
 </script>

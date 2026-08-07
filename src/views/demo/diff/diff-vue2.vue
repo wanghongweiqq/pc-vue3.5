@@ -6,11 +6,11 @@
     <h3>四个指针</h3>
     <pre>{{ `
 旧: [ A   B   C   D ]
-      ↑           ↑
+      ↑          ↑
    oldStart    oldEnd
 
 新: [ D   B   C   A ]
-      ↑           ↑
+      ↑          ↑
    newStart    newEnd
 ` }}</pre>
 
@@ -27,22 +27,22 @@
         <tr>
           <td>①</td>
           <td>oldStart vs newStart</td>
-          <td>patch 原地复用，两端指针同时内移</td>
+          <td>patch 原地复用，命中两指针内移</td>
         </tr>
         <tr>
           <td>②</td>
           <td>oldEnd vs newEnd</td>
-          <td>patch 原地复用，两端指针同时内移</td>
+          <td>patch 原地复用，命中两指针内移</td>
         </tr>
         <tr>
           <td>③</td>
           <td>oldStart vs newEnd</td>
-          <td>patch 后将旧头节点移动到旧尾之后</td>
+          <td>patch 后将旧头节点移动到旧尾之后，命中两指针内移</td>
         </tr>
         <tr>
           <td>④</td>
           <td>oldEnd vs newStart</td>
-          <td>patch 后将旧尾节点移动到旧头之前</td>
+          <td>patch 后将旧尾节点移动到旧头之前，命中两指针内移</td>
         </tr>
         <tr>
           <td>⑤</td>
@@ -74,14 +74,13 @@
     <h3>示例一：四种命中情况</h3>
     <pre>{{ `
 旧: [ A  B  C  D ]   新: [ D  B  C  A ]
-     ↑           ↑        ↑           ↑
-  oldStart    oldEnd   newStart    newEnd
+      ↑       ↑           ↑        ↑
+   oldStart oldEnd     newStart newEnd
 
-第1轮: ①A≠D  ②D≠A  ③oldStart(A) === newEnd(A) → 命中③，patch A，移到旧尾之后
+第1轮: ①A≠D  ②D≠A  ③oldStart(A) === newEnd(A) → 命中③，patch A，移到旧尾之后，命中两指针内移
   旧剩余: [ B  C  D ]   新剩余: [ D  B  C ]
-                                              ↑ newEnd 内移
 
-第2轮: ①B≠D  ②D≠C  ③B≠C  ④oldEnd(D) === newStart(D) → 命中④，patch D，移到旧头之前
+第2轮: ①B≠D  ②D≠C  ③B≠C  ④oldEnd(D) === newStart(D) → 命中④，patch D，移到旧头之前，命中两指针内移
   旧剩余: [ B  C ]      新剩余: [ B  C ]
 
 第3轮: oldStart(B) === newStart(B) → 命中①，patch 原地复用
@@ -97,13 +96,13 @@ oldStart > oldEnd，循环结束，无剩余节点，完成
     <pre>{{ `
 旧: [ A  B  C  D ]   新: [ E  B  A  D ]
 
-第1轮: ①A≠E ②oldEnd(D) === newEnd(D) → 命中②，patch D，两尾指针内移
+第1轮: ①A≠E ②oldEnd(D) === newEnd(D) → 命中②，patch D，命中两指针内移
   旧剩余: [ A  B  C ]   新剩余: [ E  B  A ]
 
-第2轮: ①A≠E ②C≠A ③A=A 命中③，patch A，移到尾部
+第2轮: ①A≠E ②C≠A ③A=A 命中③，patch A，移到尾部，命中两指针内移
   旧剩余: [ B  C ]      新剩余: [ E  B ]
 
-第3轮: ①B≠E ②C≠B ③B=B 命中③，patch B，移到尾部
+第3轮: ①B≠E ②C≠B ③B=B 命中③，patch B，移到尾部，命中两指针内移
   旧剩余: [ C ]         新剩余: [ E ]
 
 第4轮: ①C≠E ②C≠E ③C≠E ④C≠E → 四种未命中

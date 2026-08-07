@@ -48,7 +48,7 @@
     </table>
 
     <h3>一、为什么需要 Fiber</h3>
-    <p>React 15 及之前使用 Stack Reconciler，通过<em>JS调用栈同步递归遍历组件树</em>，一旦开始就必须跑完。组件树很深时，长时间占用主线程，导致用户点击 / 输入 / 动画无响应（掉帧）。</p>
+    <p>React 15 及之前使用 Stack Reconciler，<em>通过JS调用栈同步递归遍历组件树</em>，一旦开始就必须跑完。组件树很深时，长时间占用主线程，导致用户点击 / 输入 / 动画无响应（掉帧）。</p>
     <p>Fiber 把"隐式调用栈"换成自己管理的<strong>链表数据结构</strong>，让渲染过程可以分段执行、随时让出主线程。</p>
 
     <h3>二、Fiber 节点——核心数据结构</h3>
@@ -180,7 +180,7 @@ HeaderFiber ──sibling──► MainFiber ──sibling──► FooterFiber
     </ul>
 
     <h3>六、移动判断（lastPlacedIndex）</h3>
-    <p>React 用 <code>lastPlacedIndex</code> 记录上一次复用的旧节点索引。当前复用节点的旧索引 ≥ lastPlacedIndex → 不需要移动；否则 → 需要移动。</p>
+    <p>React 用 <code>lastPlacedIndex</code> 记录上一次复用的旧节点索引。当前复用节点的旧索引 ≥ lastPlacedIndex → 不需要移动, lastPlacedIndex 更新为当前节点索引；否则 → 需要移动。</p>
     <pre>{{ `
 旧: [ A  B  C  D ]   新: [ C  A  B  D ]
 lastPlacedIndex = 0

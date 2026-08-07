@@ -16,6 +16,79 @@
   客户端 ←——FIN—— 服务端          第3次：我也发完了
   客户端 ——ACK——→ 服务端          第4次：好的，连接关闭` }}</pre>
     <p>为什么挥手比握手多一次？建立连接时 SYN+ACK 可以合并，断开时服务端的 ACK 和 FIN 需要分开发（中间可能还有数据要传）。</p>
+    <h4>控制标志位: SYN / ACK / FIN</h4>
+    <p>这三个是 TCP 报文头部的控制标志位（Flag），只有 0 和 1，置 1 代表开启该信号。</p>
+    <table class="table">
+      <tbody>
+        <tr><th>标志位</th><th>全称</th><th>描述</th></tr>
+        <tr><td>SYN</td><td>Synchronize 同步</td><td>连接请求 报文</td></tr>
+        <tr><td>ACK</td><td>Acknowledge 确认</td><td>用于确认 报文是否被成功接收</td></tr>
+        <tr><td>FIN</td><td>Finish 结束</td><td>用于结束 连接，本方数据发送完毕，请求关闭单向通道</td></tr>
+      </tbody>
+    </table>
+
+    <h4>一次完整的HTTPS 请求：TCP 三次握手 → TLS 握手 → HTTP 请求 / 响应(可以多次，直到超时) → TCP四次挥手</h4>
+
+    <table class="table">
+      <tbody>
+        <tr>
+          <th width="200">
+            流程
+          </th>
+          <th>报文数</th>
+          <th>RTT数</th>
+          <th>说明</th>
+        </tr>
+        <tr>
+          <td> TCP 三次握手</td>  
+          <td>3	</td>
+          <td>1 RTT	</td>
+          <td>SYN → SYN+ACK 完成一次往返；最后的 ACK 无需应答</td>
+        </tr>
+        <tr>
+          <td>TCP 四次挥手</td>  
+          <td>4	</td>
+          <td>2</td>
+          <td>
+            <p>FIN‑ACK 一轮 RTT；FIN‑ACK 第二轮 RTT；客户端发出最后这个 ACK 之后，会进入 TIME‑WAIT（2MSL）状态，等待2MSL后才能关闭连接</p>
+            <p>2MSL = 两倍最大报文生存时间，是用来保证最后一个 ACK 能够到达对方，防止丢包；这是超时时间，不是网络往返 RTT。</p>
+          </td>
+        </tr>
+        <tr>
+          <td>TCP 四次挥手 (合并，三次挥手)</td>  
+          <td>3</td>
+          <td>2</td>
+          <td>
+            <p>当服务端没有剩余数据要发送，会把第 2 步ACK和第 3 步FIN合并成一个报文，于是变成三次挥手：</p>
+            <p>三次<em>握手</em>的1个RTT：服务端发送SYN后，客户端这边所有接收工作全部完成，只需要往外甩一个无应答的 ACK。</p>
+            <p>三次<em>挥手</em>的1个RTT：服务端发送FIN后，客户端必须针对这个【服务端的 FIN】再回复一个 ACK，之后进入TIME‑WAIT（2MSL）状态，最后关闭连接。</p>
+          </td>
+        </tr>
+        <tr>
+          <td>TLS1.2 完整握手</td>
+          <td>多报文</td>
+          <td>2</td>
+          <td>HTTPS 新建连接合计 3 RTT</td>
+        </tr>
+        <tr>
+          <td>TLS1.3 标准握手</td>
+          <td>多报文</td>
+          <td>1</td>
+          <td>TCP (1RTT)+TLS1.3 (1RTT)，HTTPS 新建连接合计 2 RTT</td>
+        </tr>
+        <tr>
+          <td>TLS1.3 0‑RTT 握手</td>
+          <td>复用会话</td>
+          <td>0 RTT</td>
+          <td>会话复用，应用数据直接随 ClientHello 发出，有重放风险</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <h4>关键易混点</h4>
+    <p>1、RTT = 发出包，等到对方响应回来才算一次往返；只发出去、不需要对方回复的报文，不计 RTT。</p>
+    <p>2、MSL ≠ 2RTT：MSL 是报文最大生存时间，Linux 默认 60 秒，协议常量，不是网络测得往返延迟。</p>
+    <p>3、TLS 跑在 TCP 之上，HTTPS 总 RTT = TCP 握手 RTT + TLS 握手 RTT。</p>
 
     <h3>二、TCP vs UDP</h3>
     <p>两者都是<em>传输层协议</em>，负责在两台设备间传输数据，但设计哲学完全不同。</p>
@@ -219,21 +292,89 @@ HTTP/3  →  QUIC（可靠 + 有序 + 加密）  →  UDP
     <h4>什么是 RTT</h4>
     <p><strong>RTT（Round Trip Time，往返时延）</strong>指数据从发送方出发、到达接收方、再返回发送方所经历的总时间，是衡量网络延迟的核心指标。</p>
     <pre>{{ `
-客户端 ——— 发出请求 ———→ 服务端
-客户端 ←—— 收到响应 ———  服务端
+      ——— 发出请求 ———→ 
+客户端                  服务端
+      ←—— 发出响应 ———  
  └──────── 1 RTT ────────┘
 
 ping 显示 50ms，即 1 RTT ≈ 50ms
 每多一次 RTT，用户就多等 50ms` }}</pre>
     <p>握手、TLS 协商等都需要若干 RTT，RTT 越多连接越慢，这也是 QUIC 优化的核心目标。</p>
 
-    <h4>TLS 握手</h4>
-    <p><strong>TLS（Transport Layer Security，传输层安全协议）</strong>是 HTTPS 的加密基础，前身是 SSL（Secure Sockets Layer）。TLS 握手的目的是在正式传输数据前完成三件事：</p>
-    <ul>
-      <li><em>身份认证</em> —— 验证服务端证书，确认对方不是假冒的</li>
-      <li><em>协商算法</em> —— 双方协商使用哪种加密套件</li>
-      <li><em>交换密钥</em> —— 安全地生成后续通信用的对称加密密钥</li>
-    </ul>
+    <h3>TLS 握手</h3>
+    <p><strong>TLS（Transport Layer Security，传输层安全协议）</strong>是 HTTPS 的加密基础，前身是 SSL（Secure Sockets Layer，安全套接层协议）。TLS 握手的目的是在正式传输数据前完成三件事：</p>
+    <table class="table">
+      <tbody>
+        <tr>
+          <th width="200">
+            内容
+          </th>
+          <th>说明</th>
+        </tr>
+        <tr>
+          <td>身份认证</td>
+          <td>验证服务端证书，确认对方不是假冒的</td>
+        </tr>
+        <tr>
+          <td>协商算法</td> 
+          <td>双方协商使用哪种加密套件</td>
+        </tr>
+        <tr>
+          <td>交换密钥</td>
+          <td>安全地生成后续通信用的对称加密密钥</td>
+        </tr> 
+      </tbody>
+    </table>
+
+    <h4>密钥类型</h4>
+    <p>非对称只用来 “协商出一把对称钥匙”，业务流量全部用对称加密。</p>
+    <table class="table">
+      <tbody>
+        <tr>
+          <th width="200">
+            类型
+          </th>
+          <th>说明</th>
+        </tr>
+        <tr>
+          <td>非对称密钥（公钥 / 私钥）</td>
+          <td>开销大，只用于握手、身份认证、密钥协商，不加密业务数据。</td>
+        </tr>
+        <tr>
+          <td>对称密钥（会话密钥）</td> 
+          <td>加解密速度快，握手协商出来，真正加密 HTTP 报文，每次会话重新生成。</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <h4>TLS 握手用什么加密？</h4>
+    <p>TLS1.3 干掉了 RSA 密钥交换，强制 ECDHE，强制 AEAD 对称加密（RSA、ECDHE、AEAD 是三种不同的算法模式/标准）。</p>
+    <table class="table">
+      <tbody>
+        <tr>
+          <th width="200">
+            阶段
+          </th>
+          <th>说明</th>
+        </tr>
+        <tr>
+          <td>握手协商阶段：非对称加</td>
+          <td>
+            <p>RSA 模式：使用 RSA 非对称加密加密预主密钥。</p>
+            <p>ECDHE 模式：使用 ECDHE 密钥协商算法交换公钥，生成预主密钥；使用 RSA/ECDSA 数字签名做服务器身份认证。</p>
+          </td>
+        </tr>
+        <tr>
+          <td>握手协商完成之后（传输 HTTP 数据）：对称加密</td> 
+          <td>使用 AES‑GCM 这类对称加密。</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <h4>握手协商阶段非对称加密计算开销大，为什么不换掉它？</h4>
+    <p>不是不想换掉它，是没有别的算法，能安全解决「公网陌生双方如何安全交换密钥」这个问题；对称加密速度快，但解决不了身份认证和密钥分发难题。</p>
+
+    <h4>TLS 1.2/1.3 握手对比</h4>
     <pre>{{ `
 TLS 1.2 握手（2 RTT）：
   RTT1  客户端 → ClientHello（支持的加密套件、随机数）
