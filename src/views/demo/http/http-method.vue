@@ -80,7 +80,7 @@ body: { title: '新标题' }
 ` }}</pre>
 
     <h3>params vs data（axios 视角）</h3>
-    <p>axios 中，入参通过哪个属性传递，取决于 method：</p>
+    <p>axios 中，入参params 和 data 与 method 无绑定关系，任意方法都能同时用两者。 axios 并不限制 params 只能配 GET、 data 只能配 POST。实际约束来自 HTTP 规范的惯例</p>
     <table class="table">
       <tbody>
         <tr>
@@ -91,12 +91,12 @@ body: { title: '新标题' }
         <tr>
           <td><code>params</code></td>
           <td>拼接到 URL 查询字符串 <code>?key=value</code></td>
-          <td>GET（及其他读操作）</td>
+          <td>无限制，所有方法都能用，主要是 GET</td>
         </tr>
         <tr>
           <td><code>data</code></td>
           <td>放入请求体（Request Body）</td>
-          <td>POST / PUT / PATCH / DELETE</td>
+          <td>无限制，所有方法都能用，GET 不建议用</td>
         </tr>
       </tbody>
     </table>

@@ -543,11 +543,11 @@ export default {
   },
   delay (duration) {
     // 旧版,while会不断同步执行阻塞主线程/冻结 UI
-    // let start = Date.now()
-    // while(Date.now() - start < duration) {}
+    let start = Date.now()
+    while(Date.now() - start < duration) {}
 
     // 改用 Promise + setTimeout，避免同步忙等待阻塞主线程/冻结 UI
     // 调用方需 await：await utils.delay(300)
-    return new Promise(resolve => setTimeout(resolve, duration))
+    // return new Promise(resolve => setTimeout(resolve, duration))
   }
 }

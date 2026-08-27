@@ -93,7 +93,7 @@ instance.interceptors.request.use(config => {
   config.data = applyFilter(config.data, isFilterStringSpace, isFilterObjectParams)
   config.params = applyFilter(config.params, isFilterStringSpace, isFilterObjectParams)
 
-  // 时间戳防缓存（仅对象格式的 params），可以和Cache-Control: no-cache 2选1
+  // 时间戳防缓存（仅对object格式的 params添加，其他类型包括undefined不添加，因为格式不确定，添加的方法也不一样），可以和Cache-Control: no-cache 2选1，这里根据实际情况配置。
   if (config.params) {
     const type = utils.dataType(config.params)
     if (type === 'object') {

@@ -108,26 +108,13 @@ export default {
     {
       path: 'duyi',
       name: 'duyi',
-      component: () => import('@/views/demo/duyi.vue'),
+      component: () => import('@/views/demo/duyi/index.vue'),
       meta: {
         title: 'duyi',
         key: 'MENU_HAWK_DEMO',
         crumb: [
           { name: 'Demo' },
           { name: 'duyi' },
-        ]
-      }
-    },
-    {
-      path: 'event-loop',
-      name: 'event-loop',
-      component: () => import('@/views/demo/event-loop.vue'),
-      meta: {
-        title: 'event-loop',
-        key: 'MENU_HAWK_DEMO',
-        crumb: [
-          { name: 'Demo' },
-          { name: 'event-loop' },
         ]
       }
     },

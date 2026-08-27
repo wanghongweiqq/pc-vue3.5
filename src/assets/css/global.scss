@@ -388,9 +388,33 @@ pre {
     padding: 5px 0;
   }
 
+  .ul {
+    padding-left: 15px;
+  }
+
+  .ol {
+    padding-left: 15px;
+
+    li{
+      list-style: decimal;
+    }
+  }
+
+  .ul {
+    padding-left: 15px;
+
+    li{
+      list-style: disc;
+    }
+  }
+
   em {
     font-style: normal;
     color: $color-primary;
+  }
+
+  img{
+    border: 1px solid $color-9;
   }
 
   .table {

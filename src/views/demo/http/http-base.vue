@@ -20,9 +20,9 @@
           <th>HTTPS</th>
         </tr>
         <tr>
-          <td>传输方式</td>
+          <td>传输/加密方式</td>
           <td>明文</td>
-          <td>TLS / SSL（Transport Layer Security，传输层安全协议，已废弃，现使用 TLS） 加密</td>
+          <td>TLS / SSL（TLS：Transport Layer Security，传输层安全协议，现主流形式。SSL：Secure Sockets Layer，安全套接层协议，已废弃）</td>
         </tr>
         <tr>
           <td>默认端口</td>

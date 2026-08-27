@@ -3,7 +3,7 @@
  * @Email：wanghongwei@hualala.com
  * @Date: 2021-05-06 10:53:45
  * @Description: 页面/组件/功能的描述
- * @FilePath: /vue3.0/src/router/index.js
+ * @FilePath: /pc-vue3.5/src/router/index.js
  */
 import { createRouter, createWebHistory } from 'vue-router'
 // import Home from '../views/Home.vue'
@@ -38,7 +38,7 @@ const router = createRouter({
 })
 router.beforeEach((to, from) => {
   if (to.meta.title) {
-    document.title = `${ to.meta.title }-京东汽配管家`
+    document.title = `${ to.meta.title }-Vue3.5 项目`
   }
   if (!to.name || to.name && to.matched.length === 0) { // 错误路由。
     return { name: '404' }

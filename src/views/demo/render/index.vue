@@ -10,52 +10,56 @@
       <p>1、React Element树：描述 UI 的普通 JS 对象，很轻。</p>
       <p>2、Fiber树：协调（reconciliation）阶段使用Fiber协调器根据 Element 生成的链表数据结构，可中断、可恢复、带优先级。</p>
       <table class="table">
-        <tr>
-          <th>✅ 属于 Render 阶段</th>
-          <th>❌ 不属于 Render 阶段</th>
-        </tr>
-        <tr>
-          <td>
-            <p>函数组件本体</p>
-            <p>useState（读取值）</p>
-            <p>useMemo</p>
-            <p>useCallback</p>
-            <p>创建 JSX</p>
-            <p>计算派生状态</p>
-          </td>
-          <td>
-            <p>useEffect</p>
-            <p>useLayoutEffect</p>
-            <p>DOM 操作</p>
-            <p>请求数据（虽然能写，但不推荐）</p>
-            <p>setState（会触发新一轮 render）</p>
-          </td>
-        </tr>
+        <tbody>
+          <tr>
+            <th>✅ 属于 Render 阶段</th>
+            <th>❌ 不属于 Render 阶段</th>
+          </tr>
+          <tr>
+            <td>
+              <p>函数组件本体</p>
+              <p>useState（读取值）</p>
+              <p>useMemo</p>
+              <p>useCallback</p>
+              <p>创建 JSX</p>
+              <p>计算派生状态</p>
+            </td>
+            <td>
+              <p>useEffect</p>
+              <p>useLayoutEffect</p>
+              <p>DOM 操作</p>
+              <p>请求数据（虽然能写，但不推荐）</p>
+              <p>setState（会触发新一轮 render）</p>
+            </td>
+          </tr>
+        </tbody>
       </table>
 
       <h3>Vue主要阶段</h3>
       <h4>Render：得到VNode → Patch：（Diff：找差异 + DOM更新） → Paint：画到屏幕</h4>
       <table class="table">
-        <tr>
-          <th>✅ 属于 Render 阶段</th>
-          <th>❌ 不属于 Render 阶段</th>
-        </tr>
-        <tr>
-          <td>
-            <p>setup()</p>
-            <p>render()</p>
-            <p>computed</p>
-            <p>template 编译结果</p>
-            <p>创建 VNode</p>
-            <p>Diff（部分）</p>
-          </td>
-          <td>
-            <p>mounted</p>
-            <p>updated</p>
-            <p>DOM 操作</p>
-            <p>watch 回调（本质是副作用）</p>
-          </td>
-        </tr>
+        <tbody>
+          <tr>
+            <th>✅ 属于 Render 阶段</th>
+            <th>❌ 不属于 Render 阶段</th>
+          </tr>
+          <tr>
+            <td>
+              <p>setup()</p>
+              <p>render()</p>
+              <p>computed</p>
+              <p>template 编译结果</p>
+              <p>创建 VNode</p>
+              <p>Diff（部分）</p>
+            </td>
+            <td>
+              <p>mounted</p>
+              <p>updated</p>
+              <p>DOM 操作</p>
+              <p>watch 回调（本质是副作用）</p>
+            </td>
+          </tr>
+        </tbody>
       </table>
 
       <h3>二、flush(watch、watchEffect)、useEffect、uesLseLayoutEffect 时序图</h3>
