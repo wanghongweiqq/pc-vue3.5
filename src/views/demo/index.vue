@@ -467,7 +467,7 @@ export default {
         if (res.success) {
           const sortFun = () => Math.random() - 0.5
           // mock的源数据，路径：src/service/mock.js -> '/api/demo/list' -> data -> list
-          const list = res.data.list || []
+          let list = res.data.list || []
           // 第二次触发时不更新，因为数据一直是mock的源数据（外部文件导进来的），this.queryList = 源数据，只有更改赋值时的引用地址，才会触发响应式更新。所以原地排序，引用没变，所以不会更新。this.queryList由初始值[]变为现在的list，也是因为改变了引用的原因才会更新。
           // 静态数据
           // const list = [{ customerName: Date.now(), cloudsGatherStatus: 1, accountPeriodStatus: 0, totalAmount: 500000, usedAmount: 120000, availableAmount: 380000, status: 0, sumUsedAmount: 890000, lastOrderTime: '2025-06-18 10:32:00' }]
@@ -475,9 +475,9 @@ export default {
           // 当数据被代理-proxy后(通过this.queryList=list被代理)，直接更改this.queryList,如this.queryList[0].customerName = '2'，会触发响应式更新。但 list[0].customerName = '2' 不会触发响应式更新。必须通过代理的变量名称来更改数据，这样才会经过proxy触发响应式系统，进而更新，流程为：this.queryList -> proxy -> list。当直接操作list时，不会触发响应式更新。
           // 总结：要么赋值时改变了引用地址，要么直接操作响应式数组，才会触发响应式更新。
         
-          list.sort(sortFun)
+          // list.sort(sortFun)
           // 以下两种都可更新，因为引用改变
-          // list = list.toSorted(sortFun)
+          list = list.toSorted(sortFun)
           // list = [...list].sort(sortFun)
           this.count = list.length
           this.queryList = list
